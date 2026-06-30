@@ -367,6 +367,59 @@ function getMarkerIcon(field, isActive = false) {
     });
 }
 
+// Grouped Marker Icon showing number of conferences (18px)
+function getGroupedMarkerIcon(count, isActive = false) {
+    const color = '#6366f1'; // Indigo for multi-field groups
+    const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
+    const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
+    
+    const html = `
+        <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background-color: rgba(17, 24, 39, 0.95);
+            border: 1.5px solid ${color};
+            border-radius: 50%;
+            box-shadow: 0 0 6px ${shadowColor};
+            transform: ${scale};
+            transition: all 0.25s ease;
+            color: #a5b4fc;
+            font-size: 8px;
+            font-weight: 700;
+        ">
+            <i class="fa-solid fa-layer-group"></i>
+            <span style="
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                background-color: #ef4444;
+                color: white;
+                font-size: 7px;
+                font-weight: 800;
+                border-radius: 50%;
+                width: 11px;
+                height: 11px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0.5px solid rgba(255,255,255,0.3);
+                line-height: 1;
+            ">${count}</span>
+        </div>
+    `;
+
+    return L.divIcon({
+        html: html,
+        className: 'custom-map-marker',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+    });
+}
+
 function initMap() {
     // Map focus center (centered global view)
     map = L.map('map', {
@@ -524,50 +577,114 @@ function renderList(filteredData) {
 function renderMapMarkers(filteredData) {
     markersLayer.clearLayers();
     
+    // Group filtered conferences by city location
+    const groups = {};
     filteredData.forEach(conf => {
-        const marker = L.marker([conf.lat, conf.lon], {
-            icon: getMarkerIcon(conf.field, false)
-        });
+        if (!groups[conf.location]) {
+            groups[conf.location] = [];
+        }
+        groups[conf.location].push(conf);
+    });
 
-        // Store custom properties on the marker
-        marker.conferenceId = conf.id;
+    Object.entries(groups).forEach(([city, confList]) => {
+        const firstConf = confList[0];
+        let marker;
 
-        // Custom Popup on hover
-        const popupContent = `
-            <div class="map-popup-card">
-                <h4>${conf.name}</h4>
-                <p><i class="fa-solid fa-location-dot"></i> ${conf.location}</p>
-                <div class="popup-score-row">
-                    <span style="background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3)">CQI: ${conf.cqi}</span>
-                    <span style="background: rgba(14,165,233,0.1); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.3)">GSAI: ${conf.gsai}</span>
+        if (confList.length === 1) {
+            // Single conference in this city
+            marker = L.marker([firstConf.lat, firstConf.lon], {
+                icon: getMarkerIcon(firstConf.field, false)
+            });
+            marker.conferenceId = firstConf.id;
+            marker.isGroup = false;
+            marker.location = firstConf.location;
+
+            const popupContent = `
+                <div class="map-popup-card">
+                    <h4>${firstConf.name}</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> ${firstConf.location}</p>
+                    <div class="popup-score-row">
+                        <span style="background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3)">CQI: ${firstConf.cqi}</span>
+                        <span style="background: rgba(14,165,233,0.1); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.3)">GSAI: ${firstConf.gsai}</span>
+                    </div>
                 </div>
-            </div>
-        `;
-        
-        marker.bindPopup(popupContent, {
-            closeButton: false,
-            offset: L.point(0, -5)
-        });
+            `;
 
-        marker.on('click', (e) => {
-            selectConference(conf.id);
-        });
+            marker.bindPopup(popupContent, {
+                closeButton: false,
+                offset: L.point(0, -5)
+            });
 
-        marker.on('mouseover', function (e) {
-            this.openPopup();
-        });
+            marker.on('click', (e) => {
+                selectConference(firstConf.id);
+            });
 
-        marker.on('mouseout', function (e) {
-            if (activeMarker !== this) {
-                this.closePopup();
-            }
-        });
+            marker.on('mouseover', function (e) {
+                this.openPopup();
+            });
+
+            marker.on('mouseout', function (e) {
+                if (activeMarker !== this) {
+                    this.closePopup();
+                }
+            });
+        } else {
+            // Multiple conferences in this city (Grouped marker)
+            marker = L.marker([firstConf.lat, firstConf.lon], {
+                icon: getGroupedMarkerIcon(confList.length, false)
+            });
+            marker.conferenceIds = confList.map(c => c.id);
+            marker.isGroup = true;
+            marker.location = city;
+
+            const popupContent = `
+                <div class="map-popup-card">
+                    <h4 style="margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; font-size: 0.85rem; font-weight: 700;">
+                        ${city} (${confList.length} Conferences)
+                    </h4>
+                    <div style="max-height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-right: 4px;">
+                        ${confList.map(c => `
+                            <div class="popup-list-item" onclick="selectConference('${c.id}')" style="
+                                cursor: pointer;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 4px 6px;
+                                background: rgba(255,255,255,0.03);
+                                border-radius: 4px;
+                                border-left: 3px solid ${c.field === 'semiconductor' ? '#f59e0b' : c.field === 'electronics' ? '#0ea5e9' : '#10b981'};
+                                font-size: 0.75rem;
+                            ">
+                                <span style="font-weight: 600;">${c.name}</span>
+                                <span style="font-size: 0.65rem; color: #f43f5e; font-weight: 700;">CQI: ${c.cqi}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent, {
+                closeButton: false,
+                offset: L.point(0, -5)
+            });
+
+            marker.on('mouseover', function (e) {
+                this.openPopup();
+            });
+
+            marker.on('mouseout', function (e) {
+                if (activeMarker !== this) {
+                    this.closePopup();
+                }
+            });
+        }
 
         markersLayer.addLayer(marker);
     });
 }
 
 function selectConference(id) {
+    window.selectConference = selectConference; // Expose globally for popup callbacks
     const conf = conferences.find(c => c.id === id);
     if (!conf) return;
 
@@ -582,18 +699,26 @@ function selectConference(id) {
 
     // Update map marker scale
     markersLayer.eachLayer(marker => {
-        if (marker.conferenceId === id) {
-            marker.setIcon(getMarkerIcon(conf.field, true));
+        if (marker.location === conf.location) {
+            if (marker.isGroup) {
+                marker.setIcon(getGroupedMarkerIcon(marker.conferenceIds.length, true));
+            } else {
+                marker.setIcon(getMarkerIcon(conf.field, true));
+            }
             activeMarker = marker;
             
             // Pan and zoom smoothly
-            map.setView([conf.lat, conf.lon], 5, {
+            map.setView([marker.getLatLng().lat, marker.getLatLng().lng], 5, {
                 animate: true,
                 duration: 0.5
             });
         } else {
-            const originalConf = conferences.find(c => c.id === marker.conferenceId);
-            marker.setIcon(getMarkerIcon(originalConf.field, false));
+            if (marker.isGroup) {
+                marker.setIcon(getGroupedMarkerIcon(marker.conferenceIds.length, false));
+            } else {
+                const originalConf = conferences.find(c => c.id === marker.conferenceId);
+                marker.setIcon(getMarkerIcon(originalConf.field, false));
+            }
         }
     });
 

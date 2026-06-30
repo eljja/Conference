@@ -919,3 +919,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     background: transparent !important;
     border: none !important;
 }
+
+.popup-list-item {
+    transition: var(--transition-fast);
+}
+
+.popup-list-item:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(2px);
+}
