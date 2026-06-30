@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TripConference - 재료, 전자, 반도체 학회 대시보드</title>
+    <title>TripConference - Materials, Electronics & Semiconductor Conferences</title>
     
-    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,16 +27,16 @@
                 <i class="fa-solid fa-earth-americas logo-icon"></i>
                 <div class="logo-text">
                     <h1>TripConference</h1>
-                    <p>재료 · 반도체 · 전자분야 우수 국제학회 분석 대시보드</p>
+                    <p>Prestige & Student Attraction Analysis for Major International Conferences</p>
                 </div>
             </div>
             <div class="header-stats">
                 <div class="stat-box">
-                    <span class="stat-label">분석 학회 수</span>
+                    <span class="stat-label">Conferences</span>
                     <span class="stat-value" id="stat-total-count">0</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-label">최상위 학회 (A*)</span>
+                    <span class="stat-label">Top Tier (A*)</span>
                     <span class="stat-value text-accent" id="stat-top-count">0</span>
                 </div>
             </div>
@@ -50,23 +50,23 @@
                 <div class="filter-card">
                     <div class="search-box">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="search-input" placeholder="학회 이름, 도시, 국가 검색...">
+                        <input type="text" id="search-input" placeholder="Search by name, city, country...">
                     </div>
                     
                     <div class="filter-group">
-                        <label class="filter-label">학술 분야</label>
+                        <label class="filter-label">Academic Fields</label>
                         <div class="checkbox-buttons">
                             <label class="btn-checkbox active" data-field="semiconductor">
                                 <input type="checkbox" checked id="field-semi">
-                                <span class="dot semi-dot"></span>반도체
+                                <span class="dot semi-dot"></span>Semiconductors
                             </label>
                             <label class="btn-checkbox active" data-field="electronics">
                                 <input type="checkbox" checked id="field-elec">
-                                <span class="dot elec-dot"></span>전자공학
+                                <span class="dot elec-dot"></span>Electronics
                             </label>
                             <label class="btn-checkbox active" data-field="materials">
                                 <input type="checkbox" checked id="field-mat">
-                                <span class="dot mat-dot"></span>재료공학
+                                <span class="dot mat-dot"></span>Materials
                             </label>
                         </div>
                     </div>
@@ -74,14 +74,14 @@
                     <div class="range-filters">
                         <div class="range-group">
                             <div class="range-header">
-                                <span>학술 영향도 (CQI)</span>
+                                <span>Academic Influence (CQI)</span>
                                 <span id="cqi-value">60+</span>
                             </div>
                             <input type="range" id="cqi-slider" min="50" max="95" value="60">
                         </div>
                         <div class="range-group">
                             <div class="range-header">
-                                <span>학생 매력도 (GSAI)</span>
+                                <span>Student Attraction (GSAI)</span>
                                 <span id="gsai-value">50+</span>
                             </div>
                             <input type="range" id="gsai-slider" min="50" max="95" value="50">
@@ -89,21 +89,20 @@
                     </div>
 
                     <div class="sort-group">
-                        <label for="sort-select" class="filter-label-inline"><i class="fa-solid fa-sort"></i> 정렬 기준</label>
+                        <label for="sort-select" class="filter-label-inline"><i class="fa-solid fa-sort"></i> Sort By</label>
                         <select id="sort-select" class="form-select">
-                            <option value="cqi">학술 영향도 (CQI) 순</option>
-                            <option value="gsai">학생 매력도 (GSAI) 순</option>
-                            <option value="name">학회명 알파벳 순</option>
-                            <option value="date">개최일 순</option>
+                            <option value="cqi">Academic Influence (CQI)</option>
+                            <option value="gsai">Student Attraction (GSAI)</option>
+                            <option value="name">Alphabetical</option>
+                            <option value="date">Date Scheduled</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Scrollable Conference List -->
                 <div class="list-container" id="conference-list">
-                    <!-- Dynamic cards will be injected here by app.js -->
                     <div class="loading-placeholder">
-                        <i class="fa-solid fa-spinner fa-spin"></i> 학회 데이터를 분석하고 있습니다...
+                        <i class="fa-solid fa-spinner fa-spin"></i> Analyzing conference data...
                     </div>
                 </div>
             </section>
@@ -112,7 +111,7 @@
             <section class="map-panel">
                 <div id="map"></div>
                 <div class="map-overlay-info">
-                    <p><i class="fa-solid fa-info-circle"></i> 마커를 클릭하여 상세 평가 및 학생 혜택을 확인하세요.</p>
+                    <p><i class="fa-solid fa-info-circle"></i> Click a marker to view detailed evaluation and student benefits.</p>
                 </div>
             </section>
         </main>
@@ -124,9 +123,9 @@
             <button class="modal-close-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header-section" id="modal-header-bg">
                 <div class="modal-title-area">
-                    <span class="badge" id="modal-badge-field">반도체</span>
-                    <h2 id="modal-conf-name">학회 이름</h2>
-                    <p id="modal-conf-fullname">학회 풀네임</p>
+                    <span class="badge" id="modal-badge-field">Semiconductors</span>
+                    <h2 id="modal-conf-name">Conference Name</h2>
+                    <p id="modal-conf-fullname">Full Conference Name</p>
                 </div>
             </div>
             
@@ -136,21 +135,21 @@
                     <div class="info-item">
                         <i class="fa-solid fa-calendar"></i>
                         <div>
-                            <h4>개최 일정</h4>
+                            <h4>Schedule</h4>
                             <p id="modal-info-date">2026.06.30</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fa-solid fa-location-dot"></i>
                         <div>
-                            <h4>개최 도시</h4>
+                            <h4>Host City</h4>
                             <p id="modal-info-location">San Francisco, USA</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fa-solid fa-building-columns"></i>
                         <div>
-                            <h4>주최 기관</h4>
+                            <h4>Organizer</h4>
                             <p id="modal-info-organizer">IEEE</p>
                         </div>
                     </div>
@@ -161,7 +160,7 @@
                     <!-- CQI Card -->
                     <div class="score-card cqi-card">
                         <div class="score-card-header">
-                            <h3>학술 영향도 (CQI)</h3>
+                            <h3>Academic Influence (CQI)</h3>
                             <div class="score-big" id="modal-cqi-score">00</div>
                         </div>
                         <div class="score-sub-metrics" id="modal-cqi-metrics">
@@ -172,7 +171,7 @@
                     <!-- GSAI Card -->
                     <div class="score-card gsai-card">
                         <div class="score-card-header">
-                            <h3>학생 매력도 (GSAI)</h3>
+                            <h3>Student Attraction (GSAI)</h3>
                             <div class="score-big" id="modal-gsai-score">00</div>
                         </div>
                         <div class="score-sub-metrics" id="modal-gsai-metrics">
@@ -183,19 +182,19 @@
 
                 <!-- Student Benefits & Funding Tips -->
                 <div class="modal-benefits-section">
-                    <h3><i class="fa-solid fa-graduation-cap"></i> 대학원생 맞춤 매력 포인트 & 팁</h3>
+                    <h3><i class="fa-solid fa-graduation-cap"></i> Graduate Student Highlights & Tips</h3>
                     <div class="benefit-box">
                         <div class="benefit-highlight">
-                            <span class="highlight-title">📍 여행지 매력:</span>
-                            <span id="modal-benefit-location">도시 정보 로딩 중...</span>
+                            <span class="highlight-title">📍 Location Appeal:</span>
+                            <span id="modal-benefit-location">Loading location info...</span>
                         </div>
                         <div class="benefit-highlight">
-                            <span class="highlight-title">💰 재정 지원 (Travel Grants):</span>
-                            <span id="modal-benefit-grants">그랜트 정보 로딩 중...</span>
+                            <span class="highlight-title">💰 Travel Grants:</span>
+                            <span id="modal-benefit-grants">Loading grant info...</span>
                         </div>
                         <div class="benefit-highlight">
-                            <span class="highlight-title">🤝 네트워킹 기회:</span>
-                            <span id="modal-benefit-networking">네트워킹 정보 로딩 중...</span>
+                            <span class="highlight-title">🤝 Networking Opportunities:</span>
+                            <span id="modal-benefit-networking">Loading networking info...</span>
                         </div>
                     </div>
                 </div>
@@ -203,7 +202,7 @@
                 <!-- Action Footer -->
                 <div class="modal-footer">
                     <a href="#" target="_blank" class="btn-primary" id="modal-website-link">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 웹사이트 방문
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Official Website
                     </a>
                 </div>
             </div>

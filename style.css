@@ -913,3 +913,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
         gap: 0.8rem;
     }
 }
+
+/* --- Leaflet Marker Override --- */
+.custom-map-marker {
+    background: transparent !important;
+    border: none !important;
+}
