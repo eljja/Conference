@@ -223,23 +223,26 @@ body {
 
 .checkbox-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
 }
 
 .btn-checkbox {
-    flex: 1;
+    flex: 1 1 calc(50% - 0.25rem); /* 2-column layout that wraps and grows */
+    min-width: 110px;              /* Ensures neat wrapping on small screens */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-color);
-    padding: 0.5rem;
+    padding: 0.5rem 0.6rem;
     border-radius: var(--border-radius-sm);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     cursor: pointer;
     transition: var(--transition-fast);
     user-select: none;
+    white-space: nowrap;           /* Prevent labels from wrapping inside buttons */
 }
 
 .btn-checkbox input {
