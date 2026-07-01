@@ -396,10 +396,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
     transition: var(--transition-medium);
 }
 
-.conference-card.semi-card::before { background-color: var(--color-semi); }
-.conference-card.elec-card::before { background-color: var(--color-elec); }
-.conference-card.mat-card::before { background-color: var(--color-mat); }
-.conference-card.arch-card::before { background-color: var(--color-arch); }
+.conference-card.semiconductor-card::before { background-color: var(--color-semi); }
+.conference-card.electronics-card::before { background-color: var(--color-elec); }
+.conference-card.materials-card::before { background-color: var(--color-mat); }
+.conference-card.architecture-card::before { background-color: var(--color-arch); }
 
 .conference-card:hover {
     transform: translateY(-2px);
@@ -414,34 +414,58 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .card-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.5rem;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
 }
 
-.card-title {
+.card-header-top {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
 }
 
-.card-title h3 {
+.card-header-top h3 {
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--text-primary);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.card-date {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.card-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 0.6rem;
     font-weight: 700;
-    padding: 0.15rem 0.4rem;
+    padding: 0 0.4rem;
+    height: 18px;
+    line-height: 1;
     border-radius: 4px;
     text-transform: uppercase;
+    box-sizing: border-box;
 }
 
-.badge-semi { background: rgba(245, 158, 11, 0.15); color: var(--color-semi); }
-.badge-elec { background: rgba(14, 165, 233, 0.15); color: var(--color-elec); }
-.badge-mat { background: rgba(16, 185, 129, 0.15); color: var(--color-mat); }
+.badge-semiconductor { background: rgba(245, 158, 11, 0.15); color: var(--color-semi); }
+.badge-electronics { background: rgba(14, 165, 233, 0.15); color: var(--color-elec); }
+.badge-materials { background: rgba(16, 185, 129, 0.15); color: var(--color-mat); }
+.badge-architecture { background: rgba(168, 85, 247, 0.15); color: var(--color-arch); }
+.badge-toptier { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
 
 .card-meta {
     display: flex;

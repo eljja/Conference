@@ -505,13 +505,13 @@ function renderList(filteredData) {
 
         card.innerHTML = `
             <div class="card-header">
-                <div class="card-title">
+                <div class="card-header-top">
                     <h3>${conf.name}</h3>
-                    <span class="badge-tag badge-${conf.field}">${fieldNameEn}</span>
-                    ${conf.isTopTier ? '<span class="badge-tag" style="background: rgba(99,102,241,0.15); color: #a5b4fc; margin-left: 0.3rem;">A*</span>' : ''}
+                    <div class="card-date">${conf.date}</div>
                 </div>
-                <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-                    ${conf.date}
+                <div class="card-badges">
+                    <span class="badge-tag badge-${conf.field}">${fieldNameEn}</span>
+                    ${conf.isTopTier ? '<span class="badge-tag badge-toptier">A*</span>' : ''}
                 </div>
             </div>
             <div class="card-meta">
