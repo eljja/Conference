@@ -381,11 +381,13 @@ function initMap() {
     const northEast = L.latLng(75, 1e9);
     const bounds = L.latLngBounds(southWest, northEast);
 
-    // minZoom 3 ensures the viewport never zooms out enough to show Antarctica
+    // minZoom 1.5 with fractional zoom support enabled (zoomSnap/zoomDelta: 0.5)
     map = L.map('map', {
         zoomControl: false,
         attributionControl: false,
-        minZoom: 1,
+        minZoom: 1.5,
+        zoomSnap: 0.5,
+        zoomDelta: 0.5,
         maxBounds: bounds,
         maxBoundsViscosity: 1.0,
         worldCopyJump: true
