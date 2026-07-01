@@ -153,7 +153,7 @@ const rawConferencesData = [
     ["ipsn-2026", "IPSN 2026", "ACM/IEEE International Conference on Information Processing in Sensor Networks 2026", "electronics", 88, 84, "Chicago, USA", 41.8781, -87.6298, "2026.04", "ACM / IEEE", true, "https://ipsn.acm.org"],
     ["ipsn-2027", "IPSN 2027", "ACM/IEEE International Conference on Information Processing in Sensor Networks 2027", "electronics", 88, 84, "Beijing, China", 39.9042, 116.4074, "2027.04", "ACM / IEEE", true, "https://ipsn.acm.org"],
 
-    // --- Architecture (18 events) ---
+    // --- Architecture (36 events) ---
     ["aia-2026", "AIA 2026", "AIA Conference on Architecture 2026", "architecture", 90, 93, "San Francisco, USA", 37.7749, -122.4194, "2026.06", "AIA", true, "https://conferenceonarchitecture.com"],
     ["aia-2027", "AIA 2027", "AIA Conference on Architecture 2027", "architecture", 90, 93, "Orlando, USA", 28.5383, -81.3792, "2027.06", "AIA", true, "https://conferenceonarchitecture.com"],
     ["uia-2026", "UIA 2026", "UIA World Congress of Architects 2026", "architecture", 93, 91, "Barcelona, Spain", 41.3851, 2.1734, "2026.07", "UIA", true, "https://www.uia2026barcelona.com"],
@@ -171,7 +171,25 @@ const rawConferencesData = [
     ["ashrae-2027", "ASHRAE 2027", "ASHRAE Annual Conference 2027", "architecture", 87, 89, "Washington D.C., USA", 38.9072, -77.0369, "2027.06", "ASHRAE", false, "https://www.ashrae.org"],
     ["cib-2026", "CIB 2026", "CIB World Building Congress 2026", "architecture", 89, 87, "Strasbourg, France", 48.5734, 7.7521, "2026.06", "CIB", false, "https://cibworld.org"],
     ["sigradi-2026", "SIGraDi 2026", "Ibero-American Society of Digital Graphics Conference 2026", "architecture", 85, 84, "Rome, Italy", 41.9028, 12.4964, "2026.11", "SIGraDi", false, "http://www.sigradi.org"],
-    ["sigradi-2027", "SIGraDi 2027", "Ibero-American Society of Digital Graphics Conference 2027", "architecture", 85, 84, "Bordeaux, France", 44.8378, -0.5792, "2027.11", "SIGraDi", false, "http://www.sigradi.org"]
+    ["sigradi-2027", "SIGraDi 2027", "Ibero-American Society of Digital Graphics Conference 2027", "architecture", 85, 84, "Bordeaux, France", 44.8378, -0.5792, "2027.11", "SIGraDi", false, "http://www.sigradi.org"],
+    ["acsa-2026", "ACSA 2026", "114th ACSA Annual Meeting", "architecture", 88, 86, "Chicago, USA", 41.8781, -87.6298, "2026.03", "ACSA", false, "https://www.acsa-arch.org"],
+    ["acsa-2027", "ACSA 2027", "115th ACSA Annual Meeting", "architecture", 88, 86, "Atlanta, USA", 33.7490, -84.3880, "2027.03", "ACSA", false, "https://www.acsa-arch.org"],
+    ["sah-2026", "SAH 2026", "79th SAH Annual International Conference", "architecture", 86, 85, "Mexico City, Mexico", 19.4326, -99.1332, "2026.04", "SAH", false, "https://www.sah.org"],
+    ["sah-2027", "SAH 2027", "80th SAH Annual International Conference", "architecture", 86, 85, "Chicago, USA", 41.8781, -87.6298, "2027.04", "SAH", false, "https://www.sah.org"],
+    ["arcc-2026", "ARCC 2026", "2026 ARCC-EAAE International Conference", "architecture", 87, 85, "Atlanta, USA", 33.7490, -84.3880, "2026.04", "ARCC", false, "https://www.arcc-arch.org"],
+    ["arcc-2027", "ARCC 2027", "2027 ARCC International Conference", "architecture", 87, 85, "New Orleans, USA", 29.9511, -90.0715, "2027.04", "ARCC", false, "https://www.arcc-arch.org"],
+    ["plea-2026", "PLEA 2026", "38th Passive and Low Energy Architecture Conference", "architecture", 89, 88, "San Jose, Costa Rica", 9.9281, -84.0907, "2026.07", "PLEA", false, "https://www.plea2026.com"],
+    ["caadfutures-2027", "CAAD Futures 2027", "CAAD Futures International Conference 2027", "architecture", 88, 87, "Calgary, Canada", 51.0447, -114.0719, "2027.06", "CAAD Futures", false, "https://www.caadfutures.org"],
+    ["asa-2026", "ASA 2026", "59th International Conference of the Architectural Science Association", "architecture", 85, 86, "Suzhou, China", 31.2989, 120.5853, "2026.11", "ASA", false, "https://archscience.org"],
+    ["eurau-2026", "EURAU 2026", "12th European Symposium on Research in Architecture and Urbanism", "architecture", 86, 84, "Umeå, Sweden", 63.8258, 20.2630, "2026.06", "EURAU", false, "https://www.eurau.org"],
+    ["aag-2027", "AAG 2027", "Advances in Architectural Geometry 2027", "architecture", 89, 87, "Tokyo, Japan", 35.6762, 139.6503, "2027.09", "AAG", false, "https://www.aag2025.com"],
+    ["ascaad-2026", "ASCAAD 2026", "Arab Society for Computation in Architecture, Art and Design Conference 2026", "architecture", 84, 83, "Istanbul, Turkey", 41.0082, 28.9784, "2026.11", "ASCAAD", false, "https://www.ascaad.org"],
+    ["sss-2026", "SSS 2026", "15th International Space Syntax Symposium", "architecture", 87, 85, "Johor Bahru, Malaysia", 1.4927, 103.7414, "2026.06", "SSS", false, "https://www.spacesyntax.net"],
+    ["eaae-2026", "EAAE 2026", "EAAE Annual Conference and General Meeting 2026", "architecture", 88, 86, "Cagliari, Italy", 39.2238, 9.1217, "2026.08", "EAAE", false, "https://www.eaae.eu"],
+    ["isarc-2026", "ISARC 2026", "43rd International Symposium on Automation and Robotics in Construction", "architecture", 89, 88, "Singapore", 1.3521, 103.8198, "2026.06", "IAARC", false, "https://www.iaarc.org"],
+    ["isarc-2027", "ISARC 2027", "44th International Symposium on Automation and Robotics in Construction", "architecture", 89, 88, "Odense, Denmark", 55.4038, 10.4024, "2027.06", "IAARC", false, "https://www.iaarc.org"],
+    ["ctbuh-2026", "CTBUH Europe 2026", "CTBUH 2026 Europe Conference", "architecture", 88, 89, "Madrid, Spain", 40.4168, -3.7038, "2026.05", "CTBUH", false, "https://ctbuh.org"],
+    ["bs-2027", "BS 2027", "Building Simulation Conference 2027", "architecture", 87, 88, "Vienna, Austria", 48.2082, 16.3738, "2027.08", "IBPSA", false, "https://www.ibpsa.org"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
