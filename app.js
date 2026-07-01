@@ -375,24 +375,24 @@ function getGroupedMarkerIcon(count, isActive = false) {
 }
 
 function initMap() {
-    const corner1 = L.latLng(-85, -180);
-    const corner2 = L.latLng(85, 180);
+    // Cut off Antarctica (-60 latitude limit) and allow wide longitude panning for wrapping
+    const corner1 = L.latLng(-60, -360);
+    const corner2 = L.latLng(85, 360);
     const bounds = L.latLngBounds(corner1, corner2);
 
-    // Map focus center with restricted bounds and zoom limits
+    // Map configuration with infinite horizontal wrapping (worldCopyJump) and latitude constraints
     map = L.map('map', {
         zoomControl: false,
         attributionControl: false,
         minZoom: 2,
         maxBounds: bounds,
-        maxBoundsViscosity: 1.0
+        maxBoundsViscosity: 1.0,
+        worldCopyJump: true
     }).setView([25, 10], 2);
 
-    // Dark tiles from CartoDB with wrapping disabled and bounds enforced
+    // Dark tiles from CartoDB (wrapping allowed horizontally, constrained vertically by bounds)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        noWrap: true,
-        bounds: bounds
+        maxZoom: 19
     }).addTo(map);
 
     L.control.zoom({
