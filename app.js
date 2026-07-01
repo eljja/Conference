@@ -385,7 +385,7 @@ function initMap() {
     map = L.map('map', {
         zoomControl: false,
         attributionControl: false,
-        minZoom: 2,
+        minZoom: 1,
         maxBounds: bounds,
         maxBoundsViscosity: 1.0,
         worldCopyJump: true
