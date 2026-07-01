@@ -375,15 +375,24 @@ function getGroupedMarkerIcon(count, isActive = false) {
 }
 
 function initMap() {
-    // Map focus center (centered global view)
+    const corner1 = L.latLng(-85, -180);
+    const corner2 = L.latLng(85, 180);
+    const bounds = L.latLngBounds(corner1, corner2);
+
+    // Map focus center with restricted bounds and zoom limits
     map = L.map('map', {
         zoomControl: false,
-        attributionControl: false
+        attributionControl: false,
+        minZoom: 2,
+        maxBounds: bounds,
+        maxBoundsViscosity: 1.0
     }).setView([25, 10], 2);
 
-    // Dark tiles from CartoDB (perfect fit for dark premium theme)
+    // Dark tiles from CartoDB with wrapping disabled and bounds enforced
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19
+        maxZoom: 19,
+        noWrap: true,
+        bounds: bounds
     }).addTo(map);
 
     L.control.zoom({
