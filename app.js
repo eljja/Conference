@@ -642,19 +642,19 @@ function renderMapMarkers(filteredData) {
                     offset: L.point(0, -5)
                 });
 
-                marker.on('mouseover', function () { this.openPopup(); });
-                marker.on('mouseout', function () {
-                    if (activeMarker !== this) this.closePopup();
-                });
-
                 return marker;
             });
         }
     });
 }
 
+// Expose globally for popup callbacks
+window.selectConference = selectConference;
+
 function selectConference(id) {
-    window.selectConference = selectConference; // Expose globally for popup callbacks
+    if (map) {
+        map.closePopup();
+    }
     const conf = conferences.find(c => c.id === id);
     if (!conf) return;
 
