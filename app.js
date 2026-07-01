@@ -375,9 +375,9 @@ function getGroupedMarkerIcon(count, isActive = false) {
 }
 
 function initMap() {
-    // Cut off Antarctica (-60 latitude limit) and allow wide longitude panning for wrapping
-    const corner1 = L.latLng(-60, -360);
-    const corner2 = L.latLng(85, 360);
+    // Cut off Antarctica (-60 latitude limit) and allow infinite longitude panning (1 billion degrees) for endless wrapping
+    const corner1 = L.latLng(-60, -1e9);
+    const corner2 = L.latLng(85, 1e9);
     const bounds = L.latLngBounds(corner1, corner2);
 
     // Map configuration with infinite horizontal wrapping (worldCopyJump) and latitude constraints
