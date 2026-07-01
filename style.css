@@ -353,6 +353,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
     transition: var(--transition-fast);
 }
 
+.form-select option {
+    background-color: #111827; /* Dark background matching app theme */
+    color: var(--text-primary);
+}
+
 .form-select:focus {
     border-color: var(--accent);
 }
