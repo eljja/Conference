@@ -19,6 +19,8 @@
     --color-elec-rgb: 14, 165, 233;
     --color-mat: #10b981;
     --color-mat-rgb: 16, 185, 129;
+    --color-arch: #a855f7;
+    --color-arch-rgb: 168, 85, 247;
     
     --accent: #6366f1;
     --accent-glow: rgba(99, 102, 241, 0.25);
@@ -254,6 +256,7 @@ body {
 .semi-dot { background-color: var(--color-semi); }
 .elec-dot { background-color: var(--color-elec); }
 .mat-dot { background-color: var(--color-mat); }
+.arch-dot { background-color: var(--color-arch); }
 
 .btn-checkbox.active {
     background: rgba(255, 255, 255, 0.07);
@@ -271,6 +274,10 @@ body {
 .btn-checkbox[data-field="materials"].active {
     box-shadow: inset 0 0 5px rgba(16, 185, 129, 0.15);
     border-color: rgba(16, 185, 129, 0.4);
+}
+.btn-checkbox[data-field="architecture"].active {
+    box-shadow: inset 0 0 5px rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.4);
 }
 
 .range-filters {
@@ -384,6 +391,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .conference-card.semi-card::before { background-color: var(--color-semi); }
 .conference-card.elec-card::before { background-color: var(--color-elec); }
 .conference-card.mat-card::before { background-color: var(--color-mat); }
+.conference-card.arch-card::before { background-color: var(--color-arch); }
 
 .conference-card:hover {
     transform: translateY(-2px);
