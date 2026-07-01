@@ -375,22 +375,23 @@ function getGroupedMarkerIcon(count, isActive = false) {
 }
 
 function initMap() {
-    // Cut off Antarctica (-60 latitude limit) and allow infinite longitude panning (1 billion degrees) for endless wrapping
-    const corner1 = L.latLng(-60, -1e9);
-    const corner2 = L.latLng(85, 1e9);
-    const bounds = L.latLngBounds(corner1, corner2);
+    // Tight vertical bounds: cut Antarctica completely (south limit -50), cap north at 75
+    // Huge horizontal bounds allow endless left-right panning
+    const southWest = L.latLng(-50, -1e9);
+    const northEast = L.latLng(75, 1e9);
+    const bounds = L.latLngBounds(southWest, northEast);
 
-    // Map configuration with infinite horizontal wrapping (worldCopyJump) and latitude constraints
+    // minZoom 3 ensures the viewport never zooms out enough to show Antarctica
     map = L.map('map', {
         zoomControl: false,
         attributionControl: false,
-        minZoom: 2,
+        minZoom: 3,
         maxBounds: bounds,
         maxBoundsViscosity: 1.0,
         worldCopyJump: true
-    }).setView([25, 10], 2);
+    }).setView([30, 10], 3);
 
-    // Dark tiles from CartoDB (wrapping allowed horizontally, constrained vertically by bounds)
+    // Dark tiles from CartoDB (tiles repeat horizontally by default)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         maxZoom: 19
     }).addTo(map);
@@ -400,6 +401,19 @@ function initMap() {
     }).addTo(map);
 
     markersLayer.addTo(map);
+}
+
+// Helper: add a Leaflet marker to markersLayer at 3 longitudes (original, +360, -360)
+// so markers always appear on wrapped copies of the world map
+function addMarkerWithWrapping(lat, lon, markerFactory) {
+    const offsets = [0, 360, -360];
+    const markers = [];
+    offsets.forEach(offset => {
+        const m = markerFactory(lat, lon + offset);
+        markersLayer.addLayer(m);
+        markers.push(m);
+    });
+    return markers;
 }
 
 // --- App State ---
@@ -552,17 +566,9 @@ function renderMapMarkers(filteredData) {
 
     Object.entries(groups).forEach(([city, confList]) => {
         const firstConf = confList[0];
-        let marker;
 
         if (confList.length === 1) {
-            // Single conference in this city
-            marker = L.marker([firstConf.lat, firstConf.lon], {
-                icon: getMarkerIcon(firstConf.field, false)
-            });
-            marker.conferenceId = firstConf.id;
-            marker.isGroup = false;
-            marker.location = firstConf.location;
-
+            // Single conference — create at 3 longitude offsets for wrapping
             const popupContent = `
                 <div class="map-popup-card">
                     <h4>${firstConf.name}</h4>
@@ -574,33 +580,29 @@ function renderMapMarkers(filteredData) {
                 </div>
             `;
 
-            marker.bindPopup(popupContent, {
-                closeButton: false,
-                offset: L.point(0, -5)
-            });
+            addMarkerWithWrapping(firstConf.lat, firstConf.lon, (lat, lon) => {
+                const marker = L.marker([lat, lon], {
+                    icon: getMarkerIcon(firstConf.field, false)
+                });
+                marker.conferenceId = firstConf.id;
+                marker.isGroup = false;
+                marker.location = firstConf.location;
 
-            marker.on('click', (e) => {
-                selectConference(firstConf.id);
-            });
+                marker.bindPopup(popupContent, {
+                    closeButton: false,
+                    offset: L.point(0, -5)
+                });
 
-            marker.on('mouseover', function (e) {
-                this.openPopup();
-            });
+                marker.on('click', () => selectConference(firstConf.id));
+                marker.on('mouseover', function () { this.openPopup(); });
+                marker.on('mouseout', function () {
+                    if (activeMarker !== this) this.closePopup();
+                });
 
-            marker.on('mouseout', function (e) {
-                if (activeMarker !== this) {
-                    this.closePopup();
-                }
+                return marker;
             });
         } else {
-            // Multiple conferences in this city (Grouped marker)
-            marker = L.marker([firstConf.lat, firstConf.lon], {
-                icon: getGroupedMarkerIcon(confList.length, false)
-            });
-            marker.conferenceIds = confList.map(c => c.id);
-            marker.isGroup = true;
-            marker.location = city;
-
+            // Multiple conferences in this city — grouped marker at 3 offsets
             const popupContent = `
                 <div class="map-popup-card">
                     <h4 style="margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; font-size: 0.85rem; font-weight: 700;">
@@ -627,23 +629,27 @@ function renderMapMarkers(filteredData) {
                 </div>
             `;
 
-            marker.bindPopup(popupContent, {
-                closeButton: false,
-                offset: L.point(0, -5)
-            });
+            addMarkerWithWrapping(firstConf.lat, firstConf.lon, (lat, lon) => {
+                const marker = L.marker([lat, lon], {
+                    icon: getGroupedMarkerIcon(confList.length, false)
+                });
+                marker.conferenceIds = confList.map(c => c.id);
+                marker.isGroup = true;
+                marker.location = city;
 
-            marker.on('mouseover', function (e) {
-                this.openPopup();
-            });
+                marker.bindPopup(popupContent, {
+                    closeButton: false,
+                    offset: L.point(0, -5)
+                });
 
-            marker.on('mouseout', function (e) {
-                if (activeMarker !== this) {
-                    this.closePopup();
-                }
+                marker.on('mouseover', function () { this.openPopup(); });
+                marker.on('mouseout', function () {
+                    if (activeMarker !== this) this.closePopup();
+                });
+
+                return marker;
             });
         }
-
-        markersLayer.addLayer(marker);
     });
 }
 
@@ -661,7 +667,11 @@ function selectConference(id) {
         }
     });
 
-    // Update map marker scale
+    // Update map marker scale — all wrapped copies get highlighted
+    let nearestMarker = null;
+    let nearestDist = Infinity;
+    const mapCenter = map.getCenter();
+
     markersLayer.eachLayer(marker => {
         if (marker.location === conf.location) {
             if (marker.isGroup) {
@@ -670,12 +680,14 @@ function selectConference(id) {
                 marker.setIcon(getMarkerIcon(conf.field, true));
             }
             activeMarker = marker;
-            
-            // Pan and zoom smoothly
-            map.setView([marker.getLatLng().lat, marker.getLatLng().lng], 5, {
-                animate: true,
-                duration: 0.5
-            });
+
+            // Find the copy nearest to current map center for smooth panning
+            const mLng = marker.getLatLng().lng;
+            const dist = Math.abs(mLng - mapCenter.lng);
+            if (dist < nearestDist) {
+                nearestDist = dist;
+                nearestMarker = marker;
+            }
         } else {
             if (marker.isGroup) {
                 marker.setIcon(getGroupedMarkerIcon(marker.conferenceIds.length, false));
@@ -685,6 +697,14 @@ function selectConference(id) {
             }
         }
     });
+
+    // Pan to the nearest wrapped copy
+    if (nearestMarker) {
+        map.setView([nearestMarker.getLatLng().lat, nearestMarker.getLatLng().lng], 5, {
+            animate: true,
+            duration: 0.5
+        });
+    }
 
     // Populate Modal Content
     let fieldColor, fieldBgGrad, fieldNameEn;
