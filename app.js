@@ -189,7 +189,39 @@ const rawConferencesData = [
     ["isarc-2026", "ISARC 2026", "43rd International Symposium on Automation and Robotics in Construction", "architecture", 89, 88, "Singapore", 1.3521, 103.8198, "2026.06", "IAARC", false, "https://www.iaarc.org"],
     ["isarc-2027", "ISARC 2027", "44th International Symposium on Automation and Robotics in Construction", "architecture", 89, 88, "Odense, Denmark", 55.4038, 10.4024, "2027.06", "IAARC", false, "https://www.iaarc.org"],
     ["ctbuh-2026", "CTBUH Europe 2026", "CTBUH 2026 Europe Conference", "architecture", 88, 89, "Madrid, Spain", 40.4168, -3.7038, "2026.05", "CTBUH", false, "https://ctbuh.org"],
-    ["bs-2027", "BS 2027", "Building Simulation Conference 2027", "architecture", 87, 88, "Vienna, Austria", 48.2082, 16.3738, "2027.08", "IBPSA", false, "https://www.ibpsa.org"]
+    ["bs-2027", "BS 2027", "Building Simulation Conference 2027", "architecture", 87, 88, "Vienna, Austria", 48.2082, 16.3738, "2027.08", "IBPSA", false, "https://www.ibpsa.org"],
+
+    // --- Civil Engineering (30 events) ---
+    ["trb-2026", "TRB 2026", "105th Transportation Research Board Annual Meeting", "civil", 95, 93, "Washington D.C., USA", 38.9072, -77.0369, "2026.01", "TRB", true, "https://www.trb.org"],
+    ["trb-2027", "TRB 2027", "106th Transportation Research Board Annual Meeting", "civil", 95, 93, "Washington D.C., USA", 38.9072, -77.0369, "2027.01", "TRB", true, "https://www.trb.org"],
+    ["wtc-2026", "WTC 2026", "World Tunnel Congress 2026", "civil", 91, 88, "Montreal, Canada", 45.5017, -73.5673, "2026.05", "ITA-AITES", true, "https://www.wtc2026.com"],
+    ["wtc-2027", "WTC 2027", "World Tunnel Congress 2027", "civil", 91, 88, "Antwerp, Belgium", 51.2194, 4.4025, "2027.04", "ITA-AITES", true, "https://www.wtc2027.com"],
+    ["geocongress-2026", "Geo-Congress 2026", "ASCE Geo-Congress 2026", "civil", 89, 87, "Salt Lake City, USA", 40.7608, -111.8910, "2026.03", "ASCE Geo-Institute", false, "https://www.geocongress.org"],
+    ["geocongress-2027", "Geo-Congress 2027", "ASCE Geo-Congress 2027", "civil", 89, 87, "Philadelphia, USA", 39.9526, -75.1652, "2027.03", "ASCE Geo-Institute", false, "https://www.geocongress.org"],
+    ["structures-2026", "Structures Congress 2026", "ASCE Structures Congress 2026", "civil", 89, 88, "Boston, USA", 42.3601, -71.0589, "2026.04", "ASCE SEI", false, "https://www.structurescongress.org"],
+    ["ewri-2026", "EWRI 2026", "World Environmental & Water Resources Congress 2026", "civil", 88, 86, "Mobile, USA", 30.6954, -88.0399, "2026.04", "ASCE EWRI", false, "https://www.ewricongress.org"],
+    ["icce-2026", "ICCE 2026", "39th International Conference on Coastal Engineering", "civil", 90, 87, "Galveston, USA", 29.3013, -94.7977, "2026.05", "ASCE COPRI", false, "https://www.icce2026.com"],
+    ["icsmge-2026", "ICSMGE 2026", "21st International Conference on Soil Mechanics and Geotechnical Engineering", "civil", 93, 89, "Vienna, Austria", 48.2082, 16.3738, "2026.06", "ISSMGE", true, "https://www.issmge.org"],
+    ["iabse-2026-ic", "IABSE Incheon 2026", "IABSE Congress Incheon 2026", "civil", 89, 88, "Incheon, South Korea", 37.4563, 126.7052, "2026.09", "IABSE", false, "https://www.iabse.org"],
+    ["iabse-2027-ic", "IABSE Milan 2027", "IABSE Congress Milan 2027", "civil", 89, 88, "Milan, Italy", 45.4642, 9.1900, "2027.09", "IABSE", false, "https://www.iabse.org"],
+    ["wcte-2027", "WCTE 2027", "World Conference on Timber Engineering 2027", "civil", 89, 87, "Edmonton, Canada", 53.5461, -113.4938, "2027.08", "WCTE", false, "https://wcte2027.ca"],
+    ["capsa-2027", "CAPSA 2027", "14th Conference on Asphalt Pavements for Southern Africa", "civil", 86, 85, "Sun City, South Africa", -25.3411, 27.0972, "2027.09", "CAPSA", false, "https://www.capsa2027.co.za"],
+    ["icpmg-2026", "ICPMG 2026", "11th International Conference on Physical Modelling in Geotechnics", "civil", 88, 86, "Zurich, Switzerland", 47.3769, 8.5417, "2026.06", "ISSMGE TC104", false, "https://www.tc104-issmge.com"],
+    ["iceg-2027", "10ICEG 2027", "10th International Congress on Environmental Geotechnics", "civil", 87, 85, "Kyoto, Japan", 35.0116, 135.7681, "2027.11", "ISSMGE TC215", false, "https://10iceg.org"],
+    ["13icg-2026", "13ICG 2026", "13th International Conference on Geosynthetics", "civil", 88, 86, "Montreal, Canada", 45.5017, -73.5673, "2026.09", "IGS", false, "https://www.13icg-montreal.org"],
+    ["geosynthetics-2027", "Geosynthetics 2027", "Geosynthetics Conference 2027", "civil", 86, 85, "Reno, USA", 39.5296, -119.8138, "2027.02", "IGS-NA / IECA", false, "https://geosyntheticsconference.com"],
+    ["isgsr-2027", "ISGSR 2027", "10th International Symposium on Geotechnical Safety and Risk", "civil", 87, 85, "Wrocław, Poland", 51.1079, 17.0385, "2027.06", "ISSMGE / Wrocław Tech", false, "https://isgsr2027.pwr.edu.pl"],
+    ["icpt-2027", "ICPT 2027", "15th International Conference on Road & Airfield Pavement Technology", "civil", 85, 84, "Xi'an, China", 34.3416, 108.9398, "2027.05", "ICPT Committee", false, "http://www.pavement.org.sg"],
+    ["eata-2027", "EATA 2027", "European Asphalt Technology Association Conference 2027", "civil", 86, 85, "Antwerp, Belgium", 51.2194, 4.4025, "2027.06", "EATA", false, "http://www.eata-group.eu"],
+    ["icwe-2027", "ICWE 2027", "17th International Conference on Wind Engineering", "civil", 89, 87, "Toronto, Canada", 43.6532, -79.3832, "2027.06", "IAWE", false, "http://www.icwe2027.com"],
+    ["iahr-2027", "IAHR 2027", "42nd IAHR World Congress", "civil", 89, 87, "Bari, Italy", 41.1171, 16.8719, "2027.06", "IAHR", false, "https://www.iahr.org"],
+    ["iahr-apd-2026", "IAHR-APD 2026", "25th IAHR-APD Congress", "civil", 86, 85, "Incheon, South Korea", 37.4563, 126.7052, "2026.07", "IAHR-APD", false, "https://www.iahr.org"],
+    ["ecee-2026", "ECEE 2026", "18th European Conference on Earthquake Engineering", "civil", 90, 88, "Berlin, Germany", 52.5200, 13.4050, "2026.09", "EAEE / DGEB", false, "https://ecee2026.eu"],
+    ["13ncee-2026", "13NCEE 2026", "13th U.S. National Conference on Earthquake Engineering", "civil", 89, 87, "Portland, USA", 45.5152, -122.6784, "2026.07", "EERI", false, "https://13ncee.org"],
+    ["ewshm-2026", "EWSHM 2026", "12th European Workshop on Structural Health Monitoring", "civil", 87, 86, "Toulouse, France", 43.6047, 1.4442, "2026.07", "EWSHM", false, "https://www.ewshm2026.com"],
+    ["shmii-2027", "SHMII-14 2027", "14th International Conference on Structural Health Monitoring of Intelligent Infrastructures", "civil", 87, 85, "Naples, Italy", 40.8518, 14.2681, "2027.06", "ISHMII", false, "https://www.shmii-14.com"],
+    ["iwa-2026", "IWA 2026", "IWA World Water Congress & Exhibition 2026", "civil", 91, 88, "Glasgow, UK", 55.8642, -4.2518, "2026.10", "IWA", true, "https://www.iwa-network.org"],
+    ["piarc-2027", "PIARC 2027", "XXVIII World Road Congress", "civil", 92, 90, "Vancouver, Canada", 49.2827, -123.1207, "2027.10", "PIARC", true, "https://www.wrc2027vancouver.com"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -304,7 +336,8 @@ function getMarkerIcon(field, isActive = false) {
     if (field === 'semiconductor') color = '#f59e0b';
     else if (field === 'electronics') color = '#0ea5e9';
     else if (field === 'materials') color = '#10b981';
-    else color = '#a855f7'; // Purple for architecture
+    else if (field === 'architecture') color = '#a855f7';
+    else color = '#14b8a6'; // Teal for civil engineering
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -327,7 +360,13 @@ function getMarkerIcon(field, isActive = false) {
             font-size: 8px;
             font-weight: 700;
         ">
-            <i class="fa-solid ${field === 'semiconductor' ? 'fa-microchip' : field === 'electronics' ? 'fa-bolt' : field === 'materials' ? 'fa-atom' : 'fa-building-columns'}"></i>
+            <i class="fa-solid ${
+                field === 'semiconductor' ? 'fa-microchip' : 
+                field === 'electronics' ? 'fa-bolt' : 
+                field === 'materials' ? 'fa-atom' : 
+                field === 'architecture' ? 'fa-building-columns' : 
+                'fa-bridge'
+            }"></i>
         </div>
     `;
 
@@ -439,7 +478,7 @@ function addMarkerWithWrapping(lat, lon, markerFactory) {
 // --- App State ---
 const state = {
     searchQuery: '',
-    selectedFields: ['semiconductor', 'electronics', 'materials', 'architecture'],
+    selectedFields: ['semiconductor', 'electronics', 'materials', 'architecture', 'civil'],
     minCQI: 60,
     minGSAI: 50,
     sortBy: 'cqi'
@@ -535,7 +574,8 @@ function renderList(filteredData) {
         if (conf.field === 'semiconductor') fieldNameEn = 'Semiconductors';
         else if (conf.field === 'electronics') fieldNameEn = 'Electronics';
         else if (conf.field === 'materials') fieldNameEn = 'Materials';
-        else fieldNameEn = 'Architecture';
+        else if (conf.field === 'architecture') fieldNameEn = 'Architecture';
+        else if (conf.field === 'civil') fieldNameEn = 'Civil Engineering';
 
         card.innerHTML = `
             <div class="card-header">
@@ -638,7 +678,13 @@ function renderMapMarkers(filteredData) {
                                 padding: 4px 6px;
                                 background: rgba(255,255,255,0.03);
                                 border-radius: 4px;
-                                border-left: 3px solid ${c.field === 'semiconductor' ? '#f59e0b' : c.field === 'electronics' ? '#0ea5e9' : c.field === 'materials' ? '#10b981' : '#a855f7'};
+                                border-left: 3px solid ${
+                                    c.field === 'semiconductor' ? '#f59e0b' : 
+                                    c.field === 'electronics' ? '#0ea5e9' : 
+                                    c.field === 'materials' ? '#10b981' : 
+                                    c.field === 'architecture' ? '#a855f7' : 
+                                    '#14b8a6'
+                                };
                                 font-size: 0.75rem;
                             ">
                                 <span style="font-weight: 600;">${c.name}</span>
@@ -740,10 +786,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-mat)';
         fieldBgGrad = `linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Materials';
-    } else {
+    } else if (conf.field === 'architecture') {
         fieldColor = 'var(--color-arch)';
         fieldBgGrad = `linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Architecture';
+    } else {
+        fieldColor = 'var(--color-civil)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Civil Engineering';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;
