@@ -243,7 +243,29 @@ const rawConferencesData = [
     ["usenixsec-2026", "USENIX Sec 2026", "35th USENIX Security Symposium", "cs", 96, 94, "Baltimore, USA", 39.2904, -76.6122, "2026.08", "USENIX", true, "https://www.usenix.org"],
     ["sigmod-2026", "SIGMOD 2026", "ACM SIGMOD International Conference on Management of Data", "cs", 95, 93, "Bengaluru, India", 12.9716, 77.5946, "2026.06", "ACM SIGMOD", true, "https://sigmod.org"],
     ["vldb-2026", "VLDB 2026", "52nd International Conference on Very Large Data Bases", "cs", 95, 93, "Boston, USA", 42.3601, -71.0589, "2026.08", "VLDB Endowment", true, "https://www.vldb.org"],
-    ["aistats-2026", "AISTATS 2026", "29th Int. Conf. on Artificial Intelligence and Statistics", "cs", 95, 93, "Valencia, Spain", 39.4699, -0.3763, "2026.05", "AISTATS Society", true, "https://aistats.org"]
+    ["aistats-2026", "AISTATS 2026", "29th Int. Conf. on Artificial Intelligence and Statistics", "cs", 95, 93, "Valencia, Spain", 39.4699, -0.3763, "2026.05", "AISTATS Society", true, "https://aistats.org"],
+
+    // --- Mechanical & Aerospace Engineering (20 events) ---
+    ["imece-2026", "ASME IMECE 2026", "International Mechanical Engineering Congress and Exposition", "mech", 95, 93, "Vancouver, Canada", 45.5017, -73.5673, "2026.11", "ASME", true, "https://event.asme.org/IMECE"],
+    ["turboexpo-2026", "ASME Turbo Expo 2026", "Turbomachinery Technical Conference & Expo", "mech", 94, 92, "Milan, Italy", 45.4642, 9.1900, "2026.06", "ASME IGTI", true, "https://event.asme.org/Turbo-Expo"],
+    ["idetc-2026", "ASME IDETC 2026", "Int. Design Engineering Tech. Conf. & Computers in Engineering", "mech", 92, 90, "Houston, USA", 29.7604, -95.3698, "2026.08", "ASME", false, "https://event.asme.org"],
+    ["aiaa-scitech-2026", "AIAA SciTech 2026", "AIAA Science and Technology Forum and Exposition", "mech", 97, 95, "Orlando, USA", 28.5383, -81.3792, "2026.01", "AIAA", true, "https://www.aiaa.org"],
+    ["aiaa-aviation-2026", "AIAA AVIATION 2026", "AIAA Aviation and Aeronautics Forum and Exposition", "mech", 96, 94, "San Diego, USA", 32.7157, -117.1611, "2026.06", "AIAA", true, "https://www.aiaa.org"],
+    ["iac-2026", "IAC 2026", "77th International Astronautical Congress", "mech", 98, 96, "Antalya, Turkey", 36.8969, 30.7133, "2026.10", "IAF", true, "https://www.iafastro.org"],
+    ["iac-2027", "IAC 2027", "78th International Astronautical Congress", "mech", 98, 96, "Poznań, Poland", 52.4064, 16.9252, "2027.10", "IAF", true, "https://www.iafastro.org"],
+    ["icas-2026", "ICAS 2026", "35th Congress of the International Council of the Aeronautical Sciences", "mech", 95, 93, "Sydney, Australia", -33.8688, 151.2093, "2026.09", "ICAS", true, "https://www.icas.org"],
+    ["ihtc-2026", "IHTC-18 2026", "18th International Heat Transfer Conference", "mech", 94, 91, "Rio de Janeiro, Brazil", -22.9068, -43.1729, "2026.08", "AIHTC", false, "https://ihtc18.org"],
+    ["wcx-2026", "SAE WCX 2026", "SAE World Congress Experience", "mech", 93, 91, "Detroit, USA", 42.3314, -83.0458, "2026.04", "SAE International", true, "https://www.sae.org"],
+    ["wcb-2026", "WCB 2026", "10th World Congress of Biomechanics", "mech", 94, 92, "Vancouver, Canada", 49.2827, -123.1207, "2026.07", "WCB Board", true, "https://wcb2026.com"],
+    ["aim-2026", "IEEE/ASME AIM 2026", "Int. Conf. on Advanced Intelligent Mechatronics", "mech", 92, 90, "Genova, Italy", 44.4056, 8.9463, "2026.07", "IEEE / ASME", false, "https://aim2026.com"],
+    ["iccas-2026", "ICCAS 2026", "26th Int. Conf. on Control, Automation and Systems", "mech", 90, 88, "Sapporo, Japan", 43.0618, 141.3545, "2026.10", "ICROS", false, "https://www.iccas.org"],
+    ["esmc-2027", "ESMC 2027", "13th European Solid Mechanics Conference", "mech", 91, 89, "Louvain-la-Neuve, Belgium", 50.6681, 4.6144, "2027.07", "EUROMECH", false, "https://www.euromech.org"],
+    ["aps-dfd-2026", "APS DFD 2026", "79th Meeting of the APS Division of Fluid Dynamics", "mech", 94, 92, "Orlando, USA", 28.5383, -81.3792, "2026.11", "APS DFD", true, "https://www.aps.org"],
+    ["isromac-2026", "ISROMAC 2026", "Int. Symposium on Transport Phenomena & Dynamics of Rotating Machinery", "mech", 89, 87, "Honolulu, USA", 21.3069, -157.8583, "2026.12", "ISROMAC", false, "https://isromac.org"],
+    ["cobem-2027", "COBEM 2027", "International Congress of Mechanical Engineering", "mech", 88, 86, "Brasilia, Brazil", -15.7975, -47.8919, "2027.11", "ABCM", false, "https://www.abcm.org.br"],
+    ["asme-mesa-2026", "ASME MESA 2026", "Mechatronics and Embedded Systems and Applications", "mech", 89, 87, "Boston, USA", 42.3601, -71.0589, "2026.08", "ASME", false, "https://event.asme.org"],
+    ["euromech-2026", "EUROMECH 2026", "European Mechanics Society Colloquium", "mech", 90, 88, "Zurich, Switzerland", 47.3769, 8.5417, "2026.07", "EUROMECH", false, "https://www.euromech.org"],
+    ["sae-ice-2027", "SAE ICE 2027", "SAE Int. Powertrains, Fuels & Lubricants Meeting", "mech", 90, 88, "Kyoto, Japan", 35.0116, 135.7681, "2027.09", "SAE International", false, "https://www.sae.org"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -360,7 +382,8 @@ function getMarkerIcon(field, isActive = false) {
     else if (field === 'materials') color = '#10b981';
     else if (field === 'architecture') color = '#a855f7';
     else if (field === 'civil') color = '#14b8a6';
-    else color = '#3b82f6'; // Electric Blue for CS & AI
+    else if (field === 'cs') color = '#3b82f6';
+    else color = '#f97316'; // Coral Amber for Mechanical & Aerospace
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -389,7 +412,8 @@ function getMarkerIcon(field, isActive = false) {
                 field === 'materials' ? 'fa-atom' : 
                 field === 'architecture' ? 'fa-building-columns' : 
                 field === 'civil' ? 'fa-bridge' :
-                'fa-brain'
+                field === 'cs' ? 'fa-brain' :
+                'fa-gear'
             }"></i>
         </div>
     `;
@@ -499,10 +523,21 @@ function addMarkerWithWrapping(lat, lon, markerFactory) {
     return markers;
 }
 
+// Load saved fields from LocalStorage or default to initial 2 fields
+const loadSavedFields = () => {
+    try {
+        const saved = localStorage.getItem('tripconference_selected_fields');
+        if (saved) return JSON.parse(saved);
+    } catch (e) {
+        console.warn('Failed to load saved fields:', e);
+    }
+    return ['semiconductor', 'electronics'];
+};
+
 // --- App State ---
 const state = {
     searchQuery: '',
-    selectedFields: ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs'],
+    selectedFields: loadSavedFields(),
     minCQI: 60,
     minGSAI: 50,
     sortBy: 'cqi'
@@ -601,6 +636,7 @@ function renderList(filteredData) {
         else if (conf.field === 'architecture') fieldNameEn = 'Architecture';
         else if (conf.field === 'civil') fieldNameEn = 'Civil Engineering';
         else if (conf.field === 'cs') fieldNameEn = 'Computer Science & AI';
+        else if (conf.field === 'mech') fieldNameEn = 'Mechanical & Aerospace';
 
         card.innerHTML = `
             <div class="card-header">
@@ -709,7 +745,8 @@ function renderMapMarkers(filteredData) {
                                     c.field === 'materials' ? '#10b981' : 
                                     c.field === 'architecture' ? '#a855f7' : 
                                     c.field === 'civil' ? '#14b8a6' :
-                                    '#3b82f6'
+                                    c.field === 'cs' ? '#3b82f6' :
+                                    '#f97316'
                                 };
                                 font-size: 0.75rem;
                             ">
@@ -820,10 +857,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-civil)';
         fieldBgGrad = `linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Civil Engineering';
-    } else {
+    } else if (conf.field === 'cs') {
         fieldColor = 'var(--color-cs)';
         fieldBgGrad = `linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Computer Science & AI';
+    } else {
+        fieldColor = 'var(--color-mech)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Mechanical & Aerospace';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;
@@ -909,6 +950,14 @@ document.querySelectorAll('.btn-checkbox').forEach(btn => {
             btn.classList.remove('active');
             state.selectedFields = state.selectedFields.filter(f => f !== field);
         }
+
+        // Persist to LocalStorage
+        try {
+            localStorage.setItem('tripconference_selected_fields', JSON.stringify(state.selectedFields));
+        } catch (err) {
+            console.warn('Failed to persist selected fields:', err);
+        }
+
         applyFilters();
     });
 });
@@ -1030,8 +1079,24 @@ if (openSuggestBtn && suggestModal) {
     });
 }
 
+// Sync DOM checkbox elements to match state.selectedFields
+function syncFieldCheckboxes() {
+    document.querySelectorAll('.btn-checkbox').forEach(btn => {
+        const field = btn.dataset.field;
+        const input = btn.querySelector('input');
+        const isSelected = state.selectedFields.includes(field);
+        if (input) input.checked = isSelected;
+        if (isSelected) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
+    syncFieldCheckboxes();
     initMap();
     applyFilters();
 });
