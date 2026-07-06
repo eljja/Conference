@@ -221,7 +221,29 @@ const rawConferencesData = [
     ["ewshm-2026", "EWSHM 2026", "12th European Workshop on Structural Health Monitoring", "civil", 87, 86, "Toulouse, France", 43.6047, 1.4442, "2026.07", "EWSHM", false, "https://www.ewshm2026.com"],
     ["shmii-2027", "SHMII-14 2027", "14th International Conference on Structural Health Monitoring of Intelligent Infrastructures", "civil", 87, 85, "Naples, Italy", 40.8518, 14.2681, "2027.06", "ISHMII", false, "https://www.shmii-14.com"],
     ["iwa-2026", "IWA 2026", "IWA World Water Congress & Exhibition 2026", "civil", 91, 88, "Glasgow, UK", 55.8642, -4.2518, "2026.10", "IWA", true, "https://www.iwa-network.org"],
-    ["piarc-2027", "PIARC 2027", "XXVIII World Road Congress", "civil", 92, 90, "Vancouver, Canada", 49.2827, -123.1207, "2027.10", "PIARC", true, "https://www.wrc2027vancouver.com"]
+    ["piarc-2027", "PIARC 2027", "XXVIII World Road Congress", "civil", 92, 90, "Vancouver, Canada", 49.2827, -123.1207, "2027.10", "PIARC", true, "https://www.wrc2027vancouver.com"],
+
+    // --- Computer Science & AI (20 top-tier events) ---
+    ["neurips-2026", "NeurIPS 2026", "40th Conference on Neural Information Processing Systems", "cs", 99, 98, "Sydney, Australia", -33.8688, 151.2093, "2026.12", "NeurIPS Board", true, "https://neurips.cc"],
+    ["cvpr-2026", "CVPR 2026", "IEEE/CVF Conf. on Computer Vision and Pattern Recognition", "cs", 98, 97, "Denver, USA", 39.7392, -104.9903, "2026.06", "IEEE CS / CVF", true, "https://cvpr.thecvf.com"],
+    ["cvpr-2027", "CVPR 2027", "IEEE/CVF Conf. on Computer Vision and Pattern Recognition", "cs", 98, 97, "Seattle, USA", 47.6062, -122.3321, "2027.06", "IEEE CS / CVF", true, "https://cvpr.thecvf.com"],
+    ["icml-2026", "ICML 2026", "43rd International Conference on Machine Learning", "cs", 98, 97, "Seoul, South Korea", 37.5117, 127.0592, "2026.07", "IMLS", true, "https://icml.cc"],
+    ["iclr-2026", "ICLR 2026", "14th International Conference on Learning Representations", "cs", 97, 96, "Rio de Janeiro, Brazil", -22.9068, -43.1729, "2026.05", "ICLR Board", true, "https://iclr.cc"],
+    ["aaai-2026", "AAAI 2026", "40th AAAI Conference on Artificial Intelligence", "cs", 95, 93, "Singapore", 1.3521, 103.8198, "2026.02", "AAAI", true, "https://aaai.org"],
+    ["aaai-2027", "AAAI 2027", "41st AAAI Conference on Artificial Intelligence", "cs", 95, 93, "Montreal, Canada", 45.5017, -73.5673, "2027.02", "AAAI", true, "https://aaai.org"],
+    ["acl-2026", "ACL 2026", "64th Annual Meeting of the Association for Computational Linguistics", "cs", 96, 94, "San Diego, USA", 32.7157, -117.1611, "2026.08", "ACL", true, "https://www.aclweb.org"],
+    ["emnlp-2026", "EMNLP 2026", "Conf. on Empirical Methods in Natural Language Processing", "cs", 95, 93, "Budapest, Hungary", 47.4979, 19.0402, "2026.11", "ACL SIGDAT", true, "https://emnlp.org"],
+    ["kdd-2026", "KDD 2026", "32nd ACM SIGKDD Conf. on Knowledge Discovery and Data Mining", "cs", 95, 93, "Jeju, South Korea", 33.4996, 126.5312, "2026.08", "ACM SIGKDD", true, "https://www.kdd.org"],
+    ["ijcai-2026", "IJCAI 2026", "35th International Joint Conference on Artificial Intelligence", "cs", 96, 94, "Bremen, Germany", 53.0793, 8.8017, "2026.08", "IJCAI Organization", true, "https://www.ijcai.org"],
+    ["colt-2026", "COLT 2026", "39th Annual Conference on Learning Theory", "cs", 96, 94, "Barcelona, Spain", 41.3851, 2.1734, "2026.07", "ALT / COLT", true, "https://www.learningtheory.org"],
+    ["siggraph-2026", "SIGGRAPH 2026", "53rd ACM SIGGRAPH Conference and Exhibition", "cs", 97, 96, "Los Angeles, USA", 34.0522, -118.2437, "2026.08", "ACM SIGGRAPH", true, "https://www.siggraph.org"],
+    ["chi-2026", "CHI 2026", "ACM CHI Conf. on Human Factors in Computing Systems", "cs", 96, 95, "Barcelona, Spain", 41.3851, 2.1734, "2026.04", "ACM SIGCHI", true, "https://chi2026.acm.org"],
+    ["icse-2026", "ICSE 2026", "48th IEEE/ACM International Conference on Software Engineering", "cs", 96, 94, "Rio de Janeiro, Brazil", -22.9068, -43.1729, "2026.04", "IEEE CS / ACM SIGSOFT", true, "https://www.icse-conferences.org"],
+    ["sp-2026", "IEEE S&P 2026", "47th IEEE Symposium on Security and Privacy (Oakland)", "cs", 97, 95, "San Francisco, USA", 37.7749, -122.4194, "2026.05", "IEEE CS", true, "https://www.ieee-security.org"],
+    ["usenixsec-2026", "USENIX Sec 2026", "35th USENIX Security Symposium", "cs", 96, 94, "Baltimore, USA", 39.2904, -76.6122, "2026.08", "USENIX", true, "https://www.usenix.org"],
+    ["sigmod-2026", "SIGMOD 2026", "ACM SIGMOD International Conference on Management of Data", "cs", 95, 93, "Bengaluru, India", 12.9716, 77.5946, "2026.06", "ACM SIGMOD", true, "https://sigmod.org"],
+    ["vldb-2026", "VLDB 2026", "52nd International Conference on Very Large Data Bases", "cs", 95, 93, "Boston, USA", 42.3601, -71.0589, "2026.08", "VLDB Endowment", true, "https://www.vldb.org"],
+    ["aistats-2026", "AISTATS 2026", "29th Int. Conf. on Artificial Intelligence and Statistics", "cs", 95, 93, "Valencia, Spain", 39.4699, -0.3763, "2026.05", "AISTATS Society", true, "https://aistats.org"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -337,7 +359,8 @@ function getMarkerIcon(field, isActive = false) {
     else if (field === 'electronics') color = '#0ea5e9';
     else if (field === 'materials') color = '#10b981';
     else if (field === 'architecture') color = '#a855f7';
-    else color = '#14b8a6'; // Teal for civil engineering
+    else if (field === 'civil') color = '#14b8a6';
+    else color = '#3b82f6'; // Electric Blue for CS & AI
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -365,7 +388,8 @@ function getMarkerIcon(field, isActive = false) {
                 field === 'electronics' ? 'fa-bolt' : 
                 field === 'materials' ? 'fa-atom' : 
                 field === 'architecture' ? 'fa-building-columns' : 
-                'fa-bridge'
+                field === 'civil' ? 'fa-bridge' :
+                'fa-brain'
             }"></i>
         </div>
     `;
@@ -478,7 +502,7 @@ function addMarkerWithWrapping(lat, lon, markerFactory) {
 // --- App State ---
 const state = {
     searchQuery: '',
-    selectedFields: ['semiconductor', 'electronics', 'materials', 'architecture', 'civil'],
+    selectedFields: ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs'],
     minCQI: 60,
     minGSAI: 50,
     sortBy: 'cqi'
@@ -576,6 +600,7 @@ function renderList(filteredData) {
         else if (conf.field === 'materials') fieldNameEn = 'Materials';
         else if (conf.field === 'architecture') fieldNameEn = 'Architecture';
         else if (conf.field === 'civil') fieldNameEn = 'Civil Engineering';
+        else if (conf.field === 'cs') fieldNameEn = 'Computer Science & AI';
 
         card.innerHTML = `
             <div class="card-header">
@@ -683,7 +708,8 @@ function renderMapMarkers(filteredData) {
                                     c.field === 'electronics' ? '#0ea5e9' : 
                                     c.field === 'materials' ? '#10b981' : 
                                     c.field === 'architecture' ? '#a855f7' : 
-                                    '#14b8a6'
+                                    c.field === 'civil' ? '#14b8a6' :
+                                    '#3b82f6'
                                 };
                                 font-size: 0.75rem;
                             ">
@@ -790,10 +816,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-arch)';
         fieldBgGrad = `linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Architecture';
-    } else {
+    } else if (conf.field === 'civil') {
         fieldColor = 'var(--color-civil)';
         fieldBgGrad = `linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Civil Engineering';
+    } else {
+        fieldColor = 'var(--color-cs)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Computer Science & AI';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;

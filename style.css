@@ -23,6 +23,8 @@
     --color-arch-rgb: 168, 85, 247;
     --color-civil: #14b8a6;
     --color-civil-rgb: 20, 184, 166;
+    --color-cs: #3b82f6;
+    --color-cs-rgb: 59, 130, 246;
     
     --accent: #6366f1;
     --accent-glow: rgba(99, 102, 241, 0.25);
@@ -263,6 +265,7 @@ body {
 .mat-dot { background-color: var(--color-mat); }
 .arch-dot { background-color: var(--color-arch); }
 .civil-dot { background-color: var(--color-civil); }
+.cs-dot { background-color: var(--color-cs); }
 
 .btn-checkbox.active {
     background: rgba(255, 255, 255, 0.07);
@@ -288,6 +291,10 @@ body {
 .btn-checkbox[data-field="civil"].active {
     box-shadow: inset 0 0 5px rgba(20, 184, 166, 0.15);
     border-color: rgba(20, 184, 166, 0.4);
+}
+.btn-checkbox[data-field="cs"].active {
+    box-shadow: inset 0 0 5px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
 }
 
 .range-filters {
@@ -408,6 +415,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .conference-card.materials-card::before { background-color: var(--color-mat); }
 .conference-card.architecture-card::before { background-color: var(--color-arch); }
 .conference-card.civil-card::before { background-color: var(--color-civil); }
+.conference-card.cs-card::before { background-color: var(--color-cs); }
 
 .conference-card:hover {
     transform: translateY(-2px);
@@ -474,6 +482,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .badge-materials { background: rgba(16, 185, 129, 0.15); color: var(--color-mat); }
 .badge-architecture { background: rgba(168, 85, 247, 0.15); color: var(--color-arch); }
 .badge-civil { background: rgba(20, 184, 166, 0.15); color: var(--color-civil); }
+.badge-cs { background: rgba(59, 130, 246, 0.15); color: var(--color-cs); }
 .badge-toptier { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
 
 .card-meta {
