@@ -44,6 +44,9 @@
                     <span class="stat-label">Top Tier (A*)</span>
                     <span class="stat-value text-accent" id="stat-top-count">0</span>
                 </div>
+                <button class="btn-suggest-header" id="open-suggest-btn">
+                    <i class="fa-solid fa-lightbulb"></i> Suggest Conf / Field
+                </button>
             </div>
         </header>
 
@@ -219,6 +222,39 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Suggest Conference / Field Modal -->
+    <div class="modal-backdrop" id="suggest-modal">
+        <div class="modal-content suggest-modal-content">
+            <button class="modal-close-btn" id="close-suggest-btn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="suggest-modal-header">
+                <div class="suggest-icon-wrapper">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <h2>Suggest a Conference or Field</h2>
+                <p>Have a conference or academic field you'd like to see on TripConference? Leave a quick one-line note below!</p>
+            </div>
+            
+            <form id="suggest-form" class="suggest-form">
+                <div class="form-group">
+                    <label for="suggest-comment">Suggestion / Comment <span class="required">*</span></label>
+                    <textarea id="suggest-comment" rows="3" required placeholder="e.g. Please add IEEE Globecom 2026 or Mechanical Engineering field!"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="suggest-contact">Your Email / Contact <span class="optional">(Optional)</span></label>
+                    <input type="text" id="suggest-contact" placeholder="name@example.com (Optional, in case you want updates)">
+                </div>
+                
+                <div class="suggest-form-status" id="suggest-status"></div>
+
+                <div class="suggest-footer">
+                    <button type="submit" class="btn-primary suggest-submit-btn" id="suggest-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Suggestion
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

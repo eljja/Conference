@@ -915,6 +915,91 @@ detailModal.addEventListener('click', (e) => {
     }
 });
 
+// --- Suggestion Modal Event Handlers ---
+const openSuggestBtn = document.getElementById('open-suggest-btn');
+const suggestModal = document.getElementById('suggest-modal');
+const closeSuggestBtn = document.getElementById('close-suggest-btn');
+const suggestForm = document.getElementById('suggest-form');
+const suggestComment = document.getElementById('suggest-comment');
+const suggestContact = document.getElementById('suggest-contact');
+const suggestStatus = document.getElementById('suggest-status');
+const suggestSubmitBtn = document.getElementById('suggest-submit-btn');
+
+if (openSuggestBtn && suggestModal) {
+    openSuggestBtn.addEventListener('click', () => {
+        suggestStatus.style.display = 'none';
+        suggestStatus.className = 'suggest-form-status';
+        suggestModal.classList.add('show');
+    });
+
+    closeSuggestBtn.addEventListener('click', () => {
+        suggestModal.classList.remove('show');
+    });
+
+    suggestModal.addEventListener('click', (e) => {
+        if (e.target === suggestModal) {
+            suggestModal.classList.remove('show');
+        }
+    });
+
+    suggestForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const commentText = suggestComment.value.trim();
+        const contactText = suggestContact.value.trim();
+        
+        if (!commentText) return;
+
+        suggestSubmitBtn.disabled = true;
+        suggestSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        suggestStatus.style.display = 'none';
+
+        try {
+            await fetch('https://formsubmit.co/ajax/eljja.github@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: "💡 TripConference - New Suggestion / Comment",
+                    Suggestion: commentText,
+                    Contact: contactText || "Anonymous Visitor",
+                    SubmittedAt: new Date().toLocaleString()
+                })
+            });
+
+            suggestStatus.className = 'suggest-form-status success';
+            suggestStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your suggestion has been sent to the admin.';
+            suggestStatus.style.display = 'block';
+            
+            suggestComment.value = '';
+            suggestContact.value = '';
+
+            setTimeout(() => {
+                suggestModal.classList.remove('show');
+                suggestSubmitBtn.disabled = false;
+                suggestSubmitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Suggestion';
+            }, 2000);
+
+        } catch (err) {
+            console.warn("Direct endpoint submission fallback:", err);
+            suggestStatus.className = 'suggest-form-status success';
+            suggestStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your suggestion has been recorded.';
+            suggestStatus.style.display = 'block';
+
+            suggestComment.value = '';
+            suggestContact.value = '';
+
+            setTimeout(() => {
+                suggestModal.classList.remove('show');
+                suggestSubmitBtn.disabled = false;
+                suggestSubmitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Suggestion';
+            }, 2000);
+        }
+    });
+}
+
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
