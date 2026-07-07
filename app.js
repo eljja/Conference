@@ -287,7 +287,29 @@ const rawConferencesData = [
     ["icae-2026", "ICAE 2026", "18th International Conference on Applied Energy", "chem", 95, 93, "Jeju Island, South Korea", 33.4996, 126.5312, "2026.09", "Applied Energy Association", true, "https://www.applied-energy.org"],
     ["ghgt-2026", "GHGT-18", "18th Greenhouse Gas Control Technologies Conference", "chem", 94, 92, "Perth, Australia", -31.9505, 115.8605, "2026.10", "IEAGHG", true, "https://www.ghgt.info"],
     ["iscre-29", "ISCRE 29", "29th International Symposium on Chemical Reaction Engineering", "chem", 93, 91, "Seoul, South Korea", 37.5665, 126.9780, "2026.06", "ISCRE Board", false, "https://iscre29.org"],
-    ["eubce-2026", "EUBCE 2026", "34th European Biomass Conference & Exhibition", "chem", 91, 89, "The Hague, Netherlands", 52.0705, 4.3007, "2026.05", "ETA-Florence", false, "https://www.eubce.com"]
+    ["eubce-2026", "EUBCE 2026", "34th European Biomass Conference & Exhibition", "chem", 91, 89, "The Hague, Netherlands", 52.0705, 4.3007, "2026.05", "ETA-Florence", false, "https://www.eubce.com"],
+
+    // --- Biomedical & Biotechnology (20 events) ---
+    ["embc-2026", "IEEE EMBC 2026", "48th Annual Int. Conf. of the IEEE Engineering in Medicine and Biology Society", "bio", 96, 94, "Toronto, Canada", 43.6532, -79.3832, "2026.07", "IEEE EMBS", true, "https://embc.embs.org"],
+    ["bmes-2026", "BMES 2026", "Biomedical Engineering Society 2026 Annual Meeting", "bio", 95, 93, "Orlando, USA", 28.5383, -81.3792, "2026.10", "BMES", true, "https://www.bmes.org"],
+    ["bmes-2027", "BMES 2027", "Biomedical Engineering Society 2027 Annual Meeting", "bio", 95, 93, "Columbus, USA", 39.9612, -82.9988, "2027.10", "BMES", true, "https://www.bmes.org"],
+    ["ismb-2026", "ISMB 2026", "34th Int. Conf. on Intelligent Systems for Molecular Biology", "bio", 96, 94, "Washington D.C., USA", 38.9072, -77.0369, "2026.07", "ISCB", true, "https://www.iscb.org/ismb2026"],
+    ["ismb-eccb-2027", "ISMB/ECCB 2027", "Intelligent Systems for Molecular Biology & European Conf. on Computational Biology", "bio", 96, 94, "Copenhagen, Denmark", 55.6761, 12.5683, "2027.07", "ISCB / SIB", true, "https://www.iscb.org"],
+    ["recomb-2026", "RECOMB 2026", "30th International Conference on Research in Computational Molecular Biology", "bio", 95, 93, "Thessaloniki, Greece", 40.6401, 22.9444, "2026.04", "RECOMB", true, "https://recomb.org"],
+    ["sfb-2026", "SFB 2026", "Society for Biomaterials 2026 Annual Meeting & Exposition", "bio", 92, 90, "Atlanta, USA", 33.7490, -84.3880, "2026.04", "SFB", false, "https://www.biomaterials.org"],
+    ["isbi-2026", "ISBI 2026", "23rd IEEE International Symposium on Biomedical Imaging", "bio", 93, 91, "London, UK", 51.5074, -0.1278, "2026.05", "IEEE Signal Processing Society", false, "https://biomedicalimaging.org"],
+    ["isbi-2027", "ISBI 2027", "24th IEEE International Symposium on Biomedical Imaging", "bio", 93, 91, "Lausanne, Switzerland", 46.5197, 6.6323, "2027.04", "IEEE SPS / EMBS", false, "https://biomedicalimaging.org"],
+    ["termis-eu-2026", "TERMIS-EU 2026", "Tissue Engineering & Regenerative Medicine Int. Society European Chapter", "bio", 92, 90, "Palma de Mallorca, Spain", 39.5696, 2.6502, "2026.06", "TERMIS", false, "https://termis.org"],
+    ["termis-world-2027", "TERMIS World 2027", "8th TERMIS World Congress 2027", "bio", 94, 92, "Shanghai, China", 31.2304, 121.4737, "2027.10", "TERMIS", true, "https://termis.org"],
+    ["asgct-2026", "ASGCT 2026", "American Society of Gene & Cell Therapy 2026 Annual Meeting", "bio", 94, 92, "Boston, USA", 42.3601, -71.0589, "2026.05", "ASGCT", true, "https://www.asgct.org"],
+    ["aacr-2026", "AACR 2026", "American Association for Cancer Research Annual Meeting 2026", "bio", 95, 93, "San Diego, USA", 32.7157, -117.1611, "2026.04", "AACR", true, "https://www.aacr.org"],
+    ["isscr-2026", "ISSCR 2026", "International Society for Stem Cell Research 2026 Annual Meeting", "bio", 94, 92, "Montréal, Canada", 45.5017, -73.5673, "2026.06", "ISSCR", true, "https://www.isscr.org"],
+    ["eccb-bio-2026", "ECCB 2026", "25th European Conference on Computational Biology", "bio", 93, 91, "Geneva, Switzerland", 46.2044, 6.1432, "2026.09", "SIB Swiss Institute of Bioinformatics", false, "https://eccb2026.org"],
+    ["hgm-2026", "HUGO HGM 2026", "HUGO Human Genome Meeting 2026", "bio", 91, 89, "Athens, Greece", 37.9838, 23.7275, "2026.04", "HUGO", false, "https://www.hugo-international.org"],
+    ["esb-2026", "ESB 2026", "35th Annual Conference of the European Society for Biomaterials", "bio", 90, 88, "Antwerp, Belgium", 51.2194, 4.4025, "2026.09", "ESB", false, "https://www.esb2026.org"],
+    ["wacbe-2026", "WACBE 2026", "12th World Congress on Bioengineering", "bio", 89, 87, "Changzhou, China", 31.7828, 119.9678, "2026.07", "WACBE", false, "http://wacbe.org"],
+    ["isb-2027", "ISB 2027", "31st Congress of the International Society of Biomechanics", "bio", 90, 88, "Stockholm, Sweden", 59.3293, 18.0686, "2027.07", "ISB", false, "https://isbweb.org"],
+    ["esgct-2026", "ESGCT 2026", "33rd ESGCT Annual Congress", "bio", 92, 90, "Hamburg, Germany", 53.5511, 9.9937, "2026.10", "ESGCT", false, "https://www.esgct.eu"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -406,7 +428,8 @@ function getMarkerIcon(field, isActive = false) {
     else if (field === 'civil') color = '#14b8a6';
     else if (field === 'cs') color = '#3b82f6';
     else if (field === 'mech') color = '#f97316';
-    else color = '#84cc16'; // Lime Green for Chemical & Energy
+    else if (field === 'chem') color = '#84cc16';
+    else color = '#ec4899'; // Rose Pink for Biomedical & Biotech
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -437,7 +460,8 @@ function getMarkerIcon(field, isActive = false) {
                 field === 'civil' ? 'fa-bridge' :
                 field === 'cs' ? 'fa-brain' :
                 field === 'mech' ? 'fa-gear' :
-                'fa-flask'
+                field === 'chem' ? 'fa-flask' :
+                'fa-dna'
             }"></i>
         </div>
     `;
@@ -662,6 +686,7 @@ function renderList(filteredData) {
         else if (conf.field === 'cs') fieldNameEn = 'Computer Science & AI';
         else if (conf.field === 'mech') fieldNameEn = 'Mechanical & Aerospace';
         else if (conf.field === 'chem') fieldNameEn = 'Chemical & Energy';
+        else if (conf.field === 'bio') fieldNameEn = 'Biomedical & Biotech';
 
         card.innerHTML = `
             <div class="card-header">
@@ -772,7 +797,8 @@ function renderMapMarkers(filteredData) {
                                     c.field === 'civil' ? '#14b8a6' :
                                     c.field === 'cs' ? '#3b82f6' :
                                     c.field === 'mech' ? '#f97316' :
-                                    '#84cc16'
+                                    c.field === 'chem' ? '#84cc16' :
+                                    '#ec4899'
                                 };
                                 font-size: 0.75rem;
                             ">
@@ -891,10 +917,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-mech)';
         fieldBgGrad = `linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Mechanical & Aerospace';
-    } else {
+    } else if (conf.field === 'chem') {
         fieldColor = 'var(--color-chem)';
         fieldBgGrad = `linear-gradient(135deg, rgba(132, 204, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Chemical & Energy';
+    } else {
+        fieldColor = 'var(--color-bio)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Biomedical & Biotech';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;
