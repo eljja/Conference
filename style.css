@@ -27,6 +27,8 @@
     --color-cs-rgb: 59, 130, 246;
     --color-mech: #f97316;
     --color-mech-rgb: 249, 115, 22;
+    --color-chem: #84cc16;
+    --color-chem-rgb: 132, 204, 22;
     
     --accent: #6366f1;
     --accent-glow: rgba(99, 102, 241, 0.25);
@@ -269,6 +271,7 @@ body {
 .civil-dot { background-color: var(--color-civil); }
 .cs-dot { background-color: var(--color-cs); }
 .mech-dot { background-color: var(--color-mech); }
+.chem-dot { background-color: var(--color-chem); }
 
 .btn-checkbox.active {
     background: rgba(255, 255, 255, 0.07);
@@ -302,6 +305,10 @@ body {
 .btn-checkbox[data-field="mech"].active {
     box-shadow: inset 0 0 5px rgba(249, 115, 22, 0.15);
     border-color: rgba(249, 115, 22, 0.4);
+}
+.btn-checkbox[data-field="chem"].active {
+    box-shadow: inset 0 0 5px rgba(132, 204, 22, 0.15);
+    border-color: rgba(132, 204, 22, 0.4);
 }
 
 .range-filters {
@@ -424,6 +431,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .conference-card.civil-card::before { background-color: var(--color-civil); }
 .conference-card.cs-card::before { background-color: var(--color-cs); }
 .conference-card.mech-card::before { background-color: var(--color-mech); }
+.conference-card.chem-card::before { background-color: var(--color-chem); }
 
 .conference-card:hover {
     transform: translateY(-2px);
@@ -492,6 +500,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .badge-civil { background: rgba(20, 184, 166, 0.15); color: var(--color-civil); }
 .badge-cs { background: rgba(59, 130, 246, 0.15); color: var(--color-cs); }
 .badge-mech { background: rgba(249, 115, 22, 0.15); color: var(--color-mech); }
+.badge-chem { background: rgba(132, 204, 22, 0.15); color: var(--color-chem); }
 .badge-toptier { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
 
 .card-meta {

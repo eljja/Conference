@@ -265,7 +265,29 @@ const rawConferencesData = [
     ["cobem-2027", "COBEM 2027", "International Congress of Mechanical Engineering", "mech", 88, 86, "Brasilia, Brazil", -15.7975, -47.8919, "2027.11", "ABCM", false, "https://www.abcm.org.br"],
     ["asme-mesa-2026", "ASME MESA 2026", "Mechatronics and Embedded Systems and Applications", "mech", 89, 87, "Boston, USA", 42.3601, -71.0589, "2026.08", "ASME", false, "https://event.asme.org"],
     ["euromech-2026", "EUROMECH 2026", "European Mechanics Society Colloquium", "mech", 90, 88, "Zurich, Switzerland", 47.3769, 8.5417, "2026.07", "EUROMECH", false, "https://www.euromech.org"],
-    ["sae-ice-2027", "SAE ICE 2027", "SAE Int. Powertrains, Fuels & Lubricants Meeting", "mech", 90, 88, "Kyoto, Japan", 35.0116, 135.7681, "2027.09", "SAE International", false, "https://www.sae.org"]
+    ["sae-ice-2027", "SAE ICE 2027", "SAE Int. Powertrains, Fuels & Lubricants Meeting", "mech", 90, 88, "Kyoto, Japan", 35.0116, 135.7681, "2027.09", "SAE International", false, "https://www.sae.org"],
+
+    // --- Chemical Engineering, Battery & Energy (20 events) ---
+    ["aiche-2026", "AIChE Annual Meeting 2026", "2026 American Institute of Chemical Engineers Annual Meeting", "chem", 96, 94, "Minneapolis, USA", 44.9778, -93.2650, "2026.11", "AIChE", true, "https://www.aiche.org"],
+    ["aiche-2027", "AIChE Annual Meeting 2027", "2027 American Institute of Chemical Engineers Annual Meeting", "chem", 96, 94, "San Diego, USA", 32.7157, -117.1611, "2027.10", "AIChE", true, "https://www.aiche.org"],
+    ["ecs-249", "249th ECS Meeting", "249th Electrochemical Society Spring Meeting", "chem", 94, 92, "Seattle, USA", 47.6062, -122.3321, "2026.05", "The Electrochemical Society", true, "https://www.electrochem.org"],
+    ["ecs-250", "250th ECS Meeting", "250th Electrochemical Society Fall Meeting", "chem", 94, 92, "Calgary, Canada", 51.0447, -114.0719, "2026.10", "The Electrochemical Society", true, "https://www.electrochem.org"],
+    ["ecs-251", "251st ECS Meeting", "251st Electrochemical Society Spring Meeting", "chem", 94, 92, "Washington D.C., USA", 38.9072, -77.0369, "2027.05", "The Electrochemical Society", true, "https://www.electrochem.org"],
+    ["imlb-2026", "IMLB 2026", "23rd International Meeting on Lithium Batteries", "chem", 97, 95, "Montréal, Canada", 45.5017, -73.5673, "2026.06", "IMLB Committee", true, "https://www.imlb.org"],
+    ["macro-2026", "IUPAC MACRO 2026", "51st IUPAC World Polymer Congress", "chem", 92, 90, "Kuching, Malaysia", 1.5533, 110.3592, "2026.07", "IUPAC", false, "https://macro2026.org"],
+    ["ecce-chem-2027", "ECCE 16", "16th European Congress of Chemical Engineering", "chem", 93, 91, "Edinburgh, UK", 55.9533, -3.1883, "2027.09", "EFCE", true, "https://ecce-ecab2027.org"],
+    ["chemeca-2026", "Chemeca 2026", "Chemical Engineering Conference 2026", "chem", 90, 88, "Melbourne, Australia", -37.8136, 144.9631, "2026.09", "IChemE / Engineers Australia", false, "https://www.chemeca.org"],
+    ["chemeca-2027", "Chemeca 2027", "Chemical Engineering & APCChE Congress 2027", "chem", 91, 89, "Sydney, Australia", -33.8688, 151.2093, "2027.11", "APCChE", false, "https://apcche27.com"],
+    ["aabc-eu-2026", "AABC Europe 2026", "Advanced Automotive Battery Conference Europe", "chem", 93, 91, "Mainz, Germany", 49.9929, 8.2473, "2026.05", "Cambridge EnerTech", false, "https://www.advancedautobat.com/europe"],
+    ["aabc-us-2026", "AABC USA 2026", "Advanced Automotive Battery Conference USA", "chem", 93, 91, "Las Vegas, USA", 36.1716, -115.1398, "2026.12", "Cambridge EnerTech", false, "https://www.advancedautobat.com/us"],
+    ["bat-seminar-2026", "Battery Seminar 2026", "International Battery Seminar & Exhibit 2026", "chem", 94, 92, "Orlando, USA", 28.5383, -81.3792, "2026.03", "Cambridge EnerTech", true, "https://www.internationalbatteryseminar.com"],
+    ["bat-seminar-2027", "Battery Seminar 2027", "International Battery Seminar & Exhibit 2027", "chem", 94, 92, "Orlando, USA", 28.5383, -81.3792, "2027.03", "Cambridge EnerTech", true, "https://www.internationalbatteryseminar.com"],
+    ["bat-show-eu-2026", "Battery Show Europe 2026", "The Battery Show Europe 2026", "chem", 92, 90, "Stuttgart, Germany", 48.7758, 9.1829, "2026.05", "Informa Markets", false, "https://www.thebatteryshow.eu"],
+    ["bat-show-na-2026", "Battery Show NA 2026", "The Battery Show North America 2026", "chem", 93, 91, "Detroit, USA", 42.3314, -83.0458, "2026.10", "Informa Markets", false, "https://www.thebatteryshow.com"],
+    ["icae-2026", "ICAE 2026", "18th International Conference on Applied Energy", "chem", 95, 93, "Jeju Island, South Korea", 33.4996, 126.5312, "2026.09", "Applied Energy Association", true, "https://www.applied-energy.org"],
+    ["ghgt-2026", "GHGT-18", "18th Greenhouse Gas Control Technologies Conference", "chem", 94, 92, "Perth, Australia", -31.9505, 115.8605, "2026.10", "IEAGHG", true, "https://www.ghgt.info"],
+    ["iscre-29", "ISCRE 29", "29th International Symposium on Chemical Reaction Engineering", "chem", 93, 91, "Seoul, South Korea", 37.5665, 126.9780, "2026.06", "ISCRE Board", false, "https://iscre29.org"],
+    ["eubce-2026", "EUBCE 2026", "34th European Biomass Conference & Exhibition", "chem", 91, 89, "The Hague, Netherlands", 52.0705, 4.3007, "2026.05", "ETA-Florence", false, "https://www.eubce.com"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -383,7 +405,8 @@ function getMarkerIcon(field, isActive = false) {
     else if (field === 'architecture') color = '#a855f7';
     else if (field === 'civil') color = '#14b8a6';
     else if (field === 'cs') color = '#3b82f6';
-    else color = '#f97316'; // Coral Amber for Mechanical & Aerospace
+    else if (field === 'mech') color = '#f97316';
+    else color = '#84cc16'; // Lime Green for Chemical & Energy
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -413,7 +436,8 @@ function getMarkerIcon(field, isActive = false) {
                 field === 'architecture' ? 'fa-building-columns' : 
                 field === 'civil' ? 'fa-bridge' :
                 field === 'cs' ? 'fa-brain' :
-                'fa-gear'
+                field === 'mech' ? 'fa-gear' :
+                'fa-flask'
             }"></i>
         </div>
     `;
@@ -637,6 +661,7 @@ function renderList(filteredData) {
         else if (conf.field === 'civil') fieldNameEn = 'Civil Engineering';
         else if (conf.field === 'cs') fieldNameEn = 'Computer Science & AI';
         else if (conf.field === 'mech') fieldNameEn = 'Mechanical & Aerospace';
+        else if (conf.field === 'chem') fieldNameEn = 'Chemical & Energy';
 
         card.innerHTML = `
             <div class="card-header">
@@ -746,7 +771,8 @@ function renderMapMarkers(filteredData) {
                                     c.field === 'architecture' ? '#a855f7' : 
                                     c.field === 'civil' ? '#14b8a6' :
                                     c.field === 'cs' ? '#3b82f6' :
-                                    '#f97316'
+                                    c.field === 'mech' ? '#f97316' :
+                                    '#84cc16'
                                 };
                                 font-size: 0.75rem;
                             ">
@@ -861,10 +887,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-cs)';
         fieldBgGrad = `linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Computer Science & AI';
-    } else {
+    } else if (conf.field === 'mech') {
         fieldColor = 'var(--color-mech)';
         fieldBgGrad = `linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Mechanical & Aerospace';
+    } else {
+        fieldColor = 'var(--color-chem)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(132, 204, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Chemical & Energy';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;
