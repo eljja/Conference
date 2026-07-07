@@ -309,7 +309,29 @@ const rawConferencesData = [
     ["esb-2026", "ESB 2026", "35th Annual Conference of the European Society for Biomaterials", "bio", 90, 88, "Antwerp, Belgium", 51.2194, 4.4025, "2026.09", "ESB", false, "https://www.esb2026.org"],
     ["wacbe-2026", "WACBE 2026", "12th World Congress on Bioengineering", "bio", 89, 87, "Changzhou, China", 31.7828, 119.9678, "2026.07", "WACBE", false, "http://wacbe.org"],
     ["isb-2027", "ISB 2027", "31st Congress of the International Society of Biomechanics", "bio", 90, 88, "Stockholm, Sweden", 59.3293, 18.0686, "2027.07", "ISB", false, "https://isbweb.org"],
-    ["esgct-2026", "ESGCT 2026", "33rd ESGCT Annual Congress", "bio", 92, 90, "Hamburg, Germany", 53.5511, 9.9937, "2026.10", "ESGCT", false, "https://www.esgct.eu"]
+    ["esgct-2026", "ESGCT 2026", "33rd ESGCT Annual Congress", "bio", 92, 90, "Hamburg, Germany", 53.5511, 9.9937, "2026.10", "ESGCT", false, "https://www.esgct.eu"],
+
+    // --- Industrial Engineering & Operations Research (20 events) ---
+    ["iise-2026", "IISE Annual 2026", "IISE Annual Conference & Expo 2026", "ind", 95, 93, "Arlington, USA", 32.7357, -97.1081, "2026.05", "IISE", true, "https://www.iise.org"],
+    ["iise-2027", "IISE Annual 2027", "IISE Annual Conference & Expo 2027", "ind", 95, 93, "Louisville, USA", 38.2527, -85.7585, "2027.05", "IISE", true, "https://www.iise.org"],
+    ["informs-2026", "INFORMS Annual 2026", "INFORMS Annual Meeting 2026", "ind", 97, 95, "San Francisco, USA", 37.7749, -122.4194, "2026.10", "INFORMS", true, "https://meetings.informs.org"],
+    ["informs-2027", "INFORMS Annual 2027", "INFORMS Annual Meeting 2027", "ind", 97, 95, "National Harbor, USA", 38.7846, -77.0169, "2027.10", "INFORMS", true, "https://meetings.informs.org"],
+    ["wsc-2026", "WSC 2026", "Winter Simulation Conference 2026", "ind", 94, 92, "Glasgow, UK", 55.8642, -4.2518, "2026.12", "WSC Board", true, "https://www.wintersim.org"],
+    ["wsc-2027", "WSC 2027", "Winter Simulation Conference 2027", "ind", 94, 92, "San Diego, USA", 32.7157, -117.1611, "2027.12", "WSC Board", true, "https://www.wintersim.org"],
+    ["ifac-2026", "IFAC World Congress 2026", "23rd International Federation of Automatic Control World Congress", "ind", 96, 94, "Busan, South Korea", 35.1796, 129.0756, "2026.08", "IFAC", true, "https://www.ifac2026.org"],
+    ["poms-2026", "POMS Annual 2026", "POMS 36th Annual Conference", "ind", 93, 91, "Reno, USA", 39.5296, -119.8138, "2026.05", "POMS", true, "https://www.poms.org"],
+    ["poms-2027", "POMS Annual 2027", "POMS 37th Annual Conference", "ind", 93, 91, "Orlando, USA", 28.5383, -81.3792, "2027.04", "POMS", true, "https://www.poms.org"],
+    ["ieem-2026", "IEEE IEEM 2026", "IEEE International Conference on Industrial Engineering and Engineering Management", "ind", 92, 90, "Singapore", 1.3521, 103.8198, "2026.12", "IEEE TEMS", true, "https://www.ieem.org"],
+    ["apms-2026", "APMS 2026", "International Conference on Advances in Production Management Systems", "ind", 90, 88, "Bergamo, Italy", 45.6983, 9.6773, "2026.09", "IFIP WG 5.7", false, "https://www.apms-conference.org"],
+    ["apms-2027", "APMS 2027", "International Conference on Advances in Production Management Systems", "ind", 90, 88, "Edinburgh, UK", 55.9533, -3.1883, "2027.09", "IFIP WG 5.7", false, "https://www.apms-conference.org"],
+    ["informs-analytics-2026", "INFORMS Analytics 2026", "INFORMS Business Analytics Conference 2026", "ind", 92, 90, "Orlando, USA", 28.5383, -81.3792, "2026.04", "INFORMS", false, "https://meetings.informs.org"],
+    ["euro-pm-2026", "Euro PM2026", "Euro PM2026 Powder Metallurgy Congress & Exhibition", "ind", 89, 87, "Budapest, Hungary", 47.4979, 19.0402, "2026.10", "EPMA", false, "https://www.powdermetallurgycongress.com"],
+    ["icpr-2027", "ICPR 2027", "29th International Conference on Production Research", "ind", 91, 89, "Busan, South Korea", 35.1796, 129.0756, "2027.07", "IFPR", false, "https://icpr2027.org"],
+    ["mcdm-2027", "MCDM 2027", "28th International Conference on Multiple Criteria Decision Making", "ind", 90, 88, "Helsinki, Finland", 60.1699, 24.9384, "2027.06", "MCDM Society", false, "http://www.mcdm-society.org"],
+    ["iserc-2026", "ISERC 2026", "Industrial and Systems Engineering Research Conference 2026", "ind", 91, 89, "Arlington, USA", 32.7357, -97.1081, "2026.05", "IISE", false, "https://www.iise.org"],
+    ["temscon-2026", "IEEE TEMSCON 2026", "IEEE Technology and Engineering Management Society Conference", "ind", 90, 88, "Portland, USA", 45.5152, -122.6784, "2026.06", "IEEE TEMS", false, "https://www.ieee-tems.org"],
+    ["apiems-2026", "APIEMS 2026", "26th Asia Pacific Industrial Engineering and Management Systems Conference", "ind", 89, 87, "Busan, South Korea", 35.1796, 129.0756, "2026.11", "APIEMS", false, "http://www.apiems.org"],
+    ["cie-2026", "CIE 53", "53rd International Conference on Computers and Industrial Engineering", "ind", 91, 89, "Abu Dhabi, UAE", 24.4539, 54.3773, "2026.10", "CIE / Khalifa University", false, "https://cie2026.science"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
@@ -429,7 +451,8 @@ function getMarkerIcon(field, isActive = false) {
     else if (field === 'cs') color = '#3b82f6';
     else if (field === 'mech') color = '#f97316';
     else if (field === 'chem') color = '#84cc16';
-    else color = '#ec4899'; // Rose Pink for Biomedical & Biotech
+    else if (field === 'bio') color = '#ec4899';
+    else color = '#6366f1'; // Indigo for Industrial Engineering
 
     const shadowColor = isActive ? color : 'rgba(0,0,0,0.4)';
     const scale = isActive ? 'scale(1.4)' : 'scale(1.0)';
@@ -461,7 +484,8 @@ function getMarkerIcon(field, isActive = false) {
                 field === 'cs' ? 'fa-brain' :
                 field === 'mech' ? 'fa-gear' :
                 field === 'chem' ? 'fa-flask' :
-                'fa-dna'
+                field === 'bio' ? 'fa-dna' :
+                'fa-diagram-project'
             }"></i>
         </div>
     `;
@@ -687,6 +711,7 @@ function renderList(filteredData) {
         else if (conf.field === 'mech') fieldNameEn = 'Mechanical & Aerospace';
         else if (conf.field === 'chem') fieldNameEn = 'Chemical & Energy';
         else if (conf.field === 'bio') fieldNameEn = 'Biomedical & Biotech';
+        else if (conf.field === 'ind') fieldNameEn = 'Industrial Engineering';
 
         card.innerHTML = `
             <div class="card-header">
@@ -798,7 +823,8 @@ function renderMapMarkers(filteredData) {
                                     c.field === 'cs' ? '#3b82f6' :
                                     c.field === 'mech' ? '#f97316' :
                                     c.field === 'chem' ? '#84cc16' :
-                                    '#ec4899'
+                                    c.field === 'bio' ? '#ec4899' :
+                                    '#6366f1'
                                 };
                                 font-size: 0.75rem;
                             ">
@@ -921,10 +947,14 @@ function selectConference(id) {
         fieldColor = 'var(--color-chem)';
         fieldBgGrad = `linear-gradient(135deg, rgba(132, 204, 22, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Chemical & Energy';
-    } else {
+    } else if (conf.field === 'bio') {
         fieldColor = 'var(--color-bio)';
         fieldBgGrad = `linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
         fieldNameEn = 'Biomedical & Biotech';
+    } else {
+        fieldColor = 'var(--color-ind)';
+        fieldBgGrad = `linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(11, 15, 23, 0.95) 100%)`;
+        fieldNameEn = 'Industrial Engineering';
     }
 
     modalHeaderBg.style.background = fieldBgGrad;
