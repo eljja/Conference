@@ -117,6 +117,12 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+.title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
 .logo-text h1 {
     font-size: 1.3rem;
     font-weight: 700;
@@ -124,6 +130,26 @@ body {
     background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.last-updated-badge {
+    font-size: 0.62rem;
+    padding: 0.15rem 0.35rem;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 4px;
+    color: #a5b4fc;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    height: 18px;
+    box-sizing: border-box;
+}
+
+.last-updated-badge i {
+    font-size: 0.55rem;
+    color: var(--accent);
 }
 
 .logo-text p {
@@ -992,6 +1018,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
 @media (max-width: 768px) {
     .app-header {
         padding: 1rem;
+    }
+    
+    .title-wrapper {
+        flex-wrap: wrap;
+        gap: 0.4rem;
     }
     
     .logo-text p {

@@ -648,6 +648,34 @@ const modalWebsiteLink = document.getElementById('modal-website-link');
 
 // --- Functions ---
 
+function isWithinQuarterWindow(dateStr) {
+    if (!dateStr) return false;
+    
+    // Parse Year and Month from dateStr (e.g. "2026.05")
+    const match = dateStr.match(/^(\d{4})\.(\d{2})/);
+    if (!match) return true; // Keep it if we can't parse it
+    
+    const confYear = parseInt(match[1], 10);
+    const confMonth = parseInt(match[2], 10);
+    
+    // Convert conference date to absolute quarter: Year * 4 + QuarterIndex (0 to 3)
+    const confQ = Math.floor((confMonth - 1) / 3);
+    const confAbsoluteQ = confYear * 4 + confQ;
+    
+    // Get current date quarter
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // 1-indexed
+    const currentQ = Math.floor((currentMonth - 1) / 3);
+    const currentAbsoluteQ = currentYear * 4 + currentQ;
+    
+    const diffQ = confAbsoluteQ - currentAbsoluteQ;
+    
+    // Past: up to 3 quarters in the past (diffQ >= -3)
+    // Future: up to 6 quarters in the future (diffQ <= 6)
+    return (diffQ >= -3 && diffQ <= 6);
+}
+
 function getFilteredConferences() {
     return conferences.filter(conf => {
         // Search text filter
@@ -665,7 +693,10 @@ function getFilteredConferences() {
         // GSAI score filter
         const matchGSAI = conf.gsai >= state.minGSAI;
 
-        return matchSearch && matchField && matchCQI && matchGSAI;
+        // Date quarter window filter
+        const matchQuarter = isWithinQuarterWindow(conf.date);
+
+        return matchSearch && matchField && matchCQI && matchGSAI && matchQuarter;
     }).sort((a, b) => {
         if (state.sortBy === 'cqi') return b.cqi - a.cqi;
         if (state.sortBy === 'gsai') return b.gsai - a.gsai;
