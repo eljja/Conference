@@ -1155,7 +1155,7 @@ if (openSuggestBtn && suggestModal) {
         suggestStatus.style.display = 'none';
 
         try {
-            await fetch('https://formsubmit.co/ajax/eljja.github@gmail.com', {
+            await fetch('https://formsubmit.co/ajax/eljja1@gmail.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
