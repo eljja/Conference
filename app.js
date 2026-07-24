@@ -712,6 +712,11 @@ function updateStats(filteredData) {
     // Count how many are TopTier (A* equivalent)
     const topCount = filteredData.filter(conf => conf.isTopTier).length;
     topCountEl.textContent = topCount;
+
+    const resultsCountEl = document.getElementById('results-count');
+    if (resultsCountEl) {
+        resultsCountEl.textContent = filteredData.length;
+    }
 }
 
 function renderList(filteredData) {
@@ -1050,10 +1055,75 @@ function applyFilters() {
 
 // --- Event Listeners ---
 
-// Search input
+// Search input & Clear button
+const searchClearBtn = document.getElementById('search-clear-btn');
+
 searchInput.addEventListener('input', (e) => {
     state.searchQuery = e.target.value.toLowerCase().trim();
+    if (searchClearBtn) {
+        searchClearBtn.style.display = state.searchQuery ? 'flex' : 'none';
+    }
     applyFilters();
+});
+
+if (searchClearBtn) {
+    searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        state.searchQuery = '';
+        searchClearBtn.style.display = 'none';
+        applyFilters();
+    });
+}
+
+// Reset Map View Button
+const resetMapBtn = document.getElementById('reset-map-btn');
+if (resetMapBtn) {
+    resetMapBtn.addEventListener('click', () => {
+        if (map) {
+            map.setView([20, 0], 2);
+        }
+        if (activeMarker) {
+            activeMarker = null;
+        }
+    });
+}
+
+// Mobile View Toggle Controls
+const mobileToggleList = document.getElementById('mobile-toggle-list');
+const mobileToggleMap = document.getElementById('mobile-toggle-map');
+const sidebarPanel = document.getElementById('sidebar-panel');
+const mapPanel = document.getElementById('map-panel');
+
+if (mobileToggleList && mobileToggleMap && sidebarPanel && mapPanel) {
+    mobileToggleList.addEventListener('click', () => {
+        mobileToggleList.classList.add('active');
+        mobileToggleMap.classList.remove('active');
+        sidebarPanel.classList.remove('hidden-mobile');
+        mapPanel.classList.add('hidden-mobile');
+    });
+
+    mobileToggleMap.addEventListener('click', () => {
+        mobileToggleMap.classList.add('active');
+        mobileToggleList.classList.remove('active');
+        mapPanel.classList.remove('hidden-mobile');
+        sidebarPanel.classList.add('hidden-mobile');
+        if (map) {
+            setTimeout(() => map.invalidateSize(), 100);
+        }
+    });
+}
+
+// ESC Key listener to close active modals
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (detailModal && detailModal.classList.contains('show')) {
+            detailModal.classList.remove('show');
+        }
+        const suggestModalEl = document.getElementById('suggest-modal');
+        if (suggestModalEl && suggestModalEl.classList.contains('show')) {
+            suggestModalEl.classList.remove('show');
+        }
+    }
 });
 
 // Checkbox Buttons

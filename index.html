@@ -8,6 +8,23 @@
     <meta name="keywords" content="academic conferences, semiconductor, materials science, electronics, architecture, conference mapping, CQI, GSAI">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="tQU4ms4HtuSSnlNO14YJO8OMyy59mqlFixqXl3Lhlbw" />
+    <meta name="theme-color" content="#0b0f17">
+    <link rel="canonical" href="https://eljja.github.io/Conference/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eljja.github.io/Conference/">
+    <meta property="og:title" content="TripConference - Global Academic Conference Map & Evaluation Dashboard">
+    <meta property="og:description" content="Explore and analyze academic prestige (CQI) and student attraction metrics (GSAI) for major international conferences mapped across 9 disciplines.">
+    <meta property="og:image" content="https://eljja.github.io/Conference/banner.png">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://eljja.github.io/Conference/">
+    <meta name="twitter:title" content="TripConference - Global Academic Conference Map & Evaluation Dashboard">
+    <meta name="twitter:description" content="Explore and analyze academic prestige (CQI) and student attraction metrics (GSAI) for major international conferences mapped across 9 disciplines.">
+    <meta name="twitter:image" content="https://eljja.github.io/Conference/banner.png">
+
     <link rel="icon" type="image/png" href="favicon.png">
     
     <!-- Google Fonts: Inter -->
@@ -55,13 +72,30 @@
 
         <!-- Main Content Area -->
         <main class="app-main">
+            <!-- Mobile View Toggle Controls -->
+            <div class="mobile-view-toggle">
+                <button class="mobile-toggle-btn active" id="mobile-toggle-list" aria-label="Show list view">
+                    <i class="fa-solid fa-list-ul"></i> List View
+                </button>
+                <button class="mobile-toggle-btn" id="mobile-toggle-map" aria-label="Show map view">
+                    <i class="fa-solid fa-map-location-dot"></i> Map View
+                </button>
+            </div>
+
             <!-- Left Panel: Sidebar (Filters & Conference List) -->
-            <section class="sidebar-panel">
+            <section class="sidebar-panel" id="sidebar-panel">
                 <!-- Search & Filters Container -->
                 <div class="filter-card">
                     <div class="search-box">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="search-input" placeholder="Search by name, city, country...">
+                        <input type="text" id="search-input" placeholder="Search by name, city, country..." aria-label="Search conferences">
+                        <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear search" style="display: none;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div class="search-results-feedback" id="search-results-feedback">
+                        <i class="fa-solid fa-filter"></i> Showing <span id="results-count">0</span> conferences
                     </div>
                     
                     <div class="filter-group">
@@ -116,20 +150,20 @@
                                 <span>Academic Influence (CQI)</span>
                                 <span id="cqi-value">60+</span>
                             </div>
-                            <input type="range" id="cqi-slider" min="50" max="95" value="60">
+                            <input type="range" id="cqi-slider" min="50" max="95" value="60" aria-label="Academic Influence CQI slider">
                         </div>
                         <div class="range-group">
                             <div class="range-header">
                                 <span>Student Attraction (GSAI)</span>
                                 <span id="gsai-value">50+</span>
                             </div>
-                            <input type="range" id="gsai-slider" min="50" max="95" value="50">
+                            <input type="range" id="gsai-slider" min="50" max="95" value="50" aria-label="Student Attraction GSAI slider">
                         </div>
                     </div>
 
                     <div class="sort-group">
                         <label for="sort-select" class="filter-label-inline"><i class="fa-solid fa-sort"></i> Sort By</label>
-                        <select id="sort-select" class="form-select">
+                        <select id="sort-select" class="form-select" aria-label="Sort conferences by">
                             <option value="cqi">Academic Influence (CQI)</option>
                             <option value="gsai">Student Attraction (GSAI)</option>
                             <option value="name">Alphabetical</option>
@@ -147,10 +181,13 @@
             </section>
 
             <!-- Right Panel: Interactive Map -->
-            <section class="map-panel">
+            <section class="map-panel" id="map-panel">
                 <div id="map"></div>
                 <div class="map-overlay-info">
                     <p><i class="fa-solid fa-info-circle"></i> Click a marker to view detailed evaluation and student benefits.</p>
+                    <button class="map-reset-btn" id="reset-map-btn" aria-label="Reset Map View">
+                        <i class="fa-solid fa-rotate-left"></i> Reset View
+                    </button>
                 </div>
             </section>
         </main>
@@ -159,7 +196,7 @@
     <!-- Interactive Detail Modal -->
     <div class="modal-backdrop" id="detail-modal">
         <div class="modal-content">
-            <button class="modal-close-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            <button class="modal-close-btn" id="close-modal-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header-section" id="modal-header-bg">
                 <div class="modal-title-area">
                     <span class="badge" id="modal-badge-field">Semiconductors</span>
@@ -251,7 +288,7 @@
     <!-- Suggest Conference / Field Modal -->
     <div class="modal-backdrop" id="suggest-modal">
         <div class="modal-content suggest-modal-content">
-            <button class="modal-close-btn" id="close-suggest-btn"><i class="fa-solid fa-xmark"></i></button>
+            <button class="modal-close-btn" id="close-suggest-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
             <div class="suggest-modal-header">
                 <div class="suggest-icon-wrapper">
                     <i class="fa-solid fa-lightbulb"></i>
