@@ -152,6 +152,41 @@ body {
     color: var(--accent);
 }
 
+.update-status-badge {
+    font-size: 0.62rem;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    height: 18px;
+    box-sizing: border-box;
+    transition: var(--transition-fast);
+}
+
+.update-status-badge.status-ok {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+}
+
+.update-status-badge.status-ok i {
+    font-size: 0.55rem;
+    color: #10b981;
+}
+
+.update-status-badge.status-warning {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+}
+
+.update-status-badge.status-warning i {
+    font-size: 0.55rem;
+    color: #f59e0b;
+}
+
 .logo-text p {
     font-size: 0.75rem;
     color: var(--text-secondary);

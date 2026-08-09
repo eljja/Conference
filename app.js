@@ -648,7 +648,7 @@ const modalWebsiteLink = document.getElementById('modal-website-link');
 
 // --- Functions ---
 
-function isWithinQuarterWindow(dateStr) {
+function isWithinYearWindow(dateStr) {
     if (!dateStr) return false;
     
     // Parse Year and Month from dateStr (e.g. "2026.05")
@@ -656,24 +656,47 @@ function isWithinQuarterWindow(dateStr) {
     if (!match) return true; // Keep it if we can't parse it
     
     const confYear = parseInt(match[1], 10);
-    const confMonth = parseInt(match[2], 10);
+    const confMonth = parseInt(match[2], 10); // 1-indexed
     
-    // Convert conference date to absolute quarter: Year * 4 + QuarterIndex (0 to 3)
-    const confQ = Math.floor((confMonth - 1) / 3);
-    const confAbsoluteQ = confYear * 4 + confQ;
-    
-    // Get current date quarter
+    // Get current date year and month
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1; // 1-indexed
-    const currentQ = Math.floor((currentMonth - 1) / 3);
-    const currentAbsoluteQ = currentYear * 4 + currentQ;
     
-    const diffQ = confAbsoluteQ - currentAbsoluteQ;
+    // Calculate absolute month indices to enforce strict -1 year to +1 year window (-12 to +12 months)
+    const confAbsoluteMonths = confYear * 12 + confMonth;
+    const currentAbsoluteMonths = currentYear * 12 + currentMonth;
+    const diffMonths = confAbsoluteMonths - currentAbsoluteMonths;
     
-    // Past: up to 3 quarters in the past (diffQ >= -3)
-    // Future: up to 6 quarters in the future (diffQ <= 6)
-    return (diffQ >= -3 && diffQ <= 6);
+    // Past: up to 1 year ago (diffMonths >= -12)
+    // Future: up to 1 year ahead (diffMonths <= 12)
+    return (diffMonths >= -12 && diffMonths <= 12);
+}
+
+const LAST_DB_UPDATE_YEAR = 2026;
+const LAST_DB_UPDATE_QUARTER = 3;
+
+function initUpdateStatusBadge() {
+    const badgeEl = document.getElementById('update-status-badge');
+    if (!badgeEl) return;
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentQuarter = Math.floor((currentMonth - 1) / 3) + 1;
+
+    const currentAbsoluteQ = currentYear * 4 + (currentQuarter - 1);
+    const lastUpdateAbsoluteQ = LAST_DB_UPDATE_YEAR * 4 + (LAST_DB_UPDATE_QUARTER - 1);
+
+    if (currentAbsoluteQ <= lastUpdateAbsoluteQ) {
+        badgeEl.className = 'update-status-badge status-ok';
+        badgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Up to Date';
+        badgeEl.title = 'Database is up to date for the current quarter.';
+    } else {
+        badgeEl.className = 'update-status-badge status-warning';
+        badgeEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Update Needed';
+        badgeEl.title = 'Quarterly update recommended for the current season.';
+    }
 }
 
 function getFilteredConferences() {
@@ -693,10 +716,10 @@ function getFilteredConferences() {
         // GSAI score filter
         const matchGSAI = conf.gsai >= state.minGSAI;
 
-        // Date quarter window filter
-        const matchQuarter = isWithinQuarterWindow(conf.date);
+        // Date window filter (-1 year to +1 year from today)
+        const matchDateWindow = isWithinYearWindow(conf.date);
 
-        return matchSearch && matchField && matchCQI && matchGSAI && matchQuarter;
+        return matchSearch && matchField && matchCQI && matchGSAI && matchDateWindow;
     }).sort((a, b) => {
         if (state.sortBy === 'cqi') return b.cqi - a.cqi;
         if (state.sortBy === 'gsai') return b.gsai - a.gsai;
@@ -1287,6 +1310,7 @@ function syncFieldCheckboxes() {
 
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
+    initUpdateStatusBadge();
     syncFieldCheckboxes();
     initMap();
     applyFilters();
