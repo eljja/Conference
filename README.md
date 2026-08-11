@@ -17,6 +17,9 @@
   <a href="https://eljja.github.io/Conference/">
     <img src="https://img.shields.io/badge/Live_Demo-https%3A%2F%2Feljja.github.io%2FConference%2F-blueviolet?style=for-the-badge&logo=github&logoColor=white" alt="Live Demo">
   </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License">
+  </a>
 </p>
 
 ---
@@ -100,6 +103,9 @@
    node validate_db.js
    ```
 
+### 📜 라이선스 (License)
+본 프로젝트는 **Apache License 2.0**에 따라 자유롭게 이용, 수정 및 배포할 수 있습니다. 상세 내용은 [LICENSE](LICENSE) 파일에서 확인하실 수 있습니다.
+
 ---
 ---
 
@@ -181,3 +187,8 @@ Clone the repository and run the project locally:
    ```bash
    node validate_db.js
    ```
+
+---
+
+### 📜 License
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for details.
