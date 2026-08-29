@@ -20,6 +20,8 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License">
   </a>
+  <img src="https://img.shields.io/badge/Disciplines-10_Fields-emerald?style=for-the-badge" alt="10 Disciplines">
+  <img src="https://img.shields.io/badge/Conferences-313_Verified-orange?style=for-the-badge" alt="313 Conferences">
 </p>
 
 ---
@@ -27,7 +29,7 @@
 ## Korean (한국어)
 
 ### 📌 프로젝트 소개
-**TripConference**는 반도체, 전자, 신소재, 컴퓨터 과학 및 인공지능(AI), 기계공학, 화학공학, 생명공학, 산업공학 등 다양한 학문 분야의 권위 있는 국제 학술 대회(Conference) 정보를 지도상에 시각화하고 분석해 주는 인터랙티브 웹 애플리케이션입니다. 
+**TripConference**는 반도체, 전자, 신소재, 컴퓨터 과학 및 인공지능(AI), 기계공학, 화학공학, 생명공학, 토목공학, 건축학, 산업공학 등 **10개 주요 공학 및 과학 분야**의 권위 있는 국제 학술 대회(Conference) 정보를 지도상에 시각화하고 분석해 주는 인터랙티브 웹 대시보드입니다.
 
 대학원생, 연구자, 학계 종사자들이 논문을 투고할 학회를 결정하거나 참석 일정을 계획할 때 학회의 **학술적 위상**과 **지리적 매력도**를 직관적으로 비교·대조할 수 있도록 설계되었습니다.
 
@@ -48,12 +50,12 @@
 학생 및 연구자 입장에서 해당 학회 개최지가 주는 지리적·재정적·환경적 유인 요소를 평가합니다.
 * **산출 요소**: 개최지 인근의 글로벌 IT 기업 및 대학 밀집도, 물가 수준, 기후 및 치안, 학생 대상 여행 경비 지원(Travel Grants) 혜택.
 * **점수대 의미**:
-  * 개최 도시가 허브 도시(예: 샌프란시스코, 싱가포르)이거나 학회 차원의 학생 재정 지원이 넉넉할수록 고득점을 획득합니다.
+  * 개최 도시가 글로벌 테크 허브(예: 샌프란시스코, 싱가포르)이거나 학회 차원의 학생 재정 지원이 풍부할수록 높은 점수를 받습니다.
 
 ---
 
 ### 📂 지원 분야 및 데이터 통계
-현재 총 **9개 학문 분야**의 **313개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소와 좌표를 포함합니다.
+현재 총 **10개 학문 분야**의 **313개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소와 좌표를 포함합니다.
 
 | 분야 ID | 학문 분야 (Academic Fields) | 대표 색상 (Theme) | 대표 아이콘 (Icon) | 등록 학회 수 |
 | :--- | :--- | :--- | :---: | :---: |
@@ -72,21 +74,30 @@
 
 ### ⏱️ 업데이트 주기 및 데이터 필터링 규칙 (Sliding Window Policy)
 
-#### 1. 분기별 정기 업데이트 (Quarterly Updates)
-대시보드의 학회 일정 및 개최지 정보는 매 분기(Quarter)마다 정기적으로 검토 및 업데이트됩니다. 
-* **최종 업데이트 시점**: **2026년 3분기 (2026.3Q)**
+#### 1. 분기별 정기 업데이트 (Quarterly Updates) & 동적 상태 배지
+* 대시보드의 학회 일정 및 개최지 정보는 매 분기(Quarter)마다 정기적으로 검토 및 업데이트됩니다.
+* **최종 데이터베이스 업데이트**: **2026년 3분기 (2026.3Q)**
+* **동적 상태 표시기**: 페이지 로딩 시점의 분기를 계산하여 `[Up to Date]`(최신 상태) 또는 `[Update Needed]`(업데이트 권장) 배지를 실시간으로 표시합니다.
 
-#### 2. 동적 시간 윈도우 필터링 (Dynamic Sliding Window Filter)
-대시보드는 데이터베이스의 노후화를 방지하고 최신 일정에 초점을 맞추기 위해 사용자가 접속한 현재 날짜를 기준으로 다음 규칙에 따라 학회를 자동 필터링합니다.
-* **과거 데이터 제한**: 현재 분기 기준 **과거 3분기 이내 (`-3Q`)**의 학회 일정만 유지합니다. (그 이전 완료된 학회는 대시보드 화면 및 지도에서 자동 숨김)
-* **미래 데이터 제한**: 현재 분기 기준 **미래 6분기 이내 (`+6Q`)** (약 1.5년 뒤)의 학회 일정까지만 노출합니다.
+#### 2. 오늘 기준 -1년 ~ +1년 동적 윈도우 필터링 (`isWithinYearWindow`)
+* 대시보드는 최신 일정에 초점을 맞추기 위해 사용자가 접속한 날짜를 기준으로 **과거 1년 ~ 미래 1년 (±12개월)** 범위 내의 학회 일정만 지도와 목록에 표시합니다.
+* 1년 이전의 완료된 과거 학회나 지나치게 먼 미래의 학회는 자동으로 숨김 처리됩니다.
+
+---
+
+### ✨ 주요 편의 기능 (Key Features)
+* **🗺️ 반응형 인터랙티브 지도**: Leaflet.js 기반의 무한 스크롤 타일 맵, 마커 클러스터링, 원클릭 지도 시점 초기화(`Reset View`).
+* **🔍 스마트 검색 및 필터**: 키워드 검색, 원클릭 검색어 지우기(`X`), 실시간 검색 결과 수 피드백(`Showing N conferences`), 분야별 복수 선택 및 CQI/GSAI 슬라이더.
+* **📱 모바일 맞춤형 UI**: 768px 이하 모바일 환경에서 `List View`와 `Map View`를 손쉽게 오가는 전용 토글 탭 지원.
+* **💡 건의 및 피드백 시스템**: 신규 학회 추가나 분야 건의를 위한 백엔드리스 팝업 모달 지원.
+* **🌐 검색엔진 최적화 (SEO)**: Google 및 주요 검색엔진을 위한 Schema.org JSON-LD 구조화 데이터, Open Graph, Twitter Cards, Sitemap 연동.
 
 ---
 
 ### 💻 기술 스택 (Technology Stack)
 * **지도 엔진**: Leaflet.js (지형 래핑 및 무한 스크롤, 남극 구역 렌더링 제한 적용)
 * **스타일링**: CSS Grid & Flexbox, Glassmorphism 테마, FontAwesome v6
-* **데이터 관리 및 로직**: Pure Vanilla JavaScript (LocalStorage 기반 필터 선택 상태 영구 유지)
+* **데이터 관리 및 로직**: Pure Vanilla JavaScript (LocalStorage 기반 필터 선택 상태 유지)
 * **피드백 시스템**: FormSubmit.co를 이용한 비동기 백엔드리스 건의사항 전송 시스템
 
 ---
@@ -103,6 +114,8 @@
    node validate_db.js
    ```
 
+---
+
 ### 📜 라이선스 (License)
 본 프로젝트는 **Apache License 2.0**에 따라 자유롭게 이용, 수정 및 배포할 수 있습니다. 상세 내용은 [LICENSE](LICENSE) 파일에서 확인하실 수 있습니다.
 
@@ -112,14 +125,14 @@
 ## English Description
 
 ### 📌 Project Overview
-**TripConference** is an interactive web-based dashboard designed to map and analyze prestigious global academic conferences across 9 key engineering and science disciplines. 
+**TripConference** is an interactive web-based dashboard designed to map and analyze prestigious global academic conferences across **10 key engineering and science disciplines**. 
 
 It aims to support graduate students and researchers in making informed decisions about where to submit papers and plan academic trips by comparing the **academic prestige** of conferences with the **geographical attraction** of their venues.
 
 ---
 
 ### 📊 Key Evaluation Metrics (Strategy & Metrics)
-The dashboard scores and visualizes two major indices for each conference:
+The dashboard scores and visualizes two major quantitative indices for each conference:
 
 #### 1. CQI (Conference Quality Index)
 Evaluates the academic prestige, selection difficulty, and overall reputation of the conference.
@@ -138,7 +151,7 @@ Evaluates the venue's appeal, financial incentives, and logistical benefits for 
 ---
 
 ### 📂 Supported Fields & Database Statistics
-The database contains **313 verified real-world international conferences** with exact coordinates, schedules, and active official websites.
+The database contains **313 verified real-world international conferences** with exact coordinates, schedules, and active official websites across 10 academic disciplines.
 
 | Field ID | Academic Field | Theme Color | Icon | Count |
 | :--- | :--- | :--- | :---: | :---: |
@@ -157,14 +170,23 @@ The database contains **313 verified real-world international conferences** with
 
 ### ⏱️ Update Cycle & Data Filtering (Sliding Window Policy)
 
-#### 1. Quarterly Updates
-The database schedules, locations, and links are fully reviewed and updated every quarter.
-* **Last Updated**: **2026 Q3 (2026.3Q)**
+#### 1. Quarterly Updates & Dynamic Status Indicator
+* The database schedules, locations, and links are reviewed and maintained on a quarterly cycle.
+* **Last Database Update**: **2026 Q3 (2026.3Q)**
+* **Dynamic Status Badge**: Evaluates user access time in real-time to display `[Up to Date]` or `[Update Needed]` badges.
 
-#### 2. Dynamic Sliding Window Filter
-To keep the dashboard focused on active timelines, the application dynamically filters events relative to the current date:
-* **Past Window Limit**: Only retains events within the **past 3 quarters (`-3Q`)**. Older past events are automatically hidden.
-* **Future Window Limit**: Displays future events up to **6 quarters ahead (`+6Q`)** (approx. 1.5 years).
+#### 2. Strict -1 Year to +1 Year Dynamic Window (`isWithinYearWindow`)
+* Dynamically filters conferences to display only events within **[-12 months, +12 months]** relative to the user's current date.
+* Historical events older than 1 year and distant future meetings beyond 1 year are automatically hidden.
+
+---
+
+### ✨ Key Features
+* **🗺️ Interactive Global Map**: Powered by Leaflet.js with cylindrical tile wrapping, city marker grouping, and one-click `Reset View`.
+* **🔍 Search & Multi-Field Filtering**: Fast text search with clear (`X`) button, instant result counts, discipline toggles, and CQI/GSAI sliders.
+* **📱 Mobile Responsive Controls**: Dedicated `List View` / `Map View` tab bar for mobile viewports ($\le 768\text{px}$).
+* **💡 Serverless Suggestion Box**: Integrated suggestion modal for community submissions.
+* **🌐 Google SEO & Structured Data**: Built-in Schema.org JSON-LD (`WebSite`, `WebApplication`, `FAQPage`), Open Graph, and Twitter Cards.
 
 ---
 
