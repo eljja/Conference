@@ -136,7 +136,7 @@
                 <div class="logo-text">
                     <div class="title-wrapper">
                         <h1>TripConference</h1>
-                        <span class="last-updated-badge"><i class="fa-solid fa-arrows-rotate"></i> Updated: 2026.3Q</span>
+                        <span class="last-updated-badge" id="last-updated-badge"><i class="fa-solid fa-arrows-rotate"></i> Updated: 2026.3Q</span>
                         <span class="update-status-badge" id="update-status-badge"></span>
                     </div>
                     <p>Prestige & Student Attraction Analysis for Major International Conferences</p>
@@ -186,7 +186,14 @@
                     </div>
                     
                     <div class="filter-group">
-                        <label class="filter-label">Academic Fields</label>
+                        <div class="filter-header-row">
+                            <label class="filter-label">Academic Fields</label>
+                            <div class="field-actions">
+                                <button type="button" class="btn-field-action" id="btn-select-all-fields" title="Select all fields">Select All</button>
+                                <span class="action-separator">|</span>
+                                <button type="button" class="btn-field-action" id="btn-reset-fields" title="Reset to default fields">Reset</button>
+                            </div>
+                        </div>
                         <div class="checkbox-buttons">
                             <label class="btn-checkbox active" data-field="semiconductor">
                                 <input type="checkbox" checked id="field-semi">
@@ -364,7 +371,7 @@
 
                 <!-- Action Footer -->
                 <div class="modal-footer">
-                    <a href="#" target="_blank" class="btn-primary" id="modal-website-link">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" id="modal-website-link">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Official Website
                     </a>
                 </div>

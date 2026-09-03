@@ -551,6 +551,9 @@ function getGroupedMarkerIcon(count, isActive = false) {
     });
 }
 
+const INITIAL_MAP_CENTER = [25, 10];
+const INITIAL_MAP_ZOOM = 2.5;
+
 function initMap() {
     // Tight vertical bounds: cut Antarctica completely (south limit -50), cap north at 75
     // Huge horizontal bounds allow endless left-right panning
@@ -568,7 +571,7 @@ function initMap() {
         maxBounds: bounds,
         maxBoundsViscosity: 1.0,
         worldCopyJump: true
-    }).setView([30, 10], 3);
+    }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 
     // Dark tiles from CartoDB (tiles repeat horizontally by default)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -677,6 +680,12 @@ const LAST_DB_UPDATE_YEAR = 2026;
 const LAST_DB_UPDATE_QUARTER = 3;
 
 function initUpdateStatusBadge() {
+    // Dynamically sync the last updated badge text from constants (Single Source of Truth)
+    const lastUpdatedBadgeEl = document.getElementById('last-updated-badge');
+    if (lastUpdatedBadgeEl) {
+        lastUpdatedBadgeEl.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i> Updated: ${LAST_DB_UPDATE_YEAR}.${LAST_DB_UPDATE_QUARTER}Q`;
+    }
+
     const badgeEl = document.getElementById('update-status-badge');
     if (!badgeEl) return;
 
@@ -699,13 +708,25 @@ function initUpdateStatusBadge() {
     }
 }
 
+// Lightweight debounce utility to ensure smooth typing and slider dragging
+function debounce(fn, wait = 100) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), wait);
+    };
+}
+
 function getFilteredConferences() {
+    const query = state.searchQuery.toLowerCase();
     return conferences.filter(conf => {
-        // Search text filter
-        const matchSearch = 
-            conf.name.toLowerCase().includes(state.searchQuery) ||
-            conf.fullName.toLowerCase().includes(state.searchQuery) ||
-            conf.location.toLowerCase().includes(state.searchQuery);
+        // Search text filter across name, fullName, location, organizer, and field
+        const matchSearch = !query ||
+            conf.name.toLowerCase().includes(query) ||
+            conf.fullName.toLowerCase().includes(query) ||
+            conf.location.toLowerCase().includes(query) ||
+            conf.organizer.toLowerCase().includes(query) ||
+            conf.field.toLowerCase().includes(query);
         
         // Field filter
         const matchField = state.selectedFields.includes(conf.field);
@@ -832,6 +853,9 @@ function renderMapMarkers(filteredData) {
                         <span style="background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3)">CQI: ${firstConf.cqi}</span>
                         <span style="background: rgba(14,165,233,0.1); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.3)">GSAI: ${firstConf.gsai}</span>
                     </div>
+                    <button class="popup-detail-btn" onclick="selectConference('${firstConf.id}')">
+                        <i class="fa-solid fa-circle-info"></i> View Details
+                    </button>
                 </div>
             `;
 
@@ -848,10 +872,11 @@ function renderMapMarkers(filteredData) {
                     offset: L.point(0, -5)
                 });
 
-                marker.on('click', () => selectConference(firstConf.id));
-                marker.on('mouseover', function () { this.openPopup(); });
-                marker.on('mouseout', function () {
-                    if (activeMarker !== this) this.closePopup();
+                marker.on('click', function () {
+                    this.openPopup();
+                });
+                marker.on('mouseover', function () {
+                    this.openPopup();
                 });
 
                 return marker;
@@ -924,10 +949,11 @@ function selectConference(id) {
     const conf = conferences.find(c => c.id === id);
     if (!conf) return;
 
-    // Highlight active card
+    // Highlight active card & auto-scroll into view
     document.querySelectorAll('.conference-card').forEach(card => {
         if (card.dataset.id === id) {
             card.classList.add('active');
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else {
             card.classList.remove('active');
         }
@@ -1078,6 +1104,8 @@ function applyFilters() {
 
 // --- Event Listeners ---
 
+const debouncedApplyFilters = debounce(applyFilters, 100);
+
 // Search input & Clear button
 const searchClearBtn = document.getElementById('search-clear-btn');
 
@@ -1086,7 +1114,7 @@ searchInput.addEventListener('input', (e) => {
     if (searchClearBtn) {
         searchClearBtn.style.display = state.searchQuery ? 'flex' : 'none';
     }
-    applyFilters();
+    debouncedApplyFilters();
 });
 
 if (searchClearBtn) {
@@ -1098,12 +1126,12 @@ if (searchClearBtn) {
     });
 }
 
-// Reset Map View Button
+// Reset Map View Button (Unified with INITIAL_MAP_CENTER and INITIAL_MAP_ZOOM)
 const resetMapBtn = document.getElementById('reset-map-btn');
 if (resetMapBtn) {
     resetMapBtn.addEventListener('click', () => {
         if (map) {
-            map.setView([20, 0], 2);
+            map.setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
         }
         if (activeMarker) {
             activeMarker = null;
@@ -1149,6 +1177,35 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Quick Field Actions: Select All & Reset to Default
+const ALL_FIELDS = ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs', 'mech', 'chem', 'bio', 'ind'];
+const DEFAULT_FIELDS = ['semiconductor', 'electronics'];
+
+const selectAllFieldsBtn = document.getElementById('btn-select-all-fields');
+const resetFieldsBtn = document.getElementById('btn-reset-fields');
+
+if (selectAllFieldsBtn) {
+    selectAllFieldsBtn.addEventListener('click', () => {
+        state.selectedFields = [...ALL_FIELDS];
+        syncFieldCheckboxes();
+        try {
+            localStorage.setItem('tripconference_selected_fields', JSON.stringify(state.selectedFields));
+        } catch (err) {}
+        applyFilters();
+    });
+}
+
+if (resetFieldsBtn) {
+    resetFieldsBtn.addEventListener('click', () => {
+        state.selectedFields = [...DEFAULT_FIELDS];
+        syncFieldCheckboxes();
+        try {
+            localStorage.setItem('tripconference_selected_fields', JSON.stringify(state.selectedFields));
+        } catch (err) {}
+        applyFilters();
+    });
+}
+
 // Checkbox Buttons
 document.querySelectorAll('.btn-checkbox').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1176,19 +1233,19 @@ document.querySelectorAll('.btn-checkbox').forEach(btn => {
     });
 });
 
-// Sliders
+// Sliders with debounced filter recalculation
 cqiSlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value);
     cqiValue.textContent = val + '+';
     state.minCQI = val;
-    applyFilters();
+    debouncedApplyFilters();
 });
 
 gsaiSlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value);
     gsaiValue.textContent = val + '+';
     state.minGSAI = val;
-    applyFilters();
+    debouncedApplyFilters();
 });
 
 // Sort select
