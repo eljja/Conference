@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License">
   </a>
   <img src="https://img.shields.io/badge/Disciplines-10_Fields-emerald?style=for-the-badge" alt="10 Disciplines">
-  <img src="https://img.shields.io/badge/Conferences-313_Verified-orange?style=for-the-badge" alt="313 Conferences">
+  <img src="https://img.shields.io/badge/Conferences-368_Verified-orange?style=for-the-badge" alt="368 Conferences">
 </p>
 
 ---
@@ -55,20 +55,20 @@
 ---
 
 ### 📂 지원 분야 및 데이터 통계
-현재 총 **10개 학문 분야**의 **313개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소와 좌표를 포함합니다.
+현재 총 **10개 학문 분야**의 **368개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소와 좌표를 포함합니다.
 
 | 분야 ID | 학문 분야 (Academic Fields) | 대표 색상 (Theme) | 대표 아이콘 (Icon) | 등록 학회 수 |
 | :--- | :--- | :--- | :---: | :---: |
 | `semiconductor` | 반도체 (Semiconductors) | Amber (`#f59e0b`) | `fa-microchip` | 33 |
-| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 68 |
-| `materials` | 신소재/재료공학 (Materials) | Emerald (`#10b981`) | `fa-atom` | 46 |
-| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 36 |
-| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 30 |
-| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 20 |
-| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 20 |
-| `chem` | 화학공학/배터리/에너지 (Chemical & Energy) | Lime Green (`#84cc16`) | `fa-flask` | 20 |
-| `bio` | 바이오메디컬/생명공학 (Biomedical & Biotech) | Rose Pink (`#ec4899`) | `fa-dna` | 20 |
-| `ind` | 산업공학 (Industrial Engineering) | Indigo (`#6366f1`) | `fa-diagram-project` | 20 |
+| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
+| `materials` | 신소재/재료공학 (Materials) | Emerald (`#10b981`) | `fa-atom` | 49 |
+| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 38 |
+| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 33 |
+| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 34 |
+| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 30 |
+| `chem` | 화학공학/배터리/에너지 (Chemical & Energy) | Lime Green (`#84cc16`) | `fa-flask` | 26 |
+| `bio` | 바이오메디컬/생명공학 (Biomedical & Biotech) | Rose Pink (`#ec4899`) | `fa-dna` | 32 |
+| `ind` | 산업공학 (Industrial Engineering) | Indigo (`#6366f1`) | `fa-diagram-project` | 24 |
 
 ---
 
@@ -151,20 +151,20 @@ Evaluates the venue's appeal, financial incentives, and logistical benefits for 
 ---
 
 ### 📂 Supported Fields & Database Statistics
-The database contains **313 verified real-world international conferences** with exact coordinates, schedules, and active official websites across 10 academic disciplines.
+The database contains **368 verified real-world international conferences** with exact coordinates, schedules, and active official websites across 10 academic disciplines.
 
 | Field ID | Academic Field | Theme Color | Icon | Count |
 | :--- | :--- | :--- | :---: | :---: |
 | `semiconductor` | Semiconductors | Amber (`#f59e0b`) | `fa-microchip` | 33 |
-| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 68 |
-| `materials` | Materials | Emerald (`#10b981`) | `fa-atom` | 46 |
-| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 36 |
-| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 30 |
-| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 20 |
-| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 20 |
-| `chem` | Chemical & Energy | Lime Green (`#84cc16`) | `fa-flask` | 20 |
-| `bio` | Biomedical & Biotech | Rose Pink (`#ec4899`) | `fa-dna` | 20 |
-| `ind` | Industrial Engineering | Indigo (`#6366f1`) | `fa-diagram-project` | 20 |
+| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
+| `materials` | Materials | Emerald (`#10b981`) | `fa-atom` | 49 |
+| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 38 |
+| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 33 |
+| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 34 |
+| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 30 |
+| `chem` | Chemical & Energy | Lime Green (`#84cc16`) | `fa-flask` | 26 |
+| `bio` | Biomedical & Biotech | Rose Pink (`#ec4899`) | `fa-dna` | 32 |
+| `ind` | Industrial Engineering | Indigo (`#6366f1`) | `fa-diagram-project` | 24 |
 
 ---
 

@@ -331,7 +331,73 @@ const rawConferencesData = [
     ["iserc-2026", "ISERC 2026", "Industrial and Systems Engineering Research Conference 2026", "ind", 91, 89, "Arlington, USA", 32.7357, -97.1081, "2026.05", "IISE", false, "https://www.iise.org"],
     ["temscon-2026", "IEEE TEMSCON 2026", "IEEE Technology and Engineering Management Society Conference", "ind", 90, 88, "Portland, USA", 45.5152, -122.6784, "2026.06", "IEEE TEMS", false, "https://www.ieee-tems.org"],
     ["apiems-2026", "APIEMS 2026", "26th Asia Pacific Industrial Engineering and Management Systems Conference", "ind", 89, 87, "Busan, South Korea", 35.1796, 129.0756, "2026.11", "APIEMS", false, "http://www.apiems.org"],
-    ["cie-2026", "CIE 53", "53rd International Conference on Computers and Industrial Engineering", "ind", 91, 89, "Abu Dhabi, UAE", 24.4539, 54.3773, "2026.10", "CIE / Khalifa University", false, "https://cie2026.science"]
+    ["cie-2026", "CIE 53", "53rd International Conference on Computers and Industrial Engineering", "ind", 91, 89, "Abu Dhabi, UAE", 24.4539, 54.3773, "2026.10", "CIE / Khalifa University", false, "https://cie2026.science"],
+
+    // --- 2027 Additions for Complete Forward Cycle ---
+    // Materials
+    ["aps-march-2027", "APS March 2027", "American Physical Society March Meeting 2027", "materials", 90, 88, "Chicago, USA", 41.8781, -87.6298, "2027.03", "APS", true, "https://march.aps.org"],
+    ["grc-mat-2027", "GRC Materials 2027", "Gordon Research Conference on Materials Science 2027", "materials", 95, 89, "Newport, USA", 41.4901, -71.3128, "2027.07", "Gordon Research", true, "https://www.grc.org"],
+    ["amc-2027", "AMC 2027", "Advanced Materials Congress 2027", "materials", 80, 89, "Singapore", 1.3521, 103.8198, "2027.08", "IAAM", false, "https://www.iaam.org"],
+    // Electronics
+    ["transducers-2027", "Transducers 2027", "International Conference on Solid-State Sensors, Actuators and Microsystems 2027", "electronics", 92, 91, "Vancouver, Canada", 49.2827, -123.1207, "2027.06", "IEEE EDS", true, "https://transducers-conference.org"],
+    // Architecture
+    ["plea-2027", "PLEA 2027", "Passive and Low Energy Architecture Conference 2027", "architecture", 88, 89, "Lisbon, Portugal", 38.7223, -9.1393, "2027.07", "PLEA", false, "https://plea-arch.org"],
+    ["ctbuh-2027", "CTBUH Europe 2027", "Council on Tall Buildings and Urban Habitat Conference 2027", "architecture", 88, 91, "Milan, Italy", 45.4642, 9.1900, "2027.05", "CTBUH", false, "https://ctbuh.org"],
+    // Civil Engineering
+    ["structures-2027", "Structures Congress 2027", "ASCE Structures Congress 2027", "civil", 89, 87, "Seattle, USA", 47.6062, -122.3321, "2027.04", "ASCE SEI", true, "https://www.structurescongress.org"],
+    ["ewri-2027", "EWRI 2027", "World Environmental & Water Resources Congress 2027", "civil", 88, 86, "Phoenix, USA", 33.4484, -112.0740, "2027.05", "ASCE EWRI", true, "https://www.ewricongress.org"],
+    ["icce-2027", "ICCE 2027", "International Conference on Coastal Engineering 2027", "civil", 87, 88, "Sydney, Australia", -33.8688, 151.2093, "2027.05", "ASCE COPRI", false, "https://www.icce2026.com"],
+    // Computer Science & AI
+    ["icml-2027", "ICML 2027", "International Conference on Machine Learning 2027", "cs", 99, 92, "San Diego, USA", 32.7157, -117.1611, "2027.07", "IMLS", true, "https://icml.cc"],
+    ["iclr-2027", "ICLR 2027", "International Conference on Learning Representations 2027", "cs", 98, 93, "Vienna, Austria", 48.2082, 16.3738, "2027.05", "ICLR Board", true, "https://iclr.cc"],
+    ["acl-2027", "ACL 2027", "Annual Meeting of the Association for Computational Linguistics 2027", "cs", 97, 88, "Melbourne, Australia", -37.8136, 144.9631, "2027.08", "ACL", true, "https://www.aclweb.org"],
+    ["kdd-2027", "KDD 2027", "ACM SIGKDD Conference on Knowledge Discovery and Data Mining 2027", "cs", 96, 91, "Seoul, South Korea", 37.5665, 126.9780, "2027.08", "ACM SIGKDD", true, "https://kdd.org"],
+    ["ijcai-2027", "IJCAI 2027", "International Joint Conference on Artificial Intelligence 2027", "cs", 95, 89, "Bologna, Italy", 44.4949, 11.3426, "2027.08", "IJCAI Organization", true, "https://www.ijcai.org"],
+    ["colt-2027", "COLT 2027", "Conference on Learning Theory 2027", "cs", 95, 87, "Zurich, Switzerland", 47.3769, 8.5417, "2027.07", "ALT / COLT", true, "http://learningtheory.org"],
+    ["siggraph-2027", "SIGGRAPH 2027", "ACM SIGGRAPH Conference and Exhibition 2027", "cs", 98, 92, "Los Angeles, USA", 34.0522, -118.2437, "2027.08", "ACM SIGGRAPH", true, "https://www.siggraph.org"],
+    ["chi-2027", "CHI 2027", "ACM Conference on Human Factors in Computing Systems 2027", "cs", 96, 90, "Hamburg, Germany", 53.5511, 9.9937, "2027.04", "ACM SIGCHI", true, "https://chi.acm.org"],
+    ["icse-2027", "ICSE 2027", "International Conference on Software Engineering 2027", "cs", 96, 88, "Minneapolis, USA", 44.9778, -93.2650, "2027.05", "IEEE CS / ACM SIGSOFT", true, "https://www.icse-conferences.org"],
+    ["sp-2027", "IEEE S&P 2027", "IEEE Symposium on Security and Privacy 2027", "cs", 98, 91, "San Francisco, USA", 37.7749, -122.4194, "2027.05", "IEEE CS", true, "https://www.ieee-security.org"],
+    ["usenixsec-2027", "USENIX Sec 2027", "USENIX Security Symposium 2027", "cs", 97, 89, "Boston, USA", 42.3601, -71.0589, "2027.08", "USENIX", true, "https://www.usenix.org"],
+    ["sigmod-2027", "SIGMOD 2027", "ACM SIGMOD/PODS International Conference on Management of Data 2027", "cs", 97, 90, "Vancouver, Canada", 49.2827, -123.1207, "2027.06", "ACM SIGMOD", true, "https://sigmod.org"],
+    ["vldb-2027", "VLDB 2027", "International Conference on Very Large Data Bases 2027", "cs", 96, 89, "Sydney, Australia", -33.8688, 151.2093, "2027.08", "VLDB Endowment", true, "https://vldb.org"],
+    ["aistats-2027", "AISTATS 2027", "International Conference on Artificial Intelligence and Statistics 2027", "cs", 94, 88, "Palermo, Italy", 38.1157, 13.3615, "2027.05", "AISTATS Society", true, "http://aistats.org"],
+    // Mechanical & Aerospace
+    ["turboexpo-2027", "ASME Turbo Expo 2027", "ASME Turbo Expo: Turbomachinery Technical Conference 2027", "mech", 92, 88, "Berlin, Germany", 52.5200, 13.4050, "2027.06", "ASME IGTI", true, "https://event.asme.org/Turbo-Expo"],
+    ["idetc-2027", "ASME IDETC 2027", "International Design Engineering Technical Conferences 2027", "mech", 90, 86, "Chicago, USA", 41.8781, -87.6298, "2027.08", "ASME", true, "https://event.asme.org/IDETC-CIE"],
+    ["aiaa-scitech-2027", "AIAA SciTech 2027", "AIAA Science and Technology Forum and Exposition 2027", "mech", 93, 89, "Orlando, USA", 28.5383, -81.3792, "2027.01", "AIAA", true, "https://www.aiaa.org/scitech"],
+    ["aiaa-aviation-2027", "AIAA AVIATION 2027", "AIAA AVIATION Forum 2027", "mech", 91, 87, "Las Vegas, USA", 36.1716, -115.1398, "2027.06", "AIAA", true, "https://www.aiaa.org/aviation"],
+    ["icas-2027", "ICAS 2027", "Congress of the International Council of the Aeronautical Sciences 2027", "mech", 89, 87, "Stockholm, Sweden", 59.3293, 18.0686, "2027.09", "ICAS", false, "https://www.icas.org"],
+    ["wcx-2027", "SAE WCX 2027", "SAE World Congress Experience 2027", "mech", 88, 85, "Detroit, USA", 42.3314, -83.0458, "2027.04", "SAE International", false, "https://www.sae.org/attend/wcx"],
+    ["wcb-2027", "WCB 2027", "World Congress of Biomechanics 2027", "mech", 91, 89, "Dublin, Ireland", 53.3498, -6.2603, "2027.07", "WCB Board", false, "https://wcb2026.com"],
+    ["aim-2027", "IEEE/ASME AIM 2027", "IEEE/ASME International Conference on Advanced Intelligent Mechatronics 2027", "mech", 87, 86, "Auckland, New Zealand", -36.8485, 174.7633, "2027.07", "IEEE / ASME", false, "https://aim2026.org"],
+    ["asme-mesa-2027", "ASME MESA 2027", "ASME/IEEE International Conference on Mechatronic and Embedded Systems 2027", "mech", 86, 85, "Kyoto, Japan", 35.0116, 135.7681, "2027.08", "ASME", false, "https://event.asme.org"],
+    ["euromech-2027", "EUROMECH 2027", "European Solid Mechanics Conference / Fluid Conference 2027", "mech", 88, 88, "Lyon, France", 45.7640, 4.8357, "2027.07", "EUROMECH", false, "https://euromech.org"],
+    // Chemical & Energy
+    ["imlb-2027", "IMLB 2027", "International Meeting on Lithium Batteries 2027", "chem", 93, 89, "Kyoto, Japan", 35.0116, 135.7681, "2027.06", "IMLB Committee", true, "https://imlb.org"],
+    ["macro-2027", "IUPAC MACRO 2027", "IUPAC World Polymer Congress 2027", "chem", 90, 88, "Toronto, Canada", 43.6532, -79.3832, "2027.07", "IUPAC", true, "https://iupac.org"],
+    ["aabc-eu-2027", "AABC Europe 2027", "Advanced Automotive Battery Conference Europe 2027", "chem", 87, 88, "Mainz, Germany", 49.9929, 8.2473, "2027.05", "Cambridge EnerTech", false, "https://www.advancedautobat.com/europe"],
+    ["bat-show-eu-2027", "Battery Show Europe 2027", "The Battery Show Europe 2027", "chem", 89, 90, "Stuttgart, Germany", 48.7758, 9.1829, "2027.05", "Informa Markets", false, "https://www.thebatteryshow.eu"],
+    ["icae-2027", "ICAE 2027", "International Conference on Applied Energy 2027", "chem", 88, 86, "Tokyo, Japan", 35.6762, 139.6503, "2027.09", "Applied Energy Association", false, "https://applied-energy.org"],
+    ["eubce-2027", "EUBCE 2027", "European Biomass Conference and Exhibition 2027", "chem", 86, 88, "Bologna, Italy", 44.4949, 11.3426, "2027.05", "ETA-Florence", false, "https://www.eubce.com"],
+    // Biomedical & Biotech
+    ["embc-2027", "IEEE EMBC 2027", "Annual International Conference of the IEEE EMBS 2027", "bio", 94, 91, "Toronto, Canada", 43.6532, -79.3832, "2027.07", "IEEE EMBS", true, "https://embc.embs.org"],
+    ["ismb-2027", "ISMB 2027", "Intelligent Systems for Molecular Biology 2027", "bio", 95, 92, "Vienna, Austria", 48.2082, 16.3738, "2027.07", "ISCB", true, "https://www.iscb.org/ismb"],
+    ["recomb-2027", "RECOMB 2027", "Research in Computational Molecular Biology 2027", "bio", 93, 89, "Lausanne, Switzerland", 46.5197, 6.6323, "2027.04", "RECOMB", true, "https://recomb.org"],
+    ["sfb-2027", "SFB 2027", "Society For Biomaterials Annual Meeting 2027", "bio", 89, 87, "Orlando, USA", 28.5383, -81.3792, "2027.04", "SFB", false, "https://biomaterials.org"],
+    ["termis-eu-2027", "TERMIS-EU 2027", "Tissue Engineering and Regenerative Medicine Europe 2027", "bio", 89, 90, "Dublin, Ireland", 53.3498, -6.2603, "2027.06", "TERMIS", false, "https://termis.org"],
+    ["asgct-2027", "ASGCT 2027", "American Society of Gene & Cell Therapy Annual Meeting 2027", "bio", 92, 90, "Chicago, USA", 41.8781, -87.6298, "2027.05", "ASGCT", true, "https://asgct.org"],
+    ["aacr-2027", "AACR 2027", "American Association for Cancer Research Annual Meeting 2027", "bio", 96, 92, "San Diego, USA", 32.7157, -117.1611, "2027.04", "AACR", true, "https://www.aacr.org"],
+    ["isscr-2027", "ISSCR 2027", "International Society for Stem Cell Research Annual Meeting 2027", "bio", 93, 90, "Boston, USA", 42.3601, -71.0589, "2027.06", "ISSCR", true, "https://www.isscr.org"],
+    ["eccb-bio-2027", "ECCB 2027", "European Conference on Computational Biology 2027", "bio", 90, 89, "Copenhagen, Denmark", 55.6761, 12.5683, "2027.09", "SIB Swiss Institute of Bioinformatics", false, "https://eccb2026.org"],
+    ["hgm-2027", "HUGO HGM 2027", "Human Genome Meeting 2027", "bio", 89, 88, "Singapore", 1.3521, 103.8198, "2027.04", "HUGO", false, "https://hugo-international.org"],
+    ["esb-2027", "ESB 2027", "European Society of Biomechanics Congress 2027", "bio", 88, 88, "Edinburgh, UK", 55.9533, -3.1883, "2027.09", "ESB", false, "https://esbiomech.org"],
+    ["wacbe-2027", "WACBE 2027", "World Association for Chinese Biomedical Engineers 2027", "bio", 86, 87, "Hong Kong", 22.3193, 114.1694, "2027.07", "WACBE", false, "http://wacbe.org"],
+    // Industrial Engineering
+    ["ifac-2027", "IFAC 2027", "IFAC World Congress / Conference 2027", "ind", 95, 91, "Busan, South Korea", 35.1796, 129.0756, "2027.08", "IFAC", true, "https://ifac-control.org"],
+    ["informs-analytics-2027", "INFORMS Analytics 2027", "INFORMS Business Analytics Conference 2027", "ind", 90, 88, "Denver, USA", 39.7392, -104.9903, "2027.04", "INFORMS", false, "https://meetings.informs.org"],
+    ["iserc-2027", "ISERC 2027", "IISE Annual Conference & Expo 2027", "ind", 91, 88, "Atlanta, USA", 33.7490, -84.3880, "2027.05", "IISE", true, "https://www.iise.org"],
+    ["temscon-2027", "IEEE TEMSCON 2027", "IEEE Technology & Engineering Management Society Conference 2027", "ind", 87, 86, "Helsinki, Finland", 60.1699, 24.9384, "2027.06", "IEEE TEMS", false, "https://temscon.org"]
 ];
 
 // --- Custom Benefits for Top Flagships ---
