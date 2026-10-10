@@ -794,8 +794,23 @@ input[type="range"]::-webkit-slider-thumb:hover {
     transition: var(--transition-fast);
 }
 
-.leaflet-bar a:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+.leaflet-control-attribution {
+    background: rgba(15, 23, 42, 0.75) !important;
+    backdrop-filter: blur(6px);
+    color: var(--text-muted) !important;
+    font-size: 0.65rem !important;
+    border-radius: var(--border-radius-sm) 0 0 0;
+    padding: 2px 6px !important;
+}
+
+.leaflet-control-attribution a {
+    color: var(--text-secondary) !important;
+    text-decoration: none;
+}
+
+.leaflet-control-attribution a:hover {
+    color: var(--accent) !important;
+    text-decoration: underline;
 }
 
 .leaflet-popup-content-wrapper {

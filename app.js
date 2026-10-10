@@ -619,6 +619,7 @@ function getGroupedMarkerIcon(count, isActive = false) {
 
 const INITIAL_MAP_CENTER = [25, 10];
 const INITIAL_MAP_ZOOM = 2.5;
+const CARTO_API_KEY = 'cb1_4fx7_1_90b4020701de4739f2fa31c5';
 
 function initMap() {
     // Tight vertical bounds: cut Antarctica completely (south limit -50), cap north at 75
@@ -630,7 +631,7 @@ function initMap() {
     // minZoom 1.5 with fractional zoom support enabled (zoomSnap/zoomDelta: 0.5)
     map = L.map('map', {
         zoomControl: false,
-        attributionControl: false,
+        attributionControl: true,
         minZoom: 1.5,
         zoomSnap: 0.5,
         zoomDelta: 0.5,
@@ -639,9 +640,10 @@ function initMap() {
         worldCopyJump: true
     }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 
-    // Dark tiles from CartoDB (tiles repeat horizontally by default)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19
+    // Dark raster tiles from CARTO with registered API key and attribution
+    L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`, {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>'
     }).addTo(map);
 
     L.control.zoom({
