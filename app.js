@@ -686,7 +686,8 @@ const state = {
     selectedFields: loadSavedFields(),
     minCQI: 60,
     minGSAI: 50,
-    sortBy: 'cqi'
+    sortBy: 'cqi',
+    showPast: false
 };
 
 // --- URL Parameter Engine for Deep-Linking & SEO ---
@@ -713,7 +714,13 @@ function parseUrlParameters() {
             }
         }
 
-        // 3. Conference ID (?id=...)
+        // 3. Timeline / Past Filter (?past=1 or ?timeline=all)
+        const pastParam = params.get('past') || params.get('timeline');
+        if (pastParam === '1' || pastParam === 'true' || pastParam === 'all') {
+            state.showPast = true;
+        }
+
+        // 4. Conference ID (?id=...)
         const idParam = params.get('id');
         if (idParam) {
             pendingConferenceIdFromUrl = idParam.trim();
@@ -735,6 +742,10 @@ function updateUrlParams(explicitConferenceId = undefined) {
             DEFAULT_FIELDS.every(f => state.selectedFields.includes(f));
         if (!isDefaultFields && state.selectedFields.length > 0 && state.selectedFields.length < ALL_FIELDS.length) {
             params.set('field', state.selectedFields.join(','));
+        }
+
+        if (state.showPast) {
+            params.set('past', '1');
         }
 
         if (explicitConferenceId !== undefined) {
@@ -785,30 +796,57 @@ const modalBenefitGrants = document.getElementById('modal-benefit-grants');
 const modalBenefitNetworking = document.getElementById('modal-benefit-networking');
 const modalWebsiteLink = document.getElementById('modal-website-link');
 
-// --- Functions ---
+// --- Functions & Pure Logic Delegators ---
 
-function isWithinYearWindow(dateStr) {
-    if (!dateStr) return false;
-    
-    // Parse Year and Month from dateStr (e.g. "2026.05")
+function parseConferenceDate(dateStr) {
+    if (typeof window !== 'undefined' && window.app_logic_helper && window.app_logic_helper.parseConferenceDate) {
+        return window.app_logic_helper.parseConferenceDate(dateStr);
+    }
+    if (!dateStr) return null;
     const match = dateStr.match(/^(\d{4})\.(\d{2})/);
-    if (!match) return true; // Keep it if we can't parse it
+    if (!match) return null;
+    return {
+        year: parseInt(match[1], 10),
+        month: parseInt(match[2], 10)
+    };
+}
+
+function getConferenceTimeStatus(dateStr, referenceDate = new Date()) {
+    if (typeof window !== 'undefined' && window.app_logic_helper && window.app_logic_helper.getConferenceTimeStatus) {
+        return window.app_logic_helper.getConferenceTimeStatus(dateStr, referenceDate);
+    }
+    const parsed = parseConferenceDate(dateStr);
+    if (!parsed) return 'upcoming';
     
-    const confYear = parseInt(match[1], 10);
-    const confMonth = parseInt(match[2], 10); // 1-indexed
+    const currentYear = referenceDate.getFullYear();
+    const currentMonth = referenceDate.getMonth() + 1; // 1-indexed
     
-    // Get current date year and month
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // 1-indexed
+    const confAbsoluteMonths = parsed.year * 12 + parsed.month;
+    const currentAbsoluteMonths = currentYear * 12 + currentMonth;
     
-    // Calculate absolute month indices to enforce strict -1 year to +1 year window (-12 to +12 months)
-    const confAbsoluteMonths = confYear * 12 + confMonth;
+    if (confAbsoluteMonths < currentAbsoluteMonths) {
+        return 'past';
+    } else if (confAbsoluteMonths === currentAbsoluteMonths) {
+        return 'current';
+    } else {
+        return 'future';
+    }
+}
+
+function isWithinYearWindow(dateStr, referenceDate = new Date()) {
+    if (typeof window !== 'undefined' && window.app_logic_helper && window.app_logic_helper.isWithinYearWindow) {
+        return window.app_logic_helper.isWithinYearWindow(dateStr, referenceDate);
+    }
+    const parsed = parseConferenceDate(dateStr);
+    if (!parsed) return true;
+    
+    const currentYear = referenceDate.getFullYear();
+    const currentMonth = referenceDate.getMonth() + 1;
+    
+    const confAbsoluteMonths = parsed.year * 12 + parsed.month;
     const currentAbsoluteMonths = currentYear * 12 + currentMonth;
     const diffMonths = confAbsoluteMonths - currentAbsoluteMonths;
     
-    // Past: up to 1 year ago (diffMonths >= -12)
-    // Future: up to 1 year ahead (diffMonths <= 12)
     return (diffMonths >= -12 && diffMonths <= 12);
 }
 
@@ -875,8 +913,15 @@ function getFilteredConferences() {
 
         // Date window filter (-1 year to +1 year from today)
         const matchDateWindow = isWithinYearWindow(conf.date);
+        if (!matchDateWindow) return false;
 
-        return matchSearch && matchField && matchCQI && matchGSAI && matchDateWindow;
+        // Timeline filter: By default (!state.showPast), only upcoming/future/current conferences are shown
+        if (!state.showPast) {
+            const timeStatus = getConferenceTimeStatus(conf.date);
+            if (timeStatus === 'past') return false;
+        }
+
+        return matchSearch && matchField && matchCQI && matchGSAI;
     }).sort((a, b) => {
         if (state.sortBy === 'cqi') return b.cqi - a.cqi;
         if (state.sortBy === 'gsai') return b.gsai - a.gsai;
@@ -893,9 +938,20 @@ function updateStats(filteredData) {
     const topCount = filteredData.filter(conf => conf.isTopTier).length;
     topCountEl.textContent = topCount;
 
-    const resultsCountEl = document.getElementById('results-count');
-    if (resultsCountEl) {
-        resultsCountEl.textContent = filteredData.length;
+    const statTotalLabel = document.getElementById('stat-total-label');
+    if (statTotalLabel) {
+        statTotalLabel.textContent = state.showPast ? 'All Events' : 'Upcoming';
+    }
+
+    const feedbackEl = document.getElementById('search-results-feedback');
+    if (feedbackEl) {
+        const pastCount = filteredData.filter(c => getConferenceTimeStatus(c.date) === 'past').length;
+        const upcomingCount = filteredData.length - pastCount;
+        if (state.showPast) {
+            feedbackEl.innerHTML = `<i class="fa-solid fa-filter"></i> Showing <strong>${upcomingCount}</strong> upcoming + <strong>${pastCount}</strong> past conferences (${filteredData.length} total)`;
+        } else {
+            feedbackEl.innerHTML = `<i class="fa-solid fa-filter"></i> Showing <strong>${upcomingCount}</strong> upcoming conferences`;
+        }
     }
 }
 
@@ -914,7 +970,11 @@ function renderList(filteredData) {
 
     filteredData.forEach(conf => {
         const card = document.createElement('div');
-        card.className = `conference-card ${conf.field}-card`;
+        const timeStatus = getConferenceTimeStatus(conf.date);
+        const isPast = timeStatus === 'past';
+        const isCurrent = timeStatus === 'current';
+
+        card.className = `conference-card ${conf.field}-card ${isPast ? 'card-past' : ''}`;
         card.dataset.id = conf.id;
         
         let fieldNameEn = '';
@@ -929,15 +989,25 @@ function renderList(filteredData) {
         else if (conf.field === 'bio') fieldNameEn = 'Biomedical & Biotech';
         else if (conf.field === 'ind') fieldNameEn = 'Industrial Engineering';
 
+        let timeBadgeHtml = '';
+        if (isPast) {
+            timeBadgeHtml = '<span class="badge-tag badge-status-past"><i class="fa-solid fa-clock-rotate-left"></i> Concluded</span>';
+        } else if (isCurrent) {
+            timeBadgeHtml = '<span class="badge-tag badge-status-current"><i class="fa-solid fa-bolt"></i> This Month</span>';
+        } else {
+            timeBadgeHtml = '<span class="badge-tag badge-status-upcoming"><i class="fa-solid fa-calendar-check"></i> Upcoming</span>';
+        }
+
         card.innerHTML = `
             <div class="card-header">
                 <div class="card-header-top">
                     <h3>${conf.name}</h3>
-                    <div class="card-date">${conf.date}</div>
+                    <div class="card-date ${isPast ? 'date-past' : 'date-upcoming'}">${conf.date}</div>
                 </div>
                 <div class="card-badges">
                     <span class="badge-tag badge-${conf.field}">${fieldNameEn}</span>
                     ${conf.isTopTier ? '<span class="badge-tag badge-toptier">A*</span>' : ''}
+                    ${timeBadgeHtml}
                 </div>
             </div>
             <div class="card-meta">
@@ -981,10 +1051,17 @@ function renderMapMarkers(filteredData) {
 
         if (confList.length === 1) {
             // Single conference — create at 3 longitude offsets for wrapping
+            const timeStatus = getConferenceTimeStatus(firstConf.date);
+            const timeBadgeHtml = timeStatus === 'past'
+                ? '<span class="popup-time-badge status-past"><i class="fa-solid fa-clock-rotate-left"></i> Concluded</span>'
+                : (timeStatus === 'current'
+                    ? '<span class="popup-time-badge status-current"><i class="fa-solid fa-bolt"></i> This Month</span>'
+                    : '<span class="popup-time-badge status-upcoming">Upcoming</span>');
+
             const popupContent = `
                 <div class="map-popup-card">
-                    <h4>${firstConf.name}</h4>
-                    <p><i class="fa-solid fa-location-dot"></i> ${firstConf.location}</p>
+                    <h4>${firstConf.name} ${timeBadgeHtml}</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> ${firstConf.location} &bull; <i class="fa-solid fa-calendar"></i> ${firstConf.date}</p>
                     <div class="popup-score-row">
                         <span style="background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3)">CQI: ${firstConf.cqi}</span>
                         <span style="background: rgba(14,165,233,0.1); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.3)">GSAI: ${firstConf.gsai}</span>
@@ -1025,7 +1102,10 @@ function renderMapMarkers(filteredData) {
                         ${city} (${confList.length} Conferences)
                     </h4>
                     <div style="max-height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-right: 4px;">
-                        ${confList.map(c => `
+                        ${confList.map(c => {
+                            const cStatus = getConferenceTimeStatus(c.date);
+                            const cBadge = cStatus === 'past' ? '<span class="popup-time-badge status-past">Ended</span>' : '';
+                            return `
                             <div class="popup-list-item" onclick="selectConference('${c.id}')" style="
                                 cursor: pointer;
                                 display: flex;
@@ -1048,10 +1128,11 @@ function renderMapMarkers(filteredData) {
                                 };
                                 font-size: 0.75rem;
                             ">
-                                <span style="font-weight: 600;">${c.name}</span>
+                                <span style="font-weight: 600;">${c.name} ${cBadge}</span>
                                 <span style="font-size: 0.65rem; color: #f43f5e; font-weight: 700;">CQI: ${c.cqi}</span>
                             </div>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </div>
                 </div>
             `;
@@ -1212,6 +1293,31 @@ function selectConference(id) {
     modalBenefitNetworking.textContent = conf.benefits.networking;
     
     modalWebsiteLink.href = conf.url;
+
+    // Render Modal Time Status Banner
+    const timeBannerEl = document.getElementById('modal-time-banner');
+    if (timeBannerEl) {
+        const timeStatus = getConferenceTimeStatus(conf.date);
+        if (timeStatus === 'past') {
+            timeBannerEl.className = 'modal-time-banner modal-time-past';
+            timeBannerEl.innerHTML = `
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <div><strong>Concluded Event:</strong> This conference was held in <strong>${conf.date}</strong>. Check the official website for proceedings and the next edition.</div>
+            `;
+        } else if (timeStatus === 'current') {
+            timeBannerEl.className = 'modal-time-banner modal-time-current';
+            timeBannerEl.innerHTML = `
+                <i class="fa-solid fa-bolt"></i>
+                <div><strong>Happening This Month:</strong> Scheduled for <strong>${conf.date}</strong>. Sessions and digital streams are currently active.</div>
+            `;
+        } else {
+            timeBannerEl.className = 'modal-time-banner modal-time-upcoming';
+            timeBannerEl.innerHTML = `
+                <i class="fa-solid fa-calendar-check"></i>
+                <div><strong>Upcoming Conference:</strong> Scheduled for <strong>${conf.date}</strong> in <strong>${conf.location}</strong>. Paper submissions & travel grants are active.</div>
+            `;
+        }
+    }
 
     // Open Modal
     detailModal.classList.add('show');
@@ -1488,6 +1594,36 @@ if (openSuggestBtn && suggestModal) {
     });
 }
 
+// --- Timeline Filter Controls (Future vs Past) ---
+const btnTimelineUpcoming = document.getElementById('btn-timeline-upcoming');
+const btnTimelinePast = document.getElementById('btn-timeline-past');
+const timelineHint = document.getElementById('timeline-hint');
+
+function setTimelineMode(showPast) {
+    state.showPast = showPast;
+    syncTimelineUI();
+    applyFilters();
+}
+
+function syncTimelineUI() {
+    if (btnTimelineUpcoming && btnTimelinePast) {
+        btnTimelineUpcoming.classList.toggle('active', !state.showPast);
+        btnTimelineUpcoming.setAttribute('aria-checked', (!state.showPast).toString());
+        btnTimelinePast.classList.toggle('active', state.showPast);
+        btnTimelinePast.setAttribute('aria-checked', state.showPast.toString());
+    }
+    if (timelineHint) {
+        timelineHint.textContent = state.showPast ? 'Including Past' : 'Upcoming Only';
+    }
+}
+
+if (btnTimelineUpcoming) {
+    btnTimelineUpcoming.addEventListener('click', () => setTimelineMode(false));
+}
+if (btnTimelinePast) {
+    btnTimelinePast.addEventListener('click', () => setTimelineMode(true));
+}
+
 // Sync DOM checkbox elements to match state.selectedFields
 function syncFieldCheckboxes() {
     document.querySelectorAll('.btn-checkbox').forEach(btn => {
@@ -1508,15 +1644,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initUpdateStatusBadge();
     parseUrlParameters();
     syncFieldCheckboxes();
+    syncTimelineUI();
     initMap();
     applyFilters();
 
     // Deep-linking: If an ?id= parameter was provided in the URL, highlight & open that conference
     if (pendingConferenceIdFromUrl) {
         const targetConf = conferences.find(c => c.id === pendingConferenceIdFromUrl);
-        if (targetConf && !state.selectedFields.includes(targetConf.field)) {
-            state.selectedFields.push(targetConf.field);
-            syncFieldCheckboxes();
+        if (targetConf) {
+            // If target conference has already concluded, automatically include past conferences
+            if (!state.showPast && getConferenceTimeStatus(targetConf.date) === 'past') {
+                state.showPast = true;
+                syncTimelineUI();
+            }
+            if (!state.selectedFields.includes(targetConf.field)) {
+                state.selectedFields.push(targetConf.field);
+                syncFieldCheckboxes();
+            }
             applyFilters();
         }
         setTimeout(() => {

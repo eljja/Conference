@@ -1613,3 +1613,208 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .noscript-seo-fallback li {
     font-size: 0.75rem;
 }
+
+/* --- Timeline Filter (Future vs Past) --- */
+.timeline-filter-group {
+    background: rgba(30, 41, 59, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem 0.85rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(8px);
+}
+
+.timeline-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.timeline-hint {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.timeline-toggle-wrapper {
+    display: flex;
+    gap: 0.35rem;
+    background: rgba(15, 23, 42, 0.75);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-timeline-toggle {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-timeline-toggle:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-timeline-toggle.active#btn-timeline-upcoming {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(59, 130, 246, 0.95));
+    color: #ffffff;
+    border-color: rgba(96, 165, 250, 0.4);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
+.btn-timeline-toggle.active#btn-timeline-past {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(99, 102, 241, 0.95));
+    color: #ffffff;
+    border-color: rgba(129, 140, 248, 0.4);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+/* --- Past Conference Visual Distinction --- */
+.conference-card.card-past {
+    opacity: 0.82;
+    background: rgba(15, 23, 42, 0.65);
+    border-color: rgba(100, 116, 139, 0.25);
+    filter: saturate(0.85);
+    transition: all 0.25s ease;
+}
+
+.conference-card.card-past:hover {
+    opacity: 1;
+    filter: saturate(1);
+    transform: translateY(-2px);
+    border-color: rgba(148, 163, 184, 0.5);
+}
+
+.conference-card.card-past .card-header-top h3 {
+    color: #cbd5e1;
+}
+
+.badge-status-past {
+    background: rgba(100, 116, 139, 0.25);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.badge-status-current {
+    background: rgba(245, 158, 11, 0.18);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.2);
+}
+
+.badge-status-upcoming {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.date-past {
+    color: #94a3b8 !important;
+}
+
+.date-upcoming {
+    color: #38bdf8 !important;
+}
+
+/* --- Modal Time Status Banner --- */
+.modal-time-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.modal-time-banner.modal-time-past {
+    background: rgba(71, 85, 105, 0.2);
+    border-left: 4px solid #94a3b8;
+    color: #cbd5e1;
+}
+
+.modal-time-banner.modal-time-past i {
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+.modal-time-banner.modal-time-current {
+    background: rgba(245, 158, 11, 0.15);
+    border-left: 4px solid #f59e0b;
+    color: #fef3c7;
+}
+
+.modal-time-banner.modal-time-current i {
+    color: #f59e0b;
+    font-size: 1rem;
+}
+
+.modal-time-banner.modal-time-upcoming {
+    background: rgba(16, 185, 129, 0.12);
+    border-left: 4px solid #10b981;
+    color: #d1fae5;
+}
+
+.modal-time-banner.modal-time-upcoming i {
+    color: #34d399;
+    font-size: 1rem;
+}
+
+/* --- Map Popup Status Pill --- */
+.popup-time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+}
+
+.popup-time-badge.status-past {
+    background: rgba(100, 116, 139, 0.25);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.popup-time-badge.status-current {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.popup-time-badge.status-upcoming {
+    background: rgba(16, 185, 129, 0.18);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+

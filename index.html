@@ -294,7 +294,7 @@
             </div>
             <div class="header-stats">
                 <div class="stat-box">
-                    <span class="stat-label">Conferences</span>
+                    <span class="stat-label" id="stat-total-label">Conferences</span>
                     <span class="stat-value" id="stat-total-count">0</span>
                 </div>
                 <div class="stat-box">
@@ -333,6 +333,22 @@
 
                     <div class="search-results-feedback" id="search-results-feedback">
                         <i class="fa-solid fa-filter"></i> Showing <span id="results-count">0</span> conferences
+                    </div>
+                    
+                    <!-- Timeline Filter: Future vs Past -->
+                    <div class="timeline-filter-group">
+                        <div class="timeline-control-header">
+                            <span class="timeline-label"><i class="fa-solid fa-clock-rotate-left"></i> Timeline View</span>
+                            <span class="timeline-hint" id="timeline-hint">Upcoming Only</span>
+                        </div>
+                        <div class="timeline-toggle-wrapper" role="radiogroup" aria-label="Conference timeline filter">
+                            <button type="button" class="btn-timeline-toggle active" id="btn-timeline-upcoming" role="radio" aria-checked="true" title="Show upcoming conferences only">
+                                <i class="fa-solid fa-calendar-check"></i> Upcoming Only
+                            </button>
+                            <button type="button" class="btn-timeline-toggle" id="btn-timeline-past" role="radio" aria-checked="false" title="Include concluded and past conferences">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Include Past
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="filter-group">
@@ -468,6 +484,9 @@
             </div>
             
             <div class="modal-body-section">
+                <!-- Status Timeline Banner -->
+                <div class="modal-time-banner" id="modal-time-banner"></div>
+
                 <!-- Info Cards -->
                 <div class="modal-quick-info">
                     <div class="info-item">
@@ -699,6 +718,9 @@
     <!-- Leaflet.js JavaScript for Mapping -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
+    <!-- Helper & Pure Logic Engine -->
+    <script src="app_logic_helper.js"></script>
+
     <!-- Application Logic -->
     <script src="app.js"></script>
 </body>

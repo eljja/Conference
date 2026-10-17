@@ -86,11 +86,12 @@
 ---
 
 ### ✨ 주요 편의 기능 (Key Features)
+* **⏳ 미래/과거 학회 분리 및 타임라인 뷰**: 접속한 사용자의 오늘 날짜를 기준으로 기본적으로는 다가올 **미래 학회(Upcoming Only)**만 깔끔하게 노출되며, 지난 학회 이력 확인이 필요한 경우 **[Include Past]** 토글 버튼을 켜서 과거 학회(종료 배지 및 차별화된 시각 효과 적용)를 함께 조회할 수 있습니다.
 * **🗺️ 반응형 인터랙티브 지도**: Leaflet.js 기반의 무한 스크롤 타일 맵, 마커 클러스터링, 원클릭 지도 시점 초기화(`Reset View`).
 * **🔍 스마트 검색 및 필터**: 키워드 검색, 원클릭 검색어 지우기(`X`), 실시간 검색 결과 수 피드백(`Showing N conferences`), 분야별 복수 선택 및 CQI/GSAI 슬라이더.
 * **📱 모바일 맞춤형 UI**: 768px 이하 모바일 환경에서 `List View`와 `Map View`를 손쉽게 오가는 전용 토글 탭 지원.
 * **💡 건의 및 피드백 시스템**: 신규 학회 추가나 분야 건의를 위한 백엔드리스 팝업 모달 지원.
-* **🌐 검색엔진 최적화 (SEO)**: Google 및 주요 검색엔진을 위한 Schema.org JSON-LD 구조화 데이터, Open Graph, Twitter Cards, Sitemap 연동.
+* **🌐 검색엔진 최적화 (SEO)**: Google 및 주요 검색엔진을 위한 Schema.org JSON-LD 구조화 데이터, Open Graph, Twitter Cards, 10개 분야별 Sitemap 연동 및 딥링킹 지원.
 
 ---
 
@@ -182,11 +183,12 @@ The database contains **368 verified real-world international conferences** with
 ---
 
 ### ✨ Key Features
+* **⏳ Dynamic Timeline Mode (Upcoming vs. Past Conferences)**: Defaults to showing only upcoming/ongoing conferences based on the user's current date, with a dedicated toggle button to reveal concluded past conferences (marked with distinct status badges, dimmer cards, and popup tags).
 * **🗺️ Interactive Global Map**: Powered by Leaflet.js with cylindrical tile wrapping, city marker grouping, and one-click `Reset View`.
 * **🔍 Search & Multi-Field Filtering**: Fast text search with clear (`X`) button, instant result counts, discipline toggles, and CQI/GSAI sliders.
 * **📱 Mobile Responsive Controls**: Dedicated `List View` / `Map View` tab bar for mobile viewports ($\le 768\text{px}$).
 * **💡 Serverless Suggestion Box**: Integrated suggestion modal for community submissions.
-* **🌐 Google SEO & Structured Data**: Built-in Schema.org JSON-LD (`WebSite`, `WebApplication`, `FAQPage`), Open Graph, and Twitter Cards.
+* **🌐 Google SEO, Deep-Linking & Rich Schemas**: Built-in Schema.org JSON-LD (`AcademicEvent`, `ItemList`, `BreadcrumbList`, `FAQPage`), multi-discipline sitemaps, and deep-linking URL parameters (`?field=...`, `?id=...`, `?q=...`, `?past=1`).
 
 ---
 
