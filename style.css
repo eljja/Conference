@@ -1491,3 +1491,125 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .suggest-submit-btn:hover {
     box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
 }
+
+/* --- SEO Crawler & Semantic Directory Footer --- */
+.seo-crawler-directory {
+    background: #080d1a;
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 1.5rem 4rem 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.seo-crawler-directory .seo-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.seo-crawler-directory h2 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+}
+
+.seo-crawler-directory .seo-lead {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    max-width: 900px;
+    margin-bottom: 1.8rem;
+}
+
+.seo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+}
+
+.seo-col {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem;
+}
+
+.seo-col h3 {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.seo-col h3 a {
+    color: #a5b4fc;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.seo-col h3 a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.seo-col p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.seo-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.seo-col ul li {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.seo-col ul li a {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.seo-col ul li a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.noscript-seo-fallback {
+    padding: 1.2rem;
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: var(--border-radius-sm);
+    margin: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.noscript-seo-fallback h2 {
+    font-size: 1rem;
+    color: #f8fafc;
+    margin-bottom: 0.5rem;
+}
+
+.noscript-seo-fallback p {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+}
+
+.noscript-seo-fallback ul {
+    list-style: disc inside;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.noscript-seo-fallback li {
+    font-size: 0.75rem;
+}

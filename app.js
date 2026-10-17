@@ -666,6 +666,9 @@ function addMarkerWithWrapping(lat, lon, markerFactory) {
     return markers;
 }
 
+const ALL_FIELDS = ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs', 'mech', 'chem', 'bio', 'ind'];
+const DEFAULT_FIELDS = ['semiconductor', 'electronics'];
+
 // Load saved fields from LocalStorage or default to initial 2 fields
 const loadSavedFields = () => {
     try {
@@ -674,7 +677,7 @@ const loadSavedFields = () => {
     } catch (e) {
         console.warn('Failed to load saved fields:', e);
     }
-    return ['semiconductor', 'electronics'];
+    return [...DEFAULT_FIELDS];
 };
 
 // --- App State ---
@@ -685,6 +688,71 @@ const state = {
     minGSAI: 50,
     sortBy: 'cqi'
 };
+
+// --- URL Parameter Engine for Deep-Linking & SEO ---
+let pendingConferenceIdFromUrl = null;
+
+function parseUrlParameters() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        
+        // 1. Search Query (?q=...)
+        const qParam = params.get('q');
+        if (qParam) {
+            state.searchQuery = qParam.toLowerCase().trim();
+            if (searchInput) searchInput.value = qParam;
+            if (searchClearBtn) searchClearBtn.style.display = 'flex';
+        }
+
+        // 2. Discipline Field (?field=...)
+        const fieldParam = params.get('field');
+        if (fieldParam) {
+            const requested = fieldParam.split(',').map(f => f.trim().toLowerCase()).filter(f => ALL_FIELDS.includes(f));
+            if (requested.length > 0) {
+                state.selectedFields = requested;
+            }
+        }
+
+        // 3. Conference ID (?id=...)
+        const idParam = params.get('id');
+        if (idParam) {
+            pendingConferenceIdFromUrl = idParam.trim();
+        }
+    } catch (e) {
+        console.warn('URL parsing error:', e);
+    }
+}
+
+function updateUrlParams(explicitConferenceId = undefined) {
+    try {
+        const params = new URLSearchParams();
+        if (state.searchQuery) {
+            params.set('q', state.searchQuery);
+        }
+        
+        // Check if selected fields differ from default 2 fields
+        const isDefaultFields = state.selectedFields.length === DEFAULT_FIELDS.length &&
+            DEFAULT_FIELDS.every(f => state.selectedFields.includes(f));
+        if (!isDefaultFields && state.selectedFields.length > 0 && state.selectedFields.length < ALL_FIELDS.length) {
+            params.set('field', state.selectedFields.join(','));
+        }
+
+        if (explicitConferenceId !== undefined) {
+            if (explicitConferenceId) {
+                params.set('id', explicitConferenceId);
+            }
+        } else {
+            const activeCard = document.querySelector('.conference-card.active');
+            if (activeCard && detailModal && detailModal.classList.contains('show')) {
+                params.set('id', activeCard.dataset.id);
+            }
+        }
+
+        const newQuery = params.toString();
+        const newUrl = newQuery ? `${window.location.pathname}?${newQuery}` : window.location.pathname;
+        window.history.replaceState({}, '', newUrl);
+    } catch (e) {}
+}
 
 // --- DOM References ---
 const searchInput = document.getElementById('search-input');
@@ -1147,6 +1215,7 @@ function selectConference(id) {
 
     // Open Modal
     detailModal.classList.add('show');
+    updateUrlParams(conf.id);
 }
 
 function renderMetricRow(label, score) {
@@ -1168,6 +1237,7 @@ function applyFilters() {
     updateStats(filteredData);
     renderList(filteredData);
     renderMapMarkers(filteredData);
+    updateUrlParams();
 }
 
 // --- Event Listeners ---
@@ -1237,6 +1307,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         if (detailModal && detailModal.classList.contains('show')) {
             detailModal.classList.remove('show');
+            updateUrlParams('');
         }
         const suggestModalEl = document.getElementById('suggest-modal');
         if (suggestModalEl && suggestModalEl.classList.contains('show')) {
@@ -1246,9 +1317,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Quick Field Actions: Select All & Reset to Default
-const ALL_FIELDS = ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs', 'mech', 'chem', 'bio', 'ind'];
-const DEFAULT_FIELDS = ['semiconductor', 'electronics'];
-
 const selectAllFieldsBtn = document.getElementById('btn-select-all-fields');
 const resetFieldsBtn = document.getElementById('btn-reset-fields');
 
@@ -1325,11 +1393,13 @@ sortSelect.addEventListener('change', (e) => {
 // Close modal
 closeModalBtn.addEventListener('click', () => {
     detailModal.classList.remove('show');
+    updateUrlParams('');
 });
 
 detailModal.addEventListener('click', (e) => {
     if (e.target === detailModal) {
         detailModal.classList.remove('show');
+        updateUrlParams('');
     }
 });
 
@@ -1436,7 +1506,24 @@ function syncFieldCheckboxes() {
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
     initUpdateStatusBadge();
+    parseUrlParameters();
     syncFieldCheckboxes();
     initMap();
     applyFilters();
+
+    // Deep-linking: If an ?id= parameter was provided in the URL, highlight & open that conference
+    if (pendingConferenceIdFromUrl) {
+        const targetConf = conferences.find(c => c.id === pendingConferenceIdFromUrl);
+        if (targetConf && !state.selectedFields.includes(targetConf.field)) {
+            state.selectedFields.push(targetConf.field);
+            syncFieldCheckboxes();
+            applyFilters();
+        }
+        setTimeout(() => {
+            if (pendingConferenceIdFromUrl) {
+                selectConference(pendingConferenceIdFromUrl);
+                pendingConferenceIdFromUrl = null;
+            }
+        }, 300);
+    }
 });
