@@ -17,6 +17,9 @@
   <a href="https://eljja.github.io/Conference/">
     <img src="https://img.shields.io/badge/Live_Demo-https%3A%2F%2Feljja.github.io%2FConference%2F-blueviolet?style=for-the-badge&logo=github&logoColor=white" alt="Live Demo">
   </a>
+  <a href="https://github.com/eljja/Conference">
+    <img src="https://img.shields.io/badge/GitHub-eljja%2FConference-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository">
+  </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License">
   </a>
