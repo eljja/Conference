@@ -543,6 +543,229 @@ input[type="range"]::-webkit-slider-thumb:hover {
     border-color: var(--accent);
 }
 
+/* --- Approaching Deadlines Priority Section (Top 5) --- */
+.approaching-deadlines-section {
+    margin: 0.75rem 1rem 0.25rem 1rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(30, 41, 59, 0.45) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 0.85rem;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: var(--transition-medium);
+}
+
+.approaching-deadlines-section:hover {
+    border-color: rgba(239, 68, 68, 0.45);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.12);
+}
+
+.deadlines-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.deadlines-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fca5a5;
+    letter-spacing: 0.02em;
+}
+
+.deadlines-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+    animation: beaconPulse 1.8s infinite;
+}
+
+@keyframes beaconPulse {
+    0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 4px #ef4444; }
+    50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px #ef4444; }
+    100% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 4px #ef4444; }
+}
+
+.deadlines-badge-count {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #fecaca;
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 0.15rem 0.45rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+.deadlines-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.deadline-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.deadline-item-card:hover {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(239, 68, 68, 0.4);
+    transform: translateX(3px);
+}
+
+.deadline-item-card.active {
+    border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.deadline-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.deadline-conf-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.deadline-conf-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deadline-conf-field {
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+}
+
+.deadline-item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+    flex-shrink: 0;
+}
+
+.deadline-date-text {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+/* D-Day Badges */
+.dday-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    min-width: 38px;
+    text-align: center;
+}
+
+.dday-badge.urgent {
+    background: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+.dday-badge.upcoming {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.dday-badge.closed {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Inline D-Day pill in modal and card */
+.dday-pill-inline {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.dday-pill-inline.urgent {
+    background: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.dday-pill-inline.upcoming {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.dday-pill-inline.closed {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Card Deadline Row in Main List */
+.card-deadline-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.35rem 0.55rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-sm);
+    margin: 0.45rem 0;
+    font-size: 0.72rem;
+}
+
+.card-deadline-row .deadline-label {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.card-deadline-row .deadline-label strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 /* --- List Cards --- */
 .list-container {
     flex: 1;
@@ -989,8 +1212,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .modal-quick-info {
-    display: flex;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1.2rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-color);
     padding: 1rem;
@@ -1312,7 +1536,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
     
     .modal-quick-info {
-        flex-direction: column;
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.8rem;
     }
 }

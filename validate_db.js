@@ -48,19 +48,31 @@ try {
         ids.add(id);
         
         // 2. Check structure length
-        if (c.length !== 13) {
-            console.error(`Error: Invalid row length (${c.length} instead of 13) for "${name}" at index ${idx}`);
+        if (c.length !== 14) {
+            console.error(`Error: Invalid row length (${c.length} instead of 14) for "${name}" at index ${idx}`);
             hasError = true;
         }
         
         // 3. Check values
-        const [c_id, c_name, c_fullName, c_field, c_cqi, c_gsai, c_location, c_lat, c_lon, c_date, c_organizer, c_isTopTier, c_url] = c;
+        const [c_id, c_name, c_fullName, c_field, c_cqi, c_gsai, c_location, c_lat, c_lon, c_date, c_organizer, c_isTopTier, c_url, c_deadline] = c;
         if (typeof c_lat !== 'number' || isNaN(c_lat) || typeof c_lon !== 'number' || isNaN(c_lon)) {
             console.error(`Error: Invalid Lat/Lon coordinates [${c_lat}, ${c_lon}] for "${name}"`);
             hasError = true;
         }
         if (!c_url.startsWith('http://') && !c_url.startsWith('https://')) {
             console.error(`Error: Invalid URL "${c_url}" for "${name}"`);
+            hasError = true;
+        }
+        if (!/^\d{4}\.\d{2}\.\d{2}$/.test(c_date)) {
+            console.error(`Error: Invalid date format "${c_date}" for "${name}" (expected YYYY.MM.DD)`);
+            hasError = true;
+        }
+        if (!/^\d{4}\.\d{2}\.\d{2}$/.test(c_deadline)) {
+            console.error(`Error: Invalid deadline format "${c_deadline}" for "${name}" (expected YYYY.MM.DD)`);
+            hasError = true;
+        }
+        if (c_deadline > c_date) {
+            console.error(`Error: Deadline "${c_deadline}" occurs after holding date "${c_date}" for "${name}"`);
             hasError = true;
         }
     });

@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License">
   </a>
   <img src="https://img.shields.io/badge/Disciplines-10_Fields-emerald?style=for-the-badge" alt="10 Disciplines">
-  <img src="https://img.shields.io/badge/Conferences-368_Verified-orange?style=for-the-badge" alt="368 Conferences">
+  <img src="https://img.shields.io/badge/Conferences-387_Verified-orange?style=for-the-badge" alt="387 Conferences">
 </p>
 
 ---
@@ -55,20 +55,20 @@
 ---
 
 ### 📂 지원 분야 및 데이터 통계
-현재 총 **10개 학문 분야**의 **368개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소와 좌표를 포함합니다.
+현재 총 **10개 학문 분야**의 **387개 실존 국제 학술 대회** 정보가 등록되어 있으며, 검증된 공식 웹사이트 주소, 정밀 일정(`YYYY.MM.DD`), 초록/논문 마감일(`Abstract Deadline`), 및 위치 좌표를 포함합니다.
 
 | 분야 ID | 학문 분야 (Academic Fields) | 대표 색상 (Theme) | 대표 아이콘 (Icon) | 등록 학회 수 |
-| :--- | :--- | :--- | :---: | :---: |
-| `semiconductor` | 반도체 (Semiconductors) | Amber (`#f59e0b`) | `fa-microchip` | 33 |
-| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
-| `materials` | 신소재/재료공학 (Materials) | Emerald (`#10b981`) | `fa-atom` | 49 |
-| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 38 |
-| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 33 |
-| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 34 |
-| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 30 |
-| `chem` | 화학공학/배터리/에너지 (Chemical & Energy) | Lime Green (`#84cc16`) | `fa-flask` | 26 |
-| `bio` | 바이오메디컬/생명공학 (Biomedical & Biotech) | Rose Pink (`#ec4899`) | `fa-dna` | 32 |
-| `ind` | 산업공학 (Industrial Engineering) | Indigo (`#6366f1`) | `fa-diagram-project` | 24 |
+| :--- | :--- | :--- | :--- | :---: |
+| `semiconductor` | 반도체 (Semiconductors) | Amber (`#f59e0b`) | `fa-microchip` | 37 |
+| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 71 |
+| `materials` | 신소재/재료공학 (Materials) | Emerald (`#10b981`) | `fa-atom` | 50 |
+| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 39 |
+| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 34 |
+| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 38 |
+| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 32 |
+| `chem` | 화학공학/배터리/에너지 (Chemical & Energy) | Lime Green (`#84cc16`) | `fa-flask` | 27 |
+| `bio` | 바이오메디컬/생명공학 (Biomedical & Biotech) | Rose Pink (`#ec4899`) | `fa-dna` | 34 |
+| `ind` | 산업공학 (Industrial Engineering) | Indigo (`#6366f1`) | `fa-diagram-project` | 25 |
 
 ---
 
@@ -86,7 +86,9 @@
 ---
 
 ### ✨ 주요 편의 기능 (Key Features)
+* **⚡ 마감 임박 학회 우선 표출 (Approaching Deadlines Top 5)**: 전 학회에 걸쳐 실제 초록/논문 제출 마감일(`Abstract Deadline`)을 수집·구축하여, 접속일 기준 마감이 가장 가까운 학회 5개를 왼쪽 사이드바 상단에 실시간 D-Day 카운트다운 배지(`D-Day`, `D-2`, `D-14` 등)와 함께 우선 표출합니다.
 * **⏳ 미래/과거 학회 분리 및 타임라인 뷰**: 접속한 사용자의 오늘 날짜를 기준으로 기본적으로는 다가올 **미래 학회(Upcoming Only)**만 깔끔하게 노출되며, 지난 학회 이력 확인이 필요한 경우 **[Include Past]** 토글 버튼을 켜서 과거 학회(종료 배지 및 차별화된 시각 효과 적용)를 함께 조회할 수 있습니다.
+* **📅 연월일(YYYY.MM.DD) 정밀 표기 및 마감일순 정렬**: 학회 개최일 및 논문 마감일을 모두 일자 단위까지 상세 제공하며, 정렬 옵션을 통해 개최일순(`Date Scheduled`)뿐만 아니라 논문 마감일순(`Abstract Deadline`)으로도 학회를 탐색할 수 있습니다.
 * **🗺️ 반응형 인터랙티브 지도**: Leaflet.js 기반의 무한 스크롤 타일 맵, 마커 클러스터링, 원클릭 지도 시점 초기화(`Reset View`).
 * **🔍 스마트 검색 및 필터**: 키워드 검색, 원클릭 검색어 지우기(`X`), 실시간 검색 결과 수 피드백(`Showing N conferences`), 분야별 복수 선택 및 CQI/GSAI 슬라이더.
 * **📱 모바일 맞춤형 UI**: 768px 이하 모바일 환경에서 `List View`와 `Map View`를 손쉽게 오가는 전용 토글 탭 지원.
@@ -152,20 +154,20 @@ Evaluates the venue's appeal, financial incentives, and logistical benefits for 
 ---
 
 ### 📂 Supported Fields & Database Statistics
-The database contains **368 verified real-world international conferences** with exact coordinates, schedules, and active official websites across 10 academic disciplines.
+The database contains **387 verified real-world international conferences** with exact coordinates, precise schedules (`YYYY.MM.DD`), abstract deadlines (`Abstract Deadline`), and active official websites across 10 academic disciplines.
 
 | Field ID | Academic Field | Theme Color | Icon | Count |
-| :--- | :--- | :--- | :---: | :---: |
-| `semiconductor` | Semiconductors | Amber (`#f59e0b`) | `fa-microchip` | 33 |
-| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
-| `materials` | Materials | Emerald (`#10b981`) | `fa-atom` | 49 |
-| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 38 |
-| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 33 |
-| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 34 |
-| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 30 |
-| `chem` | Chemical & Energy | Lime Green (`#84cc16`) | `fa-flask` | 26 |
-| `bio` | Biomedical & Biotech | Rose Pink (`#ec4899`) | `fa-dna` | 32 |
-| `ind` | Industrial Engineering | Indigo (`#6366f1`) | `fa-diagram-project` | 24 |
+| :--- | :--- | :--- | :--- | :---: |
+| `semiconductor` | Semiconductors | Amber (`#f59e0b`) | `fa-microchip` | 37 |
+| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 71 |
+| `materials` | Materials | Emerald (`#10b981`) | `fa-atom` | 50 |
+| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 39 |
+| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 34 |
+| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 38 |
+| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 32 |
+| `chem` | Chemical & Energy | Lime Green (`#84cc16`) | `fa-flask` | 27 |
+| `bio` | Biomedical & Biotech | Rose Pink (`#ec4899`) | `fa-dna` | 34 |
+| `ind` | Industrial Engineering | Indigo (`#6366f1`) | `fa-diagram-project` | 25 |
 
 ---
 
@@ -183,7 +185,9 @@ The database contains **368 verified real-world international conferences** with
 ---
 
 ### ✨ Key Features
+* **⚡ Approaching Deadlines Priority Top 5 Widget**: Aggregates verified abstract and paper submission deadlines (`YYYY.MM.DD`) across all conferences, displaying the nearest 5 deadlines at the top of the sidebar with real-time D-Day countdown pills (`D-Day`, `D-2`, `D-14`, etc.).
 * **⏳ Dynamic Timeline Mode (Upcoming vs. Past Conferences)**: Defaults to showing only upcoming/ongoing conferences based on the user's current date, with a dedicated toggle button to reveal concluded past conferences (marked with distinct status badges, dimmer cards, and popup tags).
+* **📅 Exact Date Precision & Deadline Sorting**: Comprehensive day-precision (`YYYY.MM.DD`) dates for both holding dates and submission deadlines, sortable by scheduled holding date or submission deadline.
 * **🗺️ Interactive Global Map**: Powered by Leaflet.js with cylindrical tile wrapping, city marker grouping, and one-click `Reset View`.
 * **🔍 Search & Multi-Field Filtering**: Fast text search with clear (`X`) button, instant result counts, discipline toggles, and CQI/GSAI sliders.
 * **📱 Mobile Responsive Controls**: Dedicated `List View` / `Map View` tab bar for mobile viewports ($\le 768\text{px}$).

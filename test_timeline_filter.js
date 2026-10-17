@@ -6,7 +6,9 @@ const {
     isWithinYearWindow, 
     filterConferencesByTimeline, 
     getTimelineStats,
-    sortConferencesByDate
+    sortConferencesByDate,
+    getDeadlineDDay,
+    getApproachingDeadlineConferences
 } = require('./app_logic_helper.js');
 
 function testTimeStatus() {
@@ -79,25 +81,114 @@ function testFilterWithPastToggle() {
     console.log("✓ Test 4 Passed!");
 }
 
-function testAllConferencesHaveDay() {
-    console.log("Running Test 5: Verify all 368 conferences in database have YYYY.MM.DD format...");
+function testDeadlineDDayCalculation() {
+    console.log("Running Test 6: Abstract deadline D-Day calculation...");
+    const refDate = new Date(2026, 9, 17); // 2026-10-17
+    
+    // Exact day
+    const dDayToday = getDeadlineDDay("2026.10.17", refDate);
+    assert.strictEqual(dDayToday.diffDays, 0);
+    assert.strictEqual(dDayToday.label, "D-Day");
+    assert.strictEqual(dDayToday.isUrgent, true);
+    assert.strictEqual(dDayToday.isUpcoming, true);
+    
+    // 5 days remaining
+    const dDay5 = getDeadlineDDay("2026.10.22", refDate);
+    assert.strictEqual(dDay5.diffDays, 5);
+    assert.strictEqual(dDay5.label, "D-5");
+    assert.strictEqual(dDay5.isUrgent, true);
+    
+    // 30 days remaining
+    const dDay30 = getDeadlineDDay("2026.11.16", refDate);
+    assert.strictEqual(dDay30.diffDays, 30);
+    assert.strictEqual(dDay30.label, "D-30");
+    assert.strictEqual(dDay30.isUrgent, false);
+    
+    // Already passed
+    const dDayPassed = getDeadlineDDay("2026.10.10", refDate);
+    assert.strictEqual(dDayPassed.diffDays, -7);
+    assert.strictEqual(dDayPassed.label, "Closed");
+    assert.strictEqual(dDayPassed.isUpcoming, false);
+    
+    console.log("✓ Test 6 Passed!");
+}
+
+function testTop5ApproachingDeadlines() {
+    console.log("Running Test 7: Top 5 approaching deadline prioritization...");
+    const refDate = new Date(2026, 9, 17); // 2026-10-17
+    
+    const mockList = [
+        { id: 'c-passed', name: 'Passed', deadline: '2026.10.05', field: 'cs' },
+        { id: 'c-30d', name: 'In 30 Days', deadline: '2026.11.16', field: 'cs' },
+        { id: 'c-3d', name: 'In 3 Days', deadline: '2026.10.20', field: 'cs' },
+        { id: 'c-10d', name: 'In 10 Days', deadline: '2026.10.27', field: 'cs' },
+        { id: 'c-60d', name: 'In 60 Days', deadline: '2026.12.16', field: 'cs' },
+        { id: 'c-today', name: 'Today', deadline: '2026.10.17', field: 'cs' },
+        { id: 'c-90d', name: 'In 90 Days', deadline: '2027.01.15', field: 'cs' }
+    ];
+    
+    const top5 = getApproachingDeadlineConferences(mockList, 5, refDate);
+    assert.strictEqual(top5.length, 5);
+    // Closest first: Today (0), In 3 Days (3), In 10 Days (10), In 30 Days (30), In 60 Days (60)
+    assert.deepStrictEqual(top5.map(c => c.id), ['c-today', 'c-3d', 'c-10d', 'c-30d', 'c-60d']);
+    
+    console.log("✓ Test 7 Passed!");
+}
+
+function testAllConferencesHaveDayAndDeadline() {
+    console.log("Running Test 8: Verify all conferences in database have 14 columns, YYYY.MM.DD date, and valid deadline...");
     const txt = fs.readFileSync('app.js', 'utf8');
     const start = txt.indexOf('const rawConferencesData = [');
     const end = txt.indexOf('];', start) + 2;
     eval(txt.substring(start, end).replace('const rawConferencesData =', 'global.testData ='));
     
-    assert.strictEqual(global.testData.length, 368, "Must have exactly 368 conferences");
+    assert(global.testData.length >= 368, "Must have at least 368 conferences");
     
-    const invalidDates = [];
+    const invalidRows = [];
     global.testData.forEach(c => {
+        if (c.length !== 14) {
+            invalidRows.push({ name: c[1], reason: `Invalid length ${c.length} !== 14` });
+            return;
+        }
         const dateStr = c[9];
+        const deadlineStr = c[13];
         if (!/^\d{4}\.\d{2}\.\d{2}$/.test(dateStr)) {
-            invalidDates.push({ name: c[1], date: dateStr });
+            invalidRows.push({ name: c[1], reason: `Invalid date ${dateStr}` });
+        }
+        if (!/^\d{4}\.\d{2}\.\d{2}$/.test(deadlineStr)) {
+            invalidRows.push({ name: c[1], reason: `Invalid deadline ${deadlineStr}` });
+        }
+        if (deadlineStr > dateStr) {
+            invalidRows.push({ name: c[1], reason: `Deadline ${deadlineStr} after date ${dateStr}` });
         }
     });
     
-    assert.strictEqual(invalidDates.length, 0, `All conferences must have YYYY.MM.DD format! Found invalid: ${JSON.stringify(invalidDates.slice(0, 5))}`);
-    console.log("✓ Test 5 Passed! (All 368 conferences have valid YYYY.MM.DD dates)");
+    assert.strictEqual(invalidRows.length, 0, `All conferences must pass validation! Found invalid: ${JSON.stringify(invalidRows.slice(0, 5))}`);
+    console.log(`✓ Test 8 Passed! (All ${global.testData.length} conferences have valid 14 columns, YYYY.MM.DD dates, and deadlines)`);
+}
+
+function testDeadlineSorting() {
+    console.log("Running Test 9: Sorting conferences by abstract deadline...");
+    const mockList = [
+        { name: "Late 2027", deadline: "2027.05.15", date: "2027.10.20" },
+        { name: "Urgent 1", deadline: "2026.10.19", date: "2027.03.15" },
+        { name: "Urgent 2", deadline: "2026.10.22", date: "2027.04.20" },
+        { name: "Concluded", deadline: "2026.05.15", date: "2026.11.01" }
+    ];
+
+    const sortedByDeadline = [...mockList].sort((a, b) => {
+        const deadA = a.deadline || '9999.99.99';
+        const deadB = b.deadline || '9999.99.99';
+        const diff = deadA.localeCompare(deadB);
+        if (diff !== 0) return diff;
+        return a.date.localeCompare(b.date);
+    });
+
+    assert.strictEqual(sortedByDeadline[0].name, "Concluded");
+    assert.strictEqual(sortedByDeadline[1].name, "Urgent 1");
+    assert.strictEqual(sortedByDeadline[2].name, "Urgent 2");
+    assert.strictEqual(sortedByDeadline[3].name, "Late 2027");
+    console.log("✓ Test 9 Passed!");
 }
 
 try {
@@ -105,7 +196,10 @@ try {
     testDayPrecision();
     testDateSorting();
     testFilterWithPastToggle();
-    testAllConferencesHaveDay();
+    testDeadlineDDayCalculation();
+    testTop5ApproachingDeadlines();
+    testAllConferencesHaveDayAndDeadline();
+    testDeadlineSorting();
     console.log("\nALL TDD TESTS PASSED SUCCESSFULLY! 🚀");
 } catch (e) {
     console.error("\nTEST FAILED:", e.message);

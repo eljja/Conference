@@ -425,10 +425,26 @@
                         <label for="sort-select" class="filter-label-inline"><i class="fa-solid fa-sort"></i> Sort By</label>
                         <select id="sort-select" class="form-select" aria-label="Sort conferences by">
                             <option value="date" selected>Date Scheduled (날짜순)</option>
+                            <option value="deadline">Abstract Deadline (마감일순)</option>
                             <option value="cqi">Academic Influence (CQI)</option>
                             <option value="gsai">Student Attraction (GSAI)</option>
                             <option value="name">Alphabetical</option>
                         </select>
+                    </div>
+                </div>
+
+                <!-- Approaching Deadlines Priority Section (마감 임박 학회 Top 5) -->
+                <div class="approaching-deadlines-section" id="approaching-deadlines-section">
+                    <div class="deadlines-header">
+                        <div class="deadlines-title">
+                            <span class="deadlines-beacon"></span>
+                            <i class="fa-solid fa-hourglass-start"></i>
+                            <span>Approaching Deadlines Top 5</span>
+                        </div>
+                        <span class="deadlines-badge-count" id="deadlines-badge-count">Urgent D-Days</span>
+                    </div>
+                    <div class="deadlines-container" id="deadlines-container">
+                        <!-- Injected dynamically by app.js -->
                     </div>
                 </div>
 
@@ -494,6 +510,13 @@
                         <div>
                             <h4>Schedule</h4>
                             <p id="modal-info-date">2026.06.30</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <div>
+                            <h4>Abstract Deadline</h4>
+                            <p id="modal-info-deadline">2026.04.15</p>
                         </div>
                     </div>
                     <div class="info-item">
