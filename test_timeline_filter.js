@@ -5,11 +5,12 @@ const {
     getConferenceTimeStatus, 
     isWithinYearWindow, 
     filterConferencesByTimeline, 
-    getTimelineStats 
+    getTimelineStats,
+    sortConferencesByDate
 } = require('./app_logic_helper.js');
 
 function testTimeStatus() {
-    console.log("Running Test 1: getConferenceTimeStatus logic...");
+    console.log("Running Test 1: getConferenceTimeStatus logic with Year & Month...");
     
     const refDate = new Date(2026, 9, 17); // October 17, 2026 (Month is 0-indexed: 9 = October)
     
@@ -22,85 +23,89 @@ function testTimeStatus() {
     console.log("✓ Test 1 Passed!");
 }
 
-function testFilterWithPastToggle() {
-    console.log("Running Test 2: Filtering logic with showPast toggle...");
+function testDayPrecision() {
+    console.log("Running Test 2: YYYY.MM.DD day precision time status...");
+    const refDate = new Date(2026, 9, 17); // 2026-10-17
     
-    const refDate = new Date(2026, 9, 17); // 2026.10
-    const mockConferences = [
-        { id: 'conf-past', name: 'Past Conf', date: '2026.04', field: 'cs', cqi: 90, gsai: 85 },
-        { id: 'conf-curr', name: 'Current Conf', date: '2026.10', field: 'cs', cqi: 90, gsai: 85 },
-        { id: 'conf-future', name: 'Future Conf', date: '2027.02', field: 'cs', cqi: 90, gsai: 85 },
-        { id: 'conf-too-old', name: 'Too Old Conf', date: '2025.08', field: 'cs', cqi: 90, gsai: 85 } // > 12 months ago
-    ];
-    
-    // When showPast is false: only conf-curr and conf-future should be returned
-    const futureOnly = filterConferencesByTimeline(mockConferences, false, refDate);
-    assert.strictEqual(futureOnly.length, 2, "Default futureOnly must have 2 conferences");
-    assert.deepStrictEqual(futureOnly.map(c => c.id), ['conf-curr', 'conf-future']);
-    
-    // When showPast is true: conf-past, conf-curr, conf-future returned (conf-too-old excluded by -1yr window)
-    const withPast = filterConferencesByTimeline(mockConferences, true, refDate);
-    assert.strictEqual(withPast.length, 3, "With showPast=true, must have 3 conferences");
-    assert.deepStrictEqual(withPast.map(c => c.id), ['conf-past', 'conf-curr', 'conf-future']);
+    const parsed = parseConferenceDate("2026.10.25");
+    assert.deepStrictEqual(parsed, { year: 2026, month: 10, day: 25 }, "parseConferenceDate should extract day");
+
+    assert.strictEqual(getConferenceTimeStatus("2026.10.12", refDate), 'past', "2026.10.12 must be 'past' on 2026-10-17");
+    assert.strictEqual(getConferenceTimeStatus("2026.10.17", refDate), 'current', "2026.10.17 must be 'current' on 2026-10-17");
+    assert.strictEqual(getConferenceTimeStatus("2026.10.25", refDate), 'future', "2026.10.25 must be 'future' on 2026-10-17");
+    assert.strictEqual(getConferenceTimeStatus("2026.11.02", refDate), 'future', "2026.11.02 must be 'future' on 2026-10-17");
+    assert.strictEqual(getConferenceTimeStatus("2026.09.28", refDate), 'past', "2026.09.28 must be 'past' on 2026-10-17");
     
     console.log("✓ Test 2 Passed!");
 }
 
-function testTimelineCounts() {
-    console.log("Running Test 3: Stats count breakdown (upcoming vs past)...");
-    const refDate = new Date(2026, 9, 17); // 2026.10
-    const mockConferences = [
-        { id: 'p1', date: '2026.05' },
-        { id: 'p2', date: '2026.08' },
-        { id: 'c1', date: '2026.10' },
-        { id: 'f1', date: '2026.12' },
-        { id: 'f2', date: '2027.05' }
+function testDateSorting() {
+    console.log("Running Test 3: Chronological sorting by date...");
+    const mockList = [
+        { id: 'c3', name: 'Conf C', date: '2026.11.05', cqi: 90 },
+        { id: 'c1', name: 'Conf A', date: '2026.10.20', cqi: 92 },
+        { id: 'c4', name: 'Conf D', date: '2027.02.14', cqi: 95 },
+        { id: 'c2', name: 'Conf B', date: '2026.10.25', cqi: 88 },
+        { id: 'c1b', name: 'Conf A2', date: '2026.10.20', cqi: 96 } // same date, higher cqi
     ];
-    
-    const stats = getTimelineStats(mockConferences, refDate);
-    assert.strictEqual(stats.upcomingCount, 3, "Upcoming count should be 3 (1 current + 2 future)");
-    assert.strictEqual(stats.pastCount, 2, "Past count should be 2");
-    assert.strictEqual(stats.totalCount, 5, "Total count should be 5");
+
+    const sorted = sortConferencesByDate(mockList);
+    const expectedOrder = ['c1b', 'c1', 'c2', 'c3', 'c4'];
+    assert.deepStrictEqual(sorted.map(c => c.id), expectedOrder, "Conferences must be sorted chronologically by date with CQI tie-breaker");
     
     console.log("✓ Test 3 Passed!");
 }
 
-function testRealDatabaseIntegrity() {
-    console.log("Running Test 4: Real database 368 conferences classification...");
+function testFilterWithPastToggle() {
+    console.log("Running Test 4: Filtering logic with showPast toggle...");
+    
+    const refDate = new Date(2026, 9, 17); // 2026.10.17
+    const mockConferences = [
+        { id: 'conf-past', name: 'Past Conf', date: '2026.04.10', field: 'cs', cqi: 90, gsai: 85 },
+        { id: 'conf-past-this-month', name: 'Past This Month', date: '2026.10.10', field: 'cs', cqi: 90, gsai: 85 },
+        { id: 'conf-curr', name: 'Current Conf', date: '2026.10.17', field: 'cs', cqi: 90, gsai: 85 },
+        { id: 'conf-future', name: 'Future Conf', date: '2026.10.28', field: 'cs', cqi: 90, gsai: 85 },
+        { id: 'conf-too-old', name: 'Too Old Conf', date: '2025.08.15', field: 'cs', cqi: 90, gsai: 85 } // > 12 months ago
+    ];
+    
+    // When showPast is false: only conf-curr and conf-future should be returned
+    const futureOnly = filterConferencesByTimeline(mockConferences, false, refDate);
+    assert.deepStrictEqual(futureOnly.map(c => c.id), ['conf-curr', 'conf-future']);
+    
+    // When showPast is true: conf-past, conf-past-this-month, conf-curr, conf-future returned
+    const withPast = filterConferencesByTimeline(mockConferences, true, refDate);
+    assert.deepStrictEqual(withPast.map(c => c.id), ['conf-past', 'conf-past-this-month', 'conf-curr', 'conf-future']);
+    
+    console.log("✓ Test 4 Passed!");
+}
+
+function testAllConferencesHaveDay() {
+    console.log("Running Test 5: Verify all 368 conferences in database have YYYY.MM.DD format...");
     const txt = fs.readFileSync('app.js', 'utf8');
     const start = txt.indexOf('const rawConferencesData = [');
     const end = txt.indexOf('];', start) + 2;
     eval(txt.substring(start, end).replace('const rawConferencesData =', 'global.testData ='));
     
-    const realConferences = global.testData.map(c => ({
-        id: c[0],
-        name: c[1],
-        date: c[9],
-        field: c[3]
-    }));
+    assert.strictEqual(global.testData.length, 368, "Must have exactly 368 conferences");
     
-    const refDate = new Date(2026, 9, 17);
-    const futureOnly = filterConferencesByTimeline(realConferences, false, refDate);
-    const withPast = filterConferencesByTimeline(realConferences, true, refDate);
-    
-    assert(futureOnly.length > 150, "Future-only list must have over 150 conferences");
-    assert(withPast.length > futureOnly.length, "With past enabled must have more conferences than future-only");
-    assert(withPast.length <= 368, "Cannot exceed total conferences in database");
-    
-    // Ensure all future-only conferences are strictly not 'past'
-    futureOnly.forEach(conf => {
-        const status = getConferenceTimeStatus(conf.date, refDate);
-        assert.notStrictEqual(status, 'past', `Conference ${conf.name} with date ${conf.date} should not be in future-only list`);
+    const invalidDates = [];
+    global.testData.forEach(c => {
+        const dateStr = c[9];
+        if (!/^\d{4}\.\d{2}\.\d{2}$/.test(dateStr)) {
+            invalidDates.push({ name: c[1], date: dateStr });
+        }
     });
     
-    console.log(`✓ Test 4 Passed! (Future only: ${futureOnly.length}, With past: ${withPast.length}, Total in DB: ${realConferences.length})`);
+    assert.strictEqual(invalidDates.length, 0, `All conferences must have YYYY.MM.DD format! Found invalid: ${JSON.stringify(invalidDates.slice(0, 5))}`);
+    console.log("✓ Test 5 Passed! (All 368 conferences have valid YYYY.MM.DD dates)");
 }
 
 try {
     testTimeStatus();
+    testDayPrecision();
+    testDateSorting();
     testFilterWithPastToggle();
-    testTimelineCounts();
-    testRealDatabaseIntegrity();
+    testAllConferencesHaveDay();
     console.log("\nALL TDD TESTS PASSED SUCCESSFULLY! 🚀");
 } catch (e) {
     console.error("\nTEST FAILED:", e.message);

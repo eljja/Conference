@@ -1,10 +1,11 @@
 function parseConferenceDate(dateStr) {
     if (!dateStr) return null;
-    const match = dateStr.match(/^(\d{4})\.(\d{2})/);
+    const match = dateStr.match(/^(\d{4})\.(\d{2})(?:\.(\d{2}))?/);
     if (!match) return null;
     return {
         year: parseInt(match[1], 10),
-        month: parseInt(match[2], 10)
+        month: parseInt(match[2], 10),
+        day: match[3] ? parseInt(match[3], 10) : null
     };
 }
 
@@ -14,16 +15,23 @@ function getConferenceTimeStatus(dateStr, referenceDate = new Date()) {
     
     const currentYear = referenceDate.getFullYear();
     const currentMonth = referenceDate.getMonth() + 1; // 1-indexed
+    const currentDay = referenceDate.getDate();
     
     const confAbsoluteMonths = parsed.year * 12 + parsed.month;
     const currentAbsoluteMonths = currentYear * 12 + currentMonth;
     
     if (confAbsoluteMonths < currentAbsoluteMonths) {
         return 'past';
-    } else if (confAbsoluteMonths === currentAbsoluteMonths) {
-        return 'current';
-    } else {
+    } else if (confAbsoluteMonths > currentAbsoluteMonths) {
         return 'future';
+    } else {
+        // Same month
+        if (parsed.day !== null) {
+            if (parsed.day < currentDay) return 'past';
+            if (parsed.day === currentDay) return 'current';
+            return 'future';
+        }
+        return 'current';
     }
 }
 
@@ -77,12 +85,21 @@ function getTimelineStats(conferences, referenceDate = new Date()) {
     };
 }
 
+function sortConferencesByDate(conferences) {
+    return [...conferences].sort((a, b) => {
+        const dateDiff = a.date.localeCompare(b.date);
+        if (dateDiff !== 0) return dateDiff;
+        return (b.cqi || 0) - (a.cqi || 0); // Tie-breaker: higher CQI first
+    });
+}
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         parseConferenceDate,
         getConferenceTimeStatus,
         isWithinYearWindow,
         filterConferencesByTimeline,
-        getTimelineStats
+        getTimelineStats,
+        sortConferencesByDate
     };
 }
