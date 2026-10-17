@@ -159,6 +159,16 @@ function getApproachingDeadlineConferences(conferences, count = 5, referenceDate
 }
 
 if (typeof window !== 'undefined') {
+    window.app_logic_helper = {
+        parseConferenceDate,
+        getConferenceTimeStatus,
+        isWithinYearWindow,
+        filterConferencesByTimeline,
+        getTimelineStats,
+        sortConferencesByDate,
+        getDeadlineDDay,
+        getApproachingDeadlineConferences
+    };
     window.parseConferenceDate = parseConferenceDate;
     window.getConferenceTimeStatus = getConferenceTimeStatus;
     window.isWithinYearWindow = isWithinYearWindow;

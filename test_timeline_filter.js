@@ -191,6 +191,56 @@ function testDeadlineSorting() {
     console.log("✓ Test 9 Passed!");
 }
 
+function testAppJsDirectDateParsingAndStatus() {
+    console.log("Running Test 10: Verify app.js directly parses day precision and correctly marks 2026.10.04 as past on 2026.10.18...");
+    const appJsTxt = fs.readFileSync('app.js', 'utf8');
+
+    // Extract parseConferenceDate lines
+    const lines = appJsTxt.split('\n');
+    function extractFunction(fnName) {
+        let inside = false;
+        let fnLines = [];
+        let braceCount = 0;
+        for (let line of lines) {
+            if (line.includes(`function ${fnName}(`)) {
+                inside = true;
+            }
+            if (inside) {
+                fnLines.push(line);
+                braceCount += (line.match(/\{/g) || []).length;
+                braceCount -= (line.match(/\}/g) || []).length;
+                if (braceCount === 0 && fnLines.length > 1) {
+                    break;
+                }
+            }
+        }
+        return fnLines.join('\n');
+    }
+
+    const parseFnCode = extractFunction('parseConferenceDate');
+    const statusFnCode = extractFunction('getConferenceTimeStatus');
+    
+    assert(parseFnCode.length > 0, "parseConferenceDate must be found in app.js");
+    assert(statusFnCode.length > 0, "getConferenceTimeStatus must be found in app.js");
+
+    const context = {};
+    eval(`
+        ${parseFnCode};
+        ${statusFnCode};
+        context.parseConferenceDate = parseConferenceDate;
+        context.getConferenceTimeStatus = getConferenceTimeStatus;
+    `);
+
+    const parsed = context.parseConferenceDate("2026.10.04");
+    assert.strictEqual(parsed.day, 4, "app.js parseConferenceDate MUST capture day=4 from 2026.10.04");
+
+    const refDate = new Date(2026, 9, 18); // 2026.10.18
+    const status = context.getConferenceTimeStatus("2026.10.04", refDate);
+    assert.strictEqual(status, 'past', "2026.10.04 MUST be marked as 'past' when today is 2026.10.18");
+
+    console.log("✓ Test 10 Passed!");
+}
+
 try {
     testTimeStatus();
     testDayPrecision();
@@ -200,6 +250,7 @@ try {
     testTop5ApproachingDeadlines();
     testAllConferencesHaveDayAndDeadline();
     testDeadlineSorting();
+    testAppJsDirectDateParsingAndStatus();
     console.log("\nALL TDD TESTS PASSED SUCCESSFULLY! 🚀");
 } catch (e) {
     console.error("\nTEST FAILED:", e.message);
