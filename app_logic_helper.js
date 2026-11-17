@@ -1,3 +1,102 @@
+(function () {
+'use strict';
+const FIELD_CONFIG = {
+    semiconductor: {
+        name: 'Semiconductors',
+        color: '#f59e0b',
+        cssVar: 'var(--color-semi)',
+        rgb: '245, 158, 11',
+        icon: 'fa-microchip'
+    },
+    electronics: {
+        name: 'Electronics',
+        color: '#0ea5e9',
+        cssVar: 'var(--color-elec)',
+        rgb: '14, 165, 233',
+        icon: 'fa-bolt'
+    },
+    materials: {
+        name: 'Materials',
+        color: '#10b981',
+        cssVar: 'var(--color-mat)',
+        rgb: '16, 185, 129',
+        icon: 'fa-atom'
+    },
+    architecture: {
+        name: 'Architecture',
+        color: '#a855f7',
+        cssVar: 'var(--color-arch)',
+        rgb: '168, 85, 247',
+        icon: 'fa-building-columns'
+    },
+    civil: {
+        name: 'Civil Engineering',
+        color: '#14b8a6',
+        cssVar: 'var(--color-civil)',
+        rgb: '20, 184, 166',
+        icon: 'fa-bridge'
+    },
+    cs: {
+        name: 'Computer Science & AI',
+        color: '#3b82f6',
+        cssVar: 'var(--color-cs)',
+        rgb: '59, 130, 246',
+        icon: 'fa-brain'
+    },
+    mech: {
+        name: 'Mechanical & Aerospace',
+        color: '#f97316',
+        cssVar: 'var(--color-mech)',
+        rgb: '249, 115, 22',
+        icon: 'fa-gear'
+    },
+    chem: {
+        name: 'Chemical & Energy',
+        color: '#84cc16',
+        cssVar: 'var(--color-chem)',
+        rgb: '132, 204, 22',
+        icon: 'fa-flask'
+    },
+    bio: {
+        name: 'Biomedical & Biotech',
+        color: '#ec4899',
+        cssVar: 'var(--color-bio)',
+        rgb: '236, 72, 153',
+        icon: 'fa-dna'
+    },
+    ind: {
+        name: 'Industrial Engineering',
+        color: '#6366f1',
+        cssVar: 'var(--color-ind)',
+        rgb: '99, 102, 241',
+        icon: 'fa-diagram-project'
+    }
+};
+
+const ALLOWED_SORT_VALUES = ['date', 'deadline', 'cqi', 'gsai', 'name'];
+
+function getFieldMeta(field) {
+    return FIELD_CONFIG[field] || FIELD_CONFIG.ind;
+}
+
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function isValidCalendarDate(dateStr) {
+    if (!/^\d{4}\.\d{2}\.\d{2}$/.test(dateStr)) return false;
+    const [year, month, day] = dateStr.split('.').map(Number);
+    if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+    const dt = new Date(year, month - 1, day);
+    return dt.getFullYear() === year && dt.getMonth() === month - 1 && dt.getDate() === day;
+}
+
 function parseConferenceDate(dateStr) {
     if (!dateStr) return null;
     const match = dateStr.match(/^(\d{4})\.(\d{2})(?:\.(\d{2}))?/);
@@ -158,36 +257,60 @@ function getApproachingDeadlineConferences(conferences, count = 5, referenceDate
     return upcomingDeadlines.slice(0, count);
 }
 
+/**
+ * Fallback approaching deadlines that respects the user's active field,
+ * quality score, and search filters while relaxing only the timeline window.
+ */
+function getFallbackApproachingDeadlines(conferences, filterCriteria = {}, count = 5, referenceDate = new Date()) {
+    const query = (filterCriteria.searchQuery || '').toLowerCase().trim();
+    const selectedFields = Array.isArray(filterCriteria.selectedFields) ? filterCriteria.selectedFields : [];
+    const minCQI = typeof filterCriteria.minCQI === 'number' ? filterCriteria.minCQI : 0;
+    const minGSAI = typeof filterCriteria.minGSAI === 'number' ? filterCriteria.minGSAI : 0;
+
+    const eligible = conferences.filter(conf => {
+        if (selectedFields.length > 0 && !selectedFields.includes(conf.field)) return false;
+        if ((conf.cqi || 0) < minCQI) return false;
+        if ((conf.gsai || 0) < minGSAI) return false;
+        if (query) {
+            const matchSearch =
+                (conf.name || '').toLowerCase().includes(query) ||
+                (conf.fullName || '').toLowerCase().includes(query) ||
+                (conf.location || '').toLowerCase().includes(query) ||
+                (conf.organizer || '').toLowerCase().includes(query) ||
+                (conf.field || '').toLowerCase().includes(query);
+            if (!matchSearch) return false;
+        }
+        return true;
+    });
+
+    return getApproachingDeadlineConferences(eligible, count, referenceDate);
+}
+
+const exportedHelpers = {
+    FIELD_CONFIG,
+    ALLOWED_SORT_VALUES,
+    getFieldMeta,
+    escapeHtml,
+    isValidCalendarDate,
+    parseConferenceDate,
+    getConferenceTimeStatus,
+    isWithinYearWindow,
+    filterConferencesByTimeline,
+    getTimelineStats,
+    sortConferencesByDate,
+    getDeadlineDDay,
+    getApproachingDeadlineConferences,
+    getFallbackApproachingDeadlines
+};
+
 if (typeof window !== 'undefined') {
-    window.app_logic_helper = {
-        parseConferenceDate,
-        getConferenceTimeStatus,
-        isWithinYearWindow,
-        filterConferencesByTimeline,
-        getTimelineStats,
-        sortConferencesByDate,
-        getDeadlineDDay,
-        getApproachingDeadlineConferences
-    };
-    window.parseConferenceDate = parseConferenceDate;
-    window.getConferenceTimeStatus = getConferenceTimeStatus;
-    window.isWithinYearWindow = isWithinYearWindow;
-    window.filterConferencesByTimeline = filterConferencesByTimeline;
-    window.getTimelineStats = getTimelineStats;
-    window.sortConferencesByDate = sortConferencesByDate;
-    window.getDeadlineDDay = getDeadlineDDay;
-    window.getApproachingDeadlineConferences = getApproachingDeadlineConferences;
+    window.app_logic_helper = exportedHelpers;
+    Object.entries(exportedHelpers).forEach(([key, val]) => {
+        window[key] = val;
+    });
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        parseConferenceDate,
-        getConferenceTimeStatus,
-        isWithinYearWindow,
-        filterConferencesByTimeline,
-        getTimelineStats,
-        sortConferencesByDate,
-        getDeadlineDDay,
-        getApproachingDeadlineConferences
-    };
+    module.exports = exportedHelpers;
 }
+})();

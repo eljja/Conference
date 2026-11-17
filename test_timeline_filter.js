@@ -137,15 +137,12 @@ function testTop5ApproachingDeadlines() {
 
 function testAllConferencesHaveDayAndDeadline() {
     console.log("Running Test 8: Verify all conferences in database have 14 columns, YYYY.MM.DD date, and valid deadline...");
-    const txt = fs.readFileSync('app.js', 'utf8');
-    const start = txt.indexOf('const rawConferencesData = [');
-    const end = txt.indexOf('];', start) + 2;
-    eval(txt.substring(start, end).replace('const rawConferencesData =', 'global.testData ='));
+    const { rawConferencesData } = require('./conferences-data.js');
     
-    assert(global.testData.length >= 368, "Must have at least 368 conferences");
+    assert(rawConferencesData.length >= 368, "Must have at least 368 conferences");
     
     const invalidRows = [];
-    global.testData.forEach(c => {
+    rawConferencesData.forEach(c => {
         if (c.length !== 14) {
             invalidRows.push({ name: c[1], reason: `Invalid length ${c.length} !== 14` });
             return;
@@ -164,7 +161,7 @@ function testAllConferencesHaveDayAndDeadline() {
     });
     
     assert.strictEqual(invalidRows.length, 0, `All conferences must pass validation! Found invalid: ${JSON.stringify(invalidRows.slice(0, 5))}`);
-    console.log(`✓ Test 8 Passed! (All ${global.testData.length} conferences have valid 14 columns, YYYY.MM.DD dates, and deadlines)`);
+    console.log(`✓ Test 8 Passed! (All ${rawConferencesData.length} conferences have valid 14 columns, YYYY.MM.DD dates, and deadlines)`);
 }
 
 function testDeadlineSorting() {
@@ -192,53 +189,172 @@ function testDeadlineSorting() {
 }
 
 function testAppJsDirectDateParsingAndStatus() {
-    console.log("Running Test 10: Verify app.js directly parses day precision and correctly marks 2026.10.04 as past on 2026.10.18...");
+    console.log("Running Test 10: Verify app.js uses Single Source of Truth helper without duplicating date parsing and marks 2026.10.04 as past on 2026.10.18...");
     const appJsTxt = fs.readFileSync('app.js', 'utf8');
 
-    // Extract parseConferenceDate lines
-    const lines = appJsTxt.split('\n');
-    function extractFunction(fnName) {
-        let inside = false;
-        let fnLines = [];
-        let braceCount = 0;
-        for (let line of lines) {
-            if (line.includes(`function ${fnName}(`)) {
-                inside = true;
-            }
-            if (inside) {
-                fnLines.push(line);
-                braceCount += (line.match(/\{/g) || []).length;
-                braceCount -= (line.match(/\}/g) || []).length;
-                if (braceCount === 0 && fnLines.length > 1) {
-                    break;
-                }
-            }
-        }
-        return fnLines.join('\n');
-    }
+    assert(!/function\s+parseConferenceDate\s*\(/.test(appJsTxt), "app.js must not duplicate parseConferenceDate");
+    assert(!/function\s+getConferenceTimeStatus\s*\(/.test(appJsTxt), "app.js must not duplicate getConferenceTimeStatus");
+    assert(appJsTxt.includes('window.app_logic_helper'), "app.js must consume window.app_logic_helper");
 
-    const parseFnCode = extractFunction('parseConferenceDate');
-    const statusFnCode = extractFunction('getConferenceTimeStatus');
-    
-    assert(parseFnCode.length > 0, "parseConferenceDate must be found in app.js");
-    assert(statusFnCode.length > 0, "getConferenceTimeStatus must be found in app.js");
-
-    const context = {};
-    eval(`
-        ${parseFnCode};
-        ${statusFnCode};
-        context.parseConferenceDate = parseConferenceDate;
-        context.getConferenceTimeStatus = getConferenceTimeStatus;
-    `);
-
-    const parsed = context.parseConferenceDate("2026.10.04");
-    assert.strictEqual(parsed.day, 4, "app.js parseConferenceDate MUST capture day=4 from 2026.10.04");
+    const parsed = parseConferenceDate("2026.10.04");
+    assert.strictEqual(parsed.day, 4, "parseConferenceDate MUST capture day=4 from 2026.10.04");
 
     const refDate = new Date(2026, 9, 18); // 2026.10.18
-    const status = context.getConferenceTimeStatus("2026.10.04", refDate);
+    const status = getConferenceTimeStatus("2026.10.04", refDate);
     assert.strictEqual(status, 'past', "2026.10.04 MUST be marked as 'past' when today is 2026.10.18");
 
     console.log("✓ Test 10 Passed!");
+}
+
+function testHtmlStructureAndDeepLinks() {
+    console.log("Running Test 11: Verify index.html modal nesting, SRI, and deep-link IDs...");
+    const html = fs.readFileSync('index.html', 'utf8');
+
+    // 1. #suggest-modal must close before <footer class="seo-crawler-directory">
+    const suggestStart = html.search(/<div[^>]*id="suggest-modal"[^>]*>/);
+    const footerStart = html.indexOf('<footer class="seo-crawler-directory"');
+    assert(suggestStart !== -1 && footerStart !== -1 && suggestStart < footerStart, "Both suggest-modal and footer must exist in order");
+    const between = html.slice(suggestStart, footerStart);
+    const openDivs = (between.match(/<div\b/g) || []).length;
+    const closeDivs = (between.match(/<\/div>/g) || []).length;
+    assert.strictEqual(openDivs, closeDivs, `#suggest-modal div tags must be balanced before <footer> (open=${openDivs}, close=${closeDivs})`);
+
+    // 2. FontAwesome CDN must include SRI integrity attribute
+    const faLink = html.match(/<link[^>]*font-awesome[^>]*>/i);
+    assert(faLink && /integrity="sha(256|384|512)-/.test(faLink[0]), "FontAwesome CDN link must include SRI integrity attribute");
+
+    // 3. Every ?id= deep link in index.html must exist in DB
+    const dataSource = fs.existsSync('conferences-data.js') ? fs.readFileSync('conferences-data.js', 'utf8') : fs.readFileSync('app.js', 'utf8');
+    const start = dataSource.indexOf('const rawConferencesData = [');
+    const end = dataSource.indexOf('];', start) + 2;
+    const tmp = {};
+    eval(dataSource.substring(start, end).replace('const rawConferencesData =', 'tmp.raw ='));
+    const dbIds = new Set(tmp.raw.map(r => r[0]));
+    const htmlIds = [...html.matchAll(/[?&]id=([a-z0-9-]+)/g)].map(m => m[1]);
+    const missingIds = [...new Set(htmlIds)].filter(id => !dbIds.has(id));
+    assert.deepStrictEqual(missingIds, [], `All HTML deep-link IDs must exist in DB, missing: ${missingIds.join(', ')}`);
+
+    console.log("✓ Test 11 Passed!");
+}
+
+function testHelperConfigEscapeCalendarAndSort() {
+    console.log("Running Test 12: Verify FIELD_CONFIG, escapeHtml, isValidCalendarDate, fallback filter, and sort=deadline...");
+    const helper = require('./app_logic_helper.js');
+
+    // 1. FIELD_CONFIG covers all 10 fields
+    const expectedFields = ['semiconductor', 'electronics', 'materials', 'architecture', 'civil', 'cs', 'mech', 'chem', 'bio', 'ind'];
+    assert(helper.FIELD_CONFIG && typeof helper.FIELD_CONFIG === 'object', "FIELD_CONFIG must be exported");
+    expectedFields.forEach(f => {
+        assert(helper.FIELD_CONFIG[f], `FIELD_CONFIG must include ${f}`);
+        assert(helper.FIELD_CONFIG[f].name && helper.FIELD_CONFIG[f].color && helper.FIELD_CONFIG[f].icon, `FIELD_CONFIG.${f} must define name, color, icon`);
+    });
+
+    // 2. escapeHtml neutralizes XSS characters
+    assert.strictEqual(typeof helper.escapeHtml, 'function', "escapeHtml must be exported");
+    assert.strictEqual(helper.escapeHtml('<script>"a" & \'b\'</script>'), '&lt;script&gt;&quot;a&quot; &amp; &#39;b&#39;&lt;/script&gt;');
+
+    // 3. isValidCalendarDate rejects impossible calendar dates
+    assert.strictEqual(typeof helper.isValidCalendarDate, 'function', "isValidCalendarDate must be exported");
+    assert.strictEqual(helper.isValidCalendarDate('2026.02.28'), true);
+    assert.strictEqual(helper.isValidCalendarDate('2026.02.30'), false, "Feb 30 must be rejected");
+    assert.strictEqual(helper.isValidCalendarDate('2026.04.31'), false, "Apr 31 must be rejected");
+    assert.strictEqual(helper.isValidCalendarDate('2024.02.29'), true, "Leap year Feb 29 must be valid");
+    assert.strictEqual(helper.isValidCalendarDate('2026.02.29'), false, "Non-leap year Feb 29 must be invalid");
+
+    // 4. ALLOWED_SORT_VALUES includes deadline and app.js delegates sort validation to it
+    assert(Array.isArray(helper.ALLOWED_SORT_VALUES) && helper.ALLOWED_SORT_VALUES.includes('deadline'), "ALLOWED_SORT_VALUES must include 'deadline'");
+    const appJsTxt = fs.readFileSync('app.js', 'utf8');
+    const parseUrlSlice = appJsTxt.slice(appJsTxt.indexOf('function parseUrlParameters'), appJsTxt.indexOf('function updateUrlParams'));
+    assert(parseUrlSlice.includes('ALLOWED_SORT_VALUES.includes(sortParam)'), "parseUrlParameters must validate sort against ALLOWED_SORT_VALUES");
+
+    // 5. Fallback deadline filter respects CQI/GSAI/searchQuery while relaxing timeline
+    assert.strictEqual(typeof helper.getFallbackApproachingDeadlines, 'function', "getFallbackApproachingDeadlines must be exported");
+    const refDate = new Date(2026, 9, 18); // 2026-10-18
+    const mockConfs = [
+        { id: 'low-cqi', name: 'Low CQI', fullName: 'Low CQI Conf', location: 'Seoul', organizer: 'Org', field: 'cs', cqi: 55, gsai: 80, deadline: '2026.10.20' },
+        { id: 'high-cqi', name: 'High CQI', fullName: 'High CQI Conf', location: 'Seoul', organizer: 'Org', field: 'cs', cqi: 90, gsai: 80, deadline: '2026.10.25' }
+    ];
+    const fb = helper.getFallbackApproachingDeadlines(mockConfs, { selectedFields: ['cs'], minCQI: 70, minGSAI: 50, searchQuery: '' }, 5, refDate);
+    assert.deepStrictEqual(fb.map(c => c.id), ['high-cqi'], "Fallback approaching deadlines must still enforce minCQI/minGSAI/search filters");
+
+    console.log("✓ Test 12 Passed!");
+}
+
+function testBrowserScriptBootAndInteractions() {
+    console.log("Running Test 13: Verify sequential classic <script> execution (no global scope collision) and URL/modal runtime flow...");
+    const vm = require('vm');
+    const makeEl = () => ({
+        style: {},
+        classList: { add(){}, remove(){}, toggle(){}, contains(){ return false; } },
+        dataset: {},
+        querySelector: () => makeEl(),
+        querySelectorAll: () => [],
+        addEventListener: () => {},
+        setAttribute: () => {},
+        appendChild: () => {},
+        scrollIntoView: () => {},
+        focus: () => {},
+        value: '',
+        textContent: '',
+        innerHTML: ''
+    });
+    const listeners = {};
+    const sandbox = {
+        console,
+        Math,
+        Date,
+        Array,
+        Object,
+        String,
+        Number,
+        Set,
+        Map,
+        JSON,
+        URLSearchParams,
+        requestAnimationFrame: fn => fn(),
+        setTimeout: fn => fn(),
+        localStorage: { getItem: () => null, setItem: () => {} },
+        document: {
+            activeElement: null,
+            getElementById: () => makeEl(),
+            querySelector: () => null,
+            querySelectorAll: () => [],
+            createElement: () => makeEl(),
+            createDocumentFragment: () => ({ appendChild(){} }),
+            addEventListener: (ev, fn) => { listeners[ev] = listeners[ev] || []; listeners[ev].push(fn); }
+        },
+        L: {
+            latLng: (a, b) => [a, b],
+            latLngBounds: (a, b) => [a, b],
+            point: (x, y) => [x, y],
+            map: () => ({ setView(){ return this; }, closePopup(){}, getCenter(){ return { lng: 0 }; }, invalidateSize(){} }),
+            tileLayer: () => ({ addTo(){ return this; } }),
+            control: { zoom: () => ({ addTo(){} }) },
+            layerGroup: () => ({ addTo(){}, clearLayers(){}, addLayer(){} }),
+            marker: () => ({ bindPopup(){ return this; }, on(){ return this; }, setIcon(){}, getLatLng(){ return { lat: 0, lng: 0 }; } }),
+            divIcon: () => ({})
+        }
+    };
+    sandbox.window = sandbox;
+    sandbox.window.location = { search: '?field=cs&sort=deadline', pathname: '/Conference/' };
+    sandbox.window.history = { replaceState: () => {} };
+
+    vm.createContext(sandbox);
+    vm.runInContext(fs.readFileSync('conferences-data.js', 'utf8'), sandbox);
+    vm.runInContext(fs.readFileSync('app_logic_helper.js', 'utf8'), sandbox);
+    vm.runInContext(fs.readFileSync('app.js', 'utf8'), sandbox);
+
+    (listeners['DOMContentLoaded'] || []).forEach(fn => fn());
+
+    const activeState = vm.runInContext('({ sortBy: state.sortBy, selectedFields: state.selectedFields, count: getFilteredConferences().length })', sandbox);
+    assert.strictEqual(activeState.sortBy, 'deadline', "URL ?sort=deadline must initialize state.sortBy to 'deadline'");
+    assert.deepStrictEqual(Array.from(activeState.selectedFields), ['cs'], "URL ?field=cs must initialize state.selectedFields to ['cs']");
+    assert(activeState.count > 0, "Filtered CS conferences must be non-empty");
+
+    // Verify selectConference runs cleanly without errors
+    sandbox.window.selectConference('neurips-2026');
+
+    console.log("✓ Test 13 Passed!");
 }
 
 try {
@@ -251,6 +367,9 @@ try {
     testAllConferencesHaveDayAndDeadline();
     testDeadlineSorting();
     testAppJsDirectDateParsingAndStatus();
+    testHtmlStructureAndDeepLinks();
+    testHelperConfigEscapeCalendarAndSort();
+    testBrowserScriptBootAndInteractions();
     console.log("\nALL TDD TESTS PASSED SUCCESSFULLY! 🚀");
 } catch (e) {
     console.error("\nTEST FAILED:", e.message);

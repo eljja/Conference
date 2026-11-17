@@ -58,8 +58,10 @@ body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: var(--font-sans);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Scrollbar styling */
@@ -83,6 +85,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     position: relative;
     z-index: 1;
 }
@@ -1109,6 +1112,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     background-color: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(4px);
     z-index: 9999;
@@ -1439,10 +1443,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     .sidebar-panel {
         width: 100%;
         height: 50vh;
+        height: 50dvh;
     }
     
     .map-panel {
         height: 50vh;
+        height: 50dvh;
     }
 }
 
@@ -2067,5 +2073,61 @@ input[type="range"]::-webkit-slider-thumb:hover {
     background: rgba(16, 185, 129, 0.18);
     color: #34d399;
     border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* --- Accessibility, Focus Rings, Est Tag & Reduced Motion --- */
+.score-est-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1px 5px;
+    margin-left: 0.35rem;
+    vertical-align: middle;
+    cursor: help;
+}
+
+button.popup-list-item {
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+}
+
+.conference-card:focus-visible,
+.deadline-item-card:focus-visible,
+.popup-list-item:focus-visible,
+.popup-detail-btn:focus-visible,
+.btn-timeline-toggle:focus-visible,
+.btn-checkbox:focus-within,
+.modal-close-btn:focus-visible,
+.btn-suggest-header:focus-visible,
+.btn-github-header:focus-visible,
+.map-reset-btn:focus-visible,
+.mobile-toggle-btn:focus-visible {
+    outline: 2px solid #818cf8;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-icon,
+    .deadlines-beacon {
+        animation: none !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
