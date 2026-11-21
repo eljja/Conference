@@ -357,7 +357,7 @@ const modalWebsiteLink = document.getElementById('modal-website-link');
 // Pure date/timeline helpers are delegated directly to window.app_logic_helper (Single Source of Truth).
 
 const LAST_DB_UPDATE_YEAR = 2026;
-const LAST_DB_UPDATE_QUARTER = 3;
+const LAST_DB_UPDATE_QUARTER = 4;
 
 function initUpdateStatusBadge() {
     // Dynamically sync the last updated badge text from constants (Single Source of Truth)
@@ -653,7 +653,7 @@ function createSinglePopupElement(firstConf) {
     wrapper.className = 'map-popup-card';
     wrapper.innerHTML = `
         <h4>${escapeHtml(firstConf.name)} ${timeBadgeHtml}</h4>
-        <p><i class="fa-solid fa-location-dot"></i> ${escapeHtml(firstConf.location)} &bull; <i class="fa-solid fa-calendar"></i> ${escapeHtml(firstConf.date)}</p>
+        <p><i class="fa-solid fa-location-dot"></i> ${escapeHtml(firstConf.location)} &bull; <span class="popup-date-nowrap"><i class="fa-solid fa-calendar"></i> ${escapeHtml(firstConf.date)}</span></p>
         <div class="popup-score-row">
             <span style="background: rgba(244,63,94,0.1); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3)">CQI: ${firstConf.cqi}</span>
             <span style="background: rgba(14,165,233,0.1); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.3)">GSAI: ${firstConf.gsai}</span>
@@ -734,7 +734,8 @@ function renderMapMarkers(filteredData) {
         const firstConf = confList[0];
 
         if (confList.length === 1) {
-            // Single conference — create at 3 longitude offsets for wrapping
+            // Single conference — create at 3 longitude offsets for wrapping with lazy popup DOM
+            const tooltipLabel = `${escapeHtml(firstConf.name)} (${escapeHtml(firstConf.location.split(',')[0])})`;
             const markers = addMarkerWithWrapping(firstConf.lat, firstConf.lon, (lat, lon) => {
                 const marker = L.marker([lat, lon], {
                     icon: getMarkerIcon(firstConf.field, false)
@@ -744,15 +745,16 @@ function renderMapMarkers(filteredData) {
                 marker.isGroup = false;
                 marker.location = firstConf.location;
 
-                marker.bindPopup(createSinglePopupElement(firstConf), {
-                    closeButton: false,
+                marker.bindPopup(() => createSinglePopupElement(firstConf), {
+                    closeButton: true,
                     offset: L.point(0, -5)
                 });
 
+                if (typeof marker.bindTooltip === 'function') {
+                    marker.bindTooltip(tooltipLabel, { direction: 'top', offset: [0, -10], opacity: 0.92 });
+                }
+
                 marker.on('click', function () {
-                    this.openPopup();
-                });
-                marker.on('mouseover', function () {
                     this.openPopup();
                 });
 
@@ -760,7 +762,8 @@ function renderMapMarkers(filteredData) {
             });
             registerLocationMarkers(firstConf.location, markers);
         } else {
-            // Multiple conferences in this city — grouped marker at 3 offsets
+            // Multiple conferences in this city — grouped marker at 3 offsets with lazy popup DOM
+            const tooltipLabel = `${escapeHtml(city.split(',')[0])} (${confList.length} Conferences)`;
             const markers = addMarkerWithWrapping(firstConf.lat, firstConf.lon, (lat, lon) => {
                 const marker = L.marker([lat, lon], {
                     icon: getGroupedMarkerIcon(confList.length, false)
@@ -769,15 +772,16 @@ function renderMapMarkers(filteredData) {
                 marker.isGroup = true;
                 marker.location = city;
 
-                marker.bindPopup(createGroupPopupElement(city, confList), {
-                    closeButton: false,
+                marker.bindPopup(() => createGroupPopupElement(city, confList), {
+                    closeButton: true,
                     offset: L.point(0, -5)
                 });
 
+                if (typeof marker.bindTooltip === 'function') {
+                    marker.bindTooltip(tooltipLabel, { direction: 'top', offset: [0, -10], opacity: 0.92 });
+                }
+
                 marker.on('click', function () {
-                    this.openPopup();
-                });
-                marker.on('mouseover', function () {
                     this.openPopup();
                 });
 
@@ -906,10 +910,12 @@ function selectConference(id) {
     
     modalWebsiteLink.href = conf.url;
 
-    // Render Modal Time Status Banner
+    // Render Modal Time Status Banner (deadline-aware so closed submissions are never mislabeled active)
     const timeBannerEl = document.getElementById('modal-time-banner');
     if (timeBannerEl) {
         const timeStatus = getConferenceTimeStatus(conf.date);
+        const dDay = conf.deadline ? getDeadlineDDay(conf.deadline) : null;
+        const isDeadlineClosed = dDay && !dDay.isUpcoming;
         const safeDate = escapeHtml(conf.date);
         const safeLocation = escapeHtml(conf.location);
         if (timeStatus === 'past') {
@@ -922,13 +928,19 @@ function selectConference(id) {
             timeBannerEl.className = 'modal-time-banner modal-time-current';
             timeBannerEl.innerHTML = `
                 <i class="fa-solid fa-bolt"></i>
-                <div><strong>Happening This Month:</strong> Scheduled for <strong>${safeDate}</strong>. Sessions and digital streams are currently active.</div>
+                <div><strong>Happening This Month:</strong> Scheduled for <strong>${safeDate}</strong>. Sessions and program details are active on the official website.</div>
+            `;
+        } else if (isDeadlineClosed) {
+            timeBannerEl.className = 'modal-time-banner modal-time-upcoming';
+            timeBannerEl.innerHTML = `
+                <i class="fa-solid fa-calendar-check"></i>
+                <div><strong>Upcoming Conference (Submissions Closed):</strong> Scheduled for <strong>${safeDate}</strong> in <strong>${safeLocation}</strong>. Paper submissions have closed; attendee registration &amp; program details are open.</div>
             `;
         } else {
             timeBannerEl.className = 'modal-time-banner modal-time-upcoming';
             timeBannerEl.innerHTML = `
                 <i class="fa-solid fa-calendar-check"></i>
-                <div><strong>Upcoming Conference:</strong> Scheduled for <strong>${safeDate}</strong> in <strong>${safeLocation}</strong>. Paper submissions & travel grants are active.</div>
+                <div><strong>Upcoming Conference:</strong> Scheduled for <strong>${safeDate}</strong> in <strong>${safeLocation}</strong>. Paper submissions &amp; travel grants are active.</div>
             `;
         }
     }
@@ -1287,6 +1299,27 @@ if (btnTimelineUpcoming) {
 }
 if (btnTimelinePast) {
     btnTimelinePast.addEventListener('click', () => setTimelineMode(true));
+}
+
+// --- Collapsible Sidebar Filters & Approaching Deadlines ---
+const toggleFiltersBtn = document.getElementById('toggle-filters-btn');
+const filterCollapsibleBody = document.getElementById('filter-collapsible-body');
+if (toggleFiltersBtn && filterCollapsibleBody) {
+    toggleFiltersBtn.addEventListener('click', () => {
+        const isCollapsed = filterCollapsibleBody.classList.toggle('collapsed');
+        toggleFiltersBtn.setAttribute('aria-expanded', (!isCollapsed).toString());
+        toggleFiltersBtn.classList.toggle('collapsed', isCollapsed);
+    });
+}
+
+const toggleDeadlinesBtn = document.getElementById('toggle-deadlines-btn');
+const deadlinesContainerEl = document.getElementById('deadlines-container');
+if (toggleDeadlinesBtn && deadlinesContainerEl) {
+    toggleDeadlinesBtn.addEventListener('click', () => {
+        const isCollapsed = deadlinesContainerEl.classList.toggle('collapsed');
+        toggleDeadlinesBtn.setAttribute('aria-expanded', (!isCollapsed).toString());
+        toggleDeadlinesBtn.classList.toggle('collapsed', isCollapsed);
+    });
 }
 
 // Sync DOM checkbox elements to match state.selectedFields

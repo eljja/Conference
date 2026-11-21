@@ -302,7 +302,7 @@
                 <div class="logo-text">
                     <div class="title-wrapper">
                         <h1>TripConference</h1>
-                        <span class="last-updated-badge" id="last-updated-badge"><i class="fa-solid fa-arrows-rotate"></i> Updated: 2026.3Q</span>
+                        <span class="last-updated-badge" id="last-updated-badge"><i class="fa-solid fa-arrows-rotate"></i> Updated: 2026.4Q</span>
                         <span class="update-status-badge" id="update-status-badge"></span>
                     </div>
                     <p>Prestige & Student Attraction Analysis for Major International Conferences</p>
@@ -350,10 +350,16 @@
                         </button>
                     </div>
 
-                    <div class="search-results-feedback" id="search-results-feedback">
-                        <i class="fa-solid fa-filter"></i> Showing <span id="results-count">0</span> conferences
+                    <div class="filter-toolbar-row">
+                        <div class="search-results-feedback" id="search-results-feedback">
+                            <i class="fa-solid fa-filter"></i> Showing <span id="results-count">0</span> conferences
+                        </div>
+                        <button type="button" class="btn-collapse-toggle" id="toggle-filters-btn" aria-expanded="true" aria-controls="filter-collapsible-body" title="Collapse or expand filter controls">
+                            <i class="fa-solid fa-sliders"></i> <span>Filters</span> <i class="fa-solid fa-chevron-up toggle-chevron"></i>
+                        </button>
                     </div>
                     
+                    <div class="filter-collapsible-body" id="filter-collapsible-body">
                     <!-- Timeline Filter: Future vs Past -->
                     <div class="timeline-filter-group">
                         <div class="timeline-control-header">
@@ -450,6 +456,7 @@
                             <option value="name">Alphabetical</option>
                         </select>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Approaching Deadlines Priority Section (마감 임박 학회 Top 5) -->
@@ -460,7 +467,12 @@
                             <i class="fa-solid fa-hourglass-start"></i>
                             <span>Approaching Deadlines Top 5</span>
                         </div>
-                        <span class="deadlines-badge-count" id="deadlines-badge-count">Urgent D-Days</span>
+                        <div class="deadlines-header-actions">
+                            <span class="deadlines-badge-count" id="deadlines-badge-count">Urgent D-Days</span>
+                            <button type="button" class="btn-collapse-toggle deadlines-collapse-btn" id="toggle-deadlines-btn" aria-expanded="true" aria-controls="deadlines-container" aria-label="Collapse or expand approaching deadlines" title="Toggle Approaching Deadlines">
+                                <i class="fa-solid fa-chevron-up toggle-chevron"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="deadlines-container" id="deadlines-container">
                         <!-- Injected dynamically by app.js -->
@@ -494,7 +506,7 @@
             </section>
 
             <!-- Right Panel: Interactive Map -->
-            <section class="map-panel" id="map-panel">
+            <section class="map-panel hidden-mobile" id="map-panel">
                 <div id="map"></div>
                 <div class="map-overlay-info">
                     <p><i class="fa-solid fa-info-circle"></i> Click a marker to view detailed evaluation and student benefits.</p>
@@ -627,7 +639,7 @@
                 </div>
                 <div class="form-group">
                     <label for="suggest-contact">Your Email / Contact <span class="optional">(Optional)</span></label>
-                    <input type="text" id="suggest-contact" placeholder="name@example.com (Optional, in case you want updates)">
+                    <input type="text" id="suggest-contact" placeholder="name@example.com (Optional)">
                 </div>
                 
                 <div class="suggest-form-status" id="suggest-status"></div>

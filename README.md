@@ -63,12 +63,12 @@
 | 분야 ID | 학문 분야 (Academic Fields) | 대표 색상 (Theme) | 대표 아이콘 (Icon) | 등록 학회 수 |
 | :--- | :--- | :--- | :--- | :---: |
 | `semiconductor` | 반도체 (Semiconductors) | Amber (`#f59e0b`) | `fa-microchip` | 37 |
-| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 71 |
+| `electronics` | 전자공학 (Electronics) | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
 | `materials` | 신소재/재료공학 (Materials) | Emerald (`#10b981`) | `fa-atom` | 50 |
-| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 39 |
-| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 34 |
-| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 38 |
-| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 32 |
+| `architecture` | 건축학 (Architecture) | Purple (`#a855f7`) | `fa-building-columns` | 36 |
+| `civil` | 토목공학 (Civil Engineering) | Teal (`#14b8a6`) | `fa-bridge` | 36 |
+| `cs` | 컴퓨터공학 & AI (Computer Science & AI) | Blue (`#3b82f6`) | `fa-brain` | 40 |
+| `mech` | 기계/항공우주공학 (Mechanical & Aerospace) | Orange (`#f97316`) | `fa-gear` | 33 |
 | `chem` | 화학공학/배터리/에너지 (Chemical & Energy) | Lime Green (`#84cc16`) | `fa-flask` | 27 |
 | `bio` | 바이오메디컬/생명공학 (Biomedical & Biotech) | Rose Pink (`#ec4899`) | `fa-dna` | 34 |
 | `ind` | 산업공학 (Industrial Engineering) | Indigo (`#6366f1`) | `fa-diagram-project` | 25 |
@@ -79,7 +79,7 @@
 
 #### 1. 분기별 정기 업데이트 (Quarterly Updates) & 동적 상태 배지
 * 대시보드의 학회 일정 및 개최지 정보는 매 분기(Quarter)마다 정기적으로 검토 및 업데이트됩니다.
-* **최종 데이터베이스 업데이트**: **2026년 3분기 (2026.3Q)**
+* **최종 데이터베이스 업데이트**: **2026년 4분기 (2026.4Q)**
 * **동적 상태 표시기**: 페이지 로딩 시점의 분기를 계산하여 `[Up to Date]`(최신 상태) 또는 `[Update Needed]`(업데이트 권장) 배지를 실시간으로 표시합니다.
 
 #### 2. 오늘 기준 -1년 ~ +1년 동적 윈도우 필터링 (`isWithinYearWindow`)
@@ -162,12 +162,12 @@ The database contains **387 verified real-world international conferences** with
 | Field ID | Academic Field | Theme Color | Icon | Count |
 | :--- | :--- | :--- | :--- | :---: |
 | `semiconductor` | Semiconductors | Amber (`#f59e0b`) | `fa-microchip` | 37 |
-| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 71 |
+| `electronics` | Electronics | Sky Blue (`#0ea5e9`) | `fa-bolt` | 69 |
 | `materials` | Materials | Emerald (`#10b981`) | `fa-atom` | 50 |
-| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 39 |
-| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 34 |
-| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 38 |
-| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 32 |
+| `architecture` | Architecture | Purple (`#a855f7`) | `fa-building-columns` | 36 |
+| `civil` | Civil Engineering | Teal (`#14b8a6`) | `fa-bridge` | 36 |
+| `cs` | Computer Science & AI | Blue (`#3b82f6`) | `fa-brain` | 40 |
+| `mech` | Mechanical & Aerospace | Orange (`#f97316`) | `fa-gear` | 33 |
 | `chem` | Chemical & Energy | Lime Green (`#84cc16`) | `fa-flask` | 27 |
 | `bio` | Biomedical & Biotech | Rose Pink (`#ec4899`) | `fa-dna` | 34 |
 | `ind` | Industrial Engineering | Indigo (`#6366f1`) | `fa-diagram-project` | 25 |
@@ -178,7 +178,7 @@ The database contains **387 verified real-world international conferences** with
 
 #### 1. Quarterly Updates & Dynamic Status Indicator
 * The database schedules, locations, and links are reviewed and maintained on a quarterly cycle.
-* **Last Database Update**: **2026 Q3 (2026.3Q)**
+* **Last Database Update**: **2026 Q4 (2026.4Q)**
 * **Dynamic Status Badge**: Evaluates user access time in real-time to display `[Up to Date]` or `[Update Needed]` badges.
 
 #### 2. Strict -1 Year to +1 Year Dynamic Window (`isWithinYearWindow`)

@@ -357,6 +357,103 @@ function testBrowserScriptBootAndInteractions() {
     console.log("✓ Test 13 Passed!");
 }
 
+function testDatabaseDeepIntegrity() {
+    console.log("Running Test 14: Verify DB coordinate/location consistency, deduplication, HTTPS/year URLs, CQI series consistency, and TopTier threshold...");
+    const { rawConferencesData } = require('./conferences-data.js');
+
+    assert.strictEqual(rawConferencesData.length, 387, "Total conference count must remain 387");
+
+    const cityCoords = {};
+    const coordCities = {};
+    const baseNameYear = {};
+    const fullNameYear = {};
+    const seriesCqi = {};
+
+    rawConferencesData.forEach(r => {
+        const [id, name, full, field, cqi, gsai, loc, lat, lon, date, org, top, url, dl] = r;
+        const year = date.slice(0, 4);
+        const coordKey = `${lat},${lon}`;
+
+        // 1. Consistent coordinates per city and consistent city name per coordinate
+        (cityCoords[loc] = cityCoords[loc] || new Set()).add(coordKey);
+        (coordCities[coordKey] = coordCities[coordKey] || new Set()).add(loc);
+
+        // 2. Location format: must include ', ' separating city and country/region
+        assert(loc.includes(', '), `Location "${loc}" for ${id} must follow "City, Country" format`);
+
+        // 3. Deduplication check
+        const bKey = name.replace(/\s*\d{4}$/, '').toLowerCase() + '|' + year;
+        (baseNameYear[bKey] = baseNameYear[bKey] || []).push(id);
+        const fKey = full.replace(/\d{4}/g, '').replace(/\s+/g, ' ').trim().toLowerCase() + '|' + year;
+        (fullNameYear[fKey] = fullNameYear[fKey] || []).push(id);
+
+        // 4. ASCE classification check
+        if (id.startsWith('asce-')) {
+            assert.strictEqual(field, 'civil', `${id} must be classified under 'civil'`);
+        }
+
+        // 5. URL hygiene: HTTPS only, and no stale 2025/2026 year in 2027 conference URLs
+        assert(url.startsWith('https://'), `URL for ${id} must use https:// (found ${url})`);
+        const urlYrMatch = url.match(/20\d\d/);
+        if (urlYrMatch) {
+            assert.strictEqual(urlYrMatch[0], year, `URL year for ${id} (${url}) must match edition year ${year}`);
+        }
+
+        // 6. TopTier (A*) threshold: every isTopTier conference must have CQI >= 90
+        if (top) {
+            assert(cqi >= 90, `TopTier (A*) conference ${id} must have CQI >= 90 (found ${cqi})`);
+        }
+
+        // 7. Series CQI consistency across years
+        const seriesBase = id.replace(/-?\d{4}$/, '');
+        (seriesCqi[seriesBase] = seriesCqi[seriesBase] || new Set()).add(cqi);
+    });
+
+    const multiCoordCities = Object.entries(cityCoords).filter(([, s]) => s.size > 1);
+    assert.strictEqual(multiCoordCities.length, 0, `Cities with inconsistent coordinates: ${JSON.stringify(multiCoordCities.map(([c, s]) => [c, [...s]]))}`);
+
+    const multiNameCoords = Object.entries(coordCities).filter(([, s]) => s.size > 1);
+    assert.strictEqual(multiNameCoords.length, 0, `Coordinates with multiple city names: ${JSON.stringify(multiNameCoords.map(([k, s]) => [k, [...s]]))}`);
+
+    const dupBase = Object.values(baseNameYear).filter(v => v.length > 1);
+    assert.strictEqual(dupBase.length, 0, `Duplicate baseName+year entries: ${JSON.stringify(dupBase)}`);
+
+    const dupFull = Object.values(fullNameYear).filter(v => v.length > 1);
+    assert.strictEqual(dupFull.length, 0, `Duplicate fullName+year entries: ${JSON.stringify(dupFull)}`);
+
+    const driftingSeries = Object.entries(seriesCqi).filter(([, s]) => s.size > 1);
+    assert.strictEqual(driftingSeries.length, 0, `Series with inconsistent CQI across years: ${JSON.stringify(driftingSeries.map(([b, s]) => [b, [...s]]))}`);
+
+    console.log("✓ Test 14 Passed!");
+}
+
+function testGuiUxAndResourceOptimization() {
+    console.log("Running Test 15: Verify mobile List View initial state, 2026.4Q badge, deadline-aware modal banner, collapsible toggles, and favicon size...");
+    const html = fs.readFileSync('index.html', 'utf8');
+    const appJs = fs.readFileSync('app.js', 'utf8');
+
+    // 1. Mobile #map-panel must have hidden-mobile on initial HTML render
+    assert(/<section[^>]*id="map-panel"[^>]*class="[^"]*hidden-mobile[^"]*"|<section[^>]*class="[^"]*hidden-mobile[^"]*"[^>]*id="map-panel"/.test(html), "#map-panel must include 'hidden-mobile' class on initial load");
+
+    // 2. Collapsible filter & deadline toggle buttons exist
+    assert(html.includes('id="toggle-filters-btn"'), "index.html must include #toggle-filters-btn");
+    assert(html.includes('id="toggle-deadlines-btn"'), "index.html must include #toggle-deadlines-btn");
+
+    // 3. Quarterly update constant updated to 2026.4Q
+    assert(appJs.includes('const LAST_DB_UPDATE_YEAR = 2026;') && appJs.includes('const LAST_DB_UPDATE_QUARTER = 4;'), "app.js must set LAST_DB_UPDATE_QUARTER = 4 for 2026.4Q");
+    assert(html.includes('Updated: 2026.4Q'), "index.html must display Updated: 2026.4Q");
+
+    // 4. Detail modal banner must distinguish closed deadlines on upcoming conferences
+    assert(appJs.includes('Submissions Closed') || appJs.includes('submissions have closed'), "app.js modal banner must distinguish upcoming conferences whose submission deadline has already passed");
+
+    // 5. Favicon optimized (< 50KB) and redundant 651KB logo.png removed
+    const favSize = fs.statSync('favicon.png').size;
+    assert(favSize < 50 * 1024, `favicon.png must be optimized under 50KB (found ${favSize} bytes)`);
+    assert(!fs.existsSync('logo.png'), "Redundant duplicate 651KB logo.png must be removed");
+
+    console.log("✓ Test 15 Passed!");
+}
+
 try {
     testTimeStatus();
     testDayPrecision();
@@ -370,6 +467,8 @@ try {
     testHtmlStructureAndDeepLinks();
     testHelperConfigEscapeCalendarAndSort();
     testBrowserScriptBootAndInteractions();
+    testDatabaseDeepIntegrity();
+    testGuiUxAndResourceOptimization();
     console.log("\nALL TDD TESTS PASSED SUCCESSFULLY! 🚀");
 } catch (e) {
     console.error("\nTEST FAILED:", e.message);
